@@ -1,0 +1,532 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Insurance Hub API 1.0",
+    "description": "API for managing insurance contracts.",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/HubContract/MAFC_SKNVV_CreateContract": {
+      "post": {
+        "tags": [
+          "HubContract"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateContractRequestDto"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateContractRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateContractRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateContractRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/HubContract/MAFC_SKNVV_GetContract_ByLoanNo": {
+      "post": {
+        "tags": [
+          "HubContract"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetContractByLoanNoRequestDto"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetContractByLoanNoRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetContractByLoanNoRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetContractByLoanNoRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetContractByLoanNoResponseDataDtoApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetContractByLoanNoResponseDataDtoApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetContractByLoanNoResponseDataDtoApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateContractRequestDto": {
+        "required": [
+          "accessKey",
+          "data",
+          "productCode"
+        ],
+        "type": "object",
+        "properties": {
+          "accessKey": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "productCode": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InsuranceContractRequestDto"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetContractByLoanNoRequestDto": {
+        "required": [
+          "accessKey",
+          "loanNo",
+          "productCode"
+        ],
+        "type": "object",
+        "properties": {
+          "accessKey": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "productCode": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "loanNo": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetContractByLoanNoResponseDataDto": {
+        "type": "object",
+        "properties": {
+          "importBatchId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "productCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "contractPackageCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "contractStartDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "contractEndDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "contractTerm": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "loanType": {
+            "type": "string",
+            "nullable": true
+          },
+          "loanNo": {
+            "type": "string",
+            "nullable": true
+          },
+          "insuredIdNo": {
+            "type": "string",
+            "nullable": true
+          },
+          "insuredName": {
+            "type": "string",
+            "nullable": true
+          },
+          "insuredBirth": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "inuredGender": {
+            "type": "string",
+            "nullable": true
+          },
+          "hubContractSplits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HubContractSplitDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetContractByLoanNoResponseDataDtoApiResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/GetContractByLoanNoResponseDataDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "HubContractSplitDto": {
+        "type": "object",
+        "properties": {
+          "ctsContractIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ctsContractStartDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ctsContractEndDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ctsPviRefId": {
+            "type": "string",
+            "nullable": true
+          },
+          "ctsPviRefPolNo": {
+            "type": "string",
+            "nullable": true
+          },
+          "ctsPviRefLink": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "InsuranceContractRequestDto": {
+        "required": [
+          "custBirthday",
+          "custGender",
+          "custIdNo",
+          "custName",
+          "custPhone",
+          "disbursementDate",
+          "insRate",
+          "loanAmount",
+          "loanDate",
+          "loanNo",
+          "loanTerm",
+          "loanType"
+        ],
+        "type": "object",
+        "properties": {
+          "loanNo": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "loanType": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "loanDate": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "custName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "custBirthday": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "custGender": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "custIdNo": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "custAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "custPhone": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "custEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "loanAmount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "loanTerm": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "insRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "disbursementDate": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
