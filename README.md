@@ -504,3 +504,175 @@ Redis Cache: Nếu đối tác có Redis riêng, cập nhật RedisCacheSettings
 Hangfire: Nếu đối tác có yêu cầu về các tác vụ nền khác, bạn sẽ sửa đổi hoặc thêm các tác vụ trong BackgroundTasks.
 
 Swagger: Tài liệu Swagger sẽ tự động cập nhật theo các thay đổi của Contro
+
+Các bảng của Entity Framework Core (EF Core) và ứng dụng của bạn:
+
+dbo.__EFMigrationsHistory
+
+dbo.InsuranceContracts
+
+Các bảng của Hangfire:
+
+HangFire.AggregatedCounter
+
+HangFire.Counter
+
+HangFire.Hash
+
+HangFire.Job
+
+HangFire.JobParameter
+
+HangFire.JobQueue
+
+HangFire.List
+
+HangFire.Schema
+
+HangFire.Server
+
+HangFire.Set
+
+HangFire.State
+
+I. Các bảng của Entity Framework Core và ứng dụng của bạn
+1. dbo.__EFMigrationsHistory
+
+Ý nghĩa: Đây là một bảng hệ thống được tạo và quản lý bởi Entity Framework Core.
+
+Mục đích: Nó lưu trữ lịch sử của tất cả các "migrations" (di chuyển cơ sở dữ liệu) đã được áp dụng cho database của bạn. Mỗi khi bạn chạy lệnh Add-Migration (hoặc dotnet ef migrations add) và Update-Database (hoặc dotnet ef database update), EF Core sẽ ghi lại một bản ghi vào bảng này.
+
+Lý do tồn tại: EF Core sử dụng bảng này để theo dõi trạng thái của database và xác định những migration nào cần được áp dụng tiếp theo. Điều này đảm bảo rằng schema database của bạn luôn đồng bộ với các thay đổi trong code Model của bạn.
+
+Nội dung điển hình: Chứa các cột như MigrationId (tên của migration) và ProductVersion (phiên bản của EF Core đã tạo migration đó).
+
+2. dbo.InsuranceContracts
+
+Ý nghĩa: Đây là bảng chính của ứng dụng của bạn, được tạo ra từ lớp Model InsuranceContract.cs của bạn.
+
+Mục đích: Nó lưu trữ tất cả các dữ liệu về hợp đồng bảo hiểm mà API của bạn tạo ra và quản lý.
+
+Lý do tồn tại: Đây là nơi dữ liệu nghiệp vụ cốt lõi của bạn được lưu trữ một cách bền vững. Mỗi hàng trong bảng này đại diện cho một hợp đồng bảo hiểm duy nhất với tất cả các chi tiết liên quan (số hợp đồng vay, tên khách hàng, số tiền vay, ngày giải ngân, v.v.).
+
+Nội dung điển hình: Các cột tương ứng với các thuộc tính bạn đã định nghĩa trong lớp InsuranceContract.cs (ví dụ: Id, LoanNo, CustName, LoanAmount, DisbursementDate, CreatedAt, v.v.).
+
+II. Các bảng của Hangfire
+Tất cả các bảng có tiền tố HangFire. đều được tạo và quản lý bởi thư viện Hangfire.
+
+Ý nghĩa chung: Hangfire là một thư viện quản lý tác vụ nền (background job) cho .NET. Nó cần một nơi để lưu trữ thông tin về các job, trạng thái của chúng, các server đang xử lý job, và các thông tin liên quan khác. Các bảng này chính là kho lưu trữ (storage) của Hangfire trong SQL Server.
+
+Mục đích chung: Hangfire sử dụng các bảng này để đảm bảo rằng các tác vụ nền của bạn (như SampleBackgroundTask mà chúng ta đã cấu hình) có thể được thực thi một cách đáng tin cậy, ngay cả khi ứng dụng của bạn bị khởi động lại hoặc gặp sự cố. Nó lưu trữ trạng thái của job, hàng đợi, lịch trình, và thông tin về các worker server.
+
+Giải thích chi tiết các bảng Hangfire:
+
+HangFire.AggregatedCounter và HangFire.Counter
+
+Mục đích: Lưu trữ các bộ đếm (counters). Counter lưu trữ các sự kiện riêng lẻ (ví dụ: một job đã hoàn thành), và AggregatedCounter tổng hợp chúng lại trong một khoảng thời gian nhất định (ví dụ: số job hoàn thành trong ngày).
+
+Lý do tồn tại: Được sử dụng cho các số liệu thống kê và hiển thị trên Hangfire Dashboard (ví dụ: số lượng job đã xử lý, số lượng job thất bại).
+
+HangFire.Hash
+
+Mục đích: Lưu trữ các cặp khóa-giá trị dạng hash.
+
+Lý do tồn tại: Được sử dụng để lưu trữ các cấu hình, cài đặt hoặc dữ liệu tạm thời liên quan đến job hoặc server.
+
+HangFire.Job
+
+Mục đích: Bảng trung tâm lưu trữ thông tin chi tiết về từng tác vụ nền (job) đã được tạo.
+
+Lý do tồn tại: Mỗi hàng đại diện cho một job cụ thể, bao gồm tên phương thức cần gọi, tham số, trạng thái hiện tại (pending, processing, succeeded, failed), và các thông tin meta khác.
+
+HangFire.JobParameter
+
+Mục đích: Lưu trữ các tham số của job.
+
+Lý do tồn tại: Khi một job được tạo, các tham số của phương thức sẽ được tuần tự hóa và lưu vào bảng này, sau đó được deserialized khi job được thực thi.
+
+HangFire.JobQueue
+
+Mục đích: Lưu trữ các job đang chờ được xử lý trong các hàng đợi.
+
+Lý do tồn tại: Các job được đặt vào các hàng đợi (mặc định là default) để các worker của Hangfire có thể lấy và xử lý.
+
+HangFire.List
+
+Mục đích: Lưu trữ các danh sách các giá trị.
+
+Lý do tồn tại: Được sử dụng cho các mục đích nội bộ của Hangfire, ví dụ như lưu trữ các job được lên lịch lại.
+
+HangFire.Schema
+
+Mục đích: Lưu trữ thông tin về phiên bản schema của Hangfire database.
+
+Lý do tồn tại: Hangfire sử dụng bảng này để theo dõi phiên bản của các bảng database của nó và thực hiện các cập nhật schema nếu cần khi bạn nâng cấp phiên bản Hangfire.
+
+HangFire.Server
+
+Mục đích: Lưu trữ thông tin về các server (instance của ứng dụng của bạn) đang chạy Hangfire Server.
+
+Lý do tồn tại: Cho phép Hangfire biết có bao nhiêu worker server đang hoạt động và quản lý việc phân phối job giữa chúng, đặc biệt quan trọng trong môi trường phân tán.
+
+HangFire.Set
+
+Mục đích: Lưu trữ các tập hợp các giá trị không trùng lặp.
+
+Lý do tồn tại: Được sử dụng cho các mục đích nội bộ của Hangfire, ví dụ như lưu trữ các job định kỳ (recurring jobs).
+
+HangFire.State
+
+Mục đích: Lưu trữ lịch sử trạng thái của một job.
+
+Lý do tồn tại: Mỗi khi trạng thái của một job thay đổi (pending, enqueued, processing, succeeded, failed), một bản ghi mới sẽ được thêm vào bảng này, cho phép bạn theo dõi toàn bộ vòng đời của một job.
+Bạn hoàn toàn đúng khi nói rằng một bảng là không đủ để giải quyết vấn đề này. Dữ liệu bạn đang thấy trong bảng InsuranceContracts chỉ là kết quả cuối cùng của một quá trình thành công. Nếu server dừng ở giữa chừng, bạn sẽ không có cách nào biết được điều gì đã xảy ra với các yêu cầu đang xử lý.
+
+Để giải quyết vấn đề này, chúng ta cần giới thiệu các khái niệm và thành phần sau:
+
+Bảng theo dõi trạng thái yêu cầu/job (Request/Job Tracking Table): Để ghi lại mỗi yêu cầu đến và trạng thái xử lý của nó.
+
+Xử lý bất đồng bộ (Asynchronous Processing) với Message Queue hoặc Background Jobs: Để tách biệt việc nhận yêu cầu từ việc xử lý nặng, giúp API phản hồi nhanh hơn và tăng độ tin cậy.
+
+Tính bất biến (Idempotency): Đảm bảo rằng việc gửi lại cùng một yêu cầu nhiều lần không tạo ra các bản ghi trùng lặp hoặc gây ra tác dụng phụ không mong muốn.
+
+I. Phân tích vấn đề hiện tại và giải pháp
+Vấn đề hiện tại:
+
+Khi server nhận 100 request và dừng ở request thứ 10, các request từ 11 đến 100 có thể bị mất hoặc không được xử lý hoàn chỉnh.
+
+Bạn không biết đơn 30 sao rồi, xử lí tới đâu.
+
+Nếu khách hàng gửi lại request vì timeout, có thể tạo ra bản ghi trùng lặp cho các đơn đã được xử lý thành công nhưng phản hồi bị mất.
+
+Không có cơ chế tự động gửi lại hoặc ghi nhận lỗi chi tiết cho từng request.
+
+Giải pháp đề xuất:
+
+Chúng ta sẽ chuyển sang mô hình xử lý yêu cầu bất đồng bộ, sử dụng Hangfire (mà bạn đã tích hợp) làm công cụ chính để quản lý các tác vụ nền.
+
+Bảng RequestLogs (hoặc JobStates):
+
+Khi API nhận được một yêu cầu CreateContract, nó sẽ ngay lập tức tạo một bản ghi trong bảng RequestLogs với trạng thái PENDING (hoặc RECEIVED).
+
+Bản ghi này sẽ có một RequestId duy nhất.
+
+Sau đó, API sẽ đẩy công việc xử lý hợp đồng vào một hàng đợi tác vụ nền (Hangfire Job) và trả về 202 Accepted (Đã chấp nhận) cho client cùng với RequestId.
+
+Client có thể sử dụng RequestId này để truy vấn trạng thái sau này.
+
+Xử lý bất đồng bộ với Hangfire:
+
+Một worker của Hangfire sẽ lấy job từ hàng đợi.
+
+Khi job bắt đầu xử lý, trạng thái trong RequestLogs sẽ được cập nhật thành PROCESSING.
+
+Logic tạo hợp đồng (insert vào InsuranceContracts) sẽ được thực hiện trong worker này.
+
+Nếu thành công, trạng thái trong RequestLogs sẽ được cập nhật thành COMPLETED.
+
+Nếu có lỗi, ngoại lệ sẽ được bắt, trạng thái trong RequestLogs sẽ được cập nhật thành FAILED, và chi tiết lỗi có thể được lưu lại.
+
+Tính bất biến (Idempotency):
+
+Để tránh tạo trùng lặp khi client gửi lại yêu cầu, chúng ta có thể sử dụng RequestId làm một "idempotency key".
+
+Trước khi xử lý một job, worker sẽ kiểm tra RequestId trong bảng RequestLogs. Nếu RequestId đó đã có trạng thái COMPLETED, worker sẽ bỏ qua việc xử lý và coi như thành công.

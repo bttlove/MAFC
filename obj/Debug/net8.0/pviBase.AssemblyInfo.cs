@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("pviBase")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ee0d009e98558998aa7ba8779f6500fde42f986a")]
 [assembly: System.Reflection.AssemblyProductAttribute("pviBase")]
 [assembly: System.Reflection.AssemblyTitleAttribute("pviBase")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

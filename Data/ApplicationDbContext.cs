@@ -11,13 +11,13 @@ namespace pviBase.Data
         }
 
         public DbSet<InsuranceContract> InsuranceContracts { get; set; }
-
+        public DbSet<RequestLog> RequestLogs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Optional: Configure precision for decimal types if needed
-            // modelBuilder.Entity<InsuranceContract>()
-            //     .Property(i => i.InsRate)
-            //     .HasColumnType("decimal(5, 2)");
+            modelBuilder.Entity<RequestLog>()
+                .Property(i => i.Status)
+                .HasConversion<string>();
 
             base.OnModelCreating(modelBuilder);
         }

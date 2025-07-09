@@ -199,6 +199,7 @@ C:\Users\ADMIN\source\repos\pviBase\obj\Debug\net8.0\pviBase.AssemblyInfo.cs
 C:\Users\ADMIN\source\repos\pviBase\obj\Debug\net8.0\pviBase.csproj.CoreCompileInputs.cache
 C:\Users\ADMIN\source\repos\pviBase\obj\Debug\net8.0\pviBase.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\ADMIN\source\repos\pviBase\obj\Debug\net8.0\pviBase.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\ADMIN\source\repos\pviBase\obj\Debug\net8.0\pviBase.sourcelink.json
 C:\Users\ADMIN\source\repos\pviBase\obj\Debug\net8.0\scopedcss\bundle\pviBase.styles.css
 C:\Users\ADMIN\source\repos\pviBase\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\ADMIN\source\repos\pviBase\obj\Debug\net8.0\staticwebassets.development.json

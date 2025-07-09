@@ -3,34 +3,6 @@
   "WorkspaceRootPath": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|c:\\users\\admin\\source\\repos\\pvibase\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|c:\\users\\admin\\source\\repos\\pvibase\\middlewares\\responsewrappingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:middlewares\\responsewrappingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|c:\\users\\admin\\source\\repos\\pvibase\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|c:\\users\\admin\\source\\repos\\pvibase\\dtos\\getcontractbyloannorequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:dtos\\getcontractbyloannorequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|c:\\users\\admin\\source\\repos\\pvibase\\dtos\\createcontractrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:dtos\\createcontractrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|c:\\users\\admin\\source\\repos\\pvibase\\dtos\\getcontractbyloannoresponsedatadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:dtos\\getcontractbyloannoresponsedatadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|c:\\users\\admin\\source\\repos\\pvibase\\controllers\\hubcontractcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:controllers\\hubcontractcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|c:\\users\\admin\\source\\repos\\pvibase\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -39,20 +11,28 @@
       "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:services\\insuranceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|c:\\users\\admin\\source\\repos\\pvibase\\middlewares\\responsewrappingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:middlewares\\responsewrappingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|c:\\users\\admin\\source\\repos\\pvibase\\controllers\\hubcontractcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:controllers\\hubcontractcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|c:\\users\\admin\\source\\repos\\pvibase\\middlewares\\exceptionhandlingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:middlewares\\exceptionhandlingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|c:\\users\\admin\\source\\repos\\pvibase\\services\\iinsuranceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:services\\iinsuranceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|c:\\users\\admin\\source\\repos\\pvibase\\configurations\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:configurations\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|c:\\users\\admin\\source\\repos\\pvibase\\models\\requestlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:models\\requestlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|c:\\users\\admin\\source\\repos\\pvibase\\validators\\getcontractbyloannorequestdtovalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:validators\\getcontractbyloannorequestdtovalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|c:\\users\\admin\\source\\repos\\pvibase\\dtos\\hubcontractsplitdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:dtos\\hubcontractsplitdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|c:\\users\\admin\\source\\repos\\pvibase\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -62,175 +42,110 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-07-08T09:41:56.379Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ResponseWrappingMiddleware.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Middlewares\\ResponseWrappingMiddleware.cs",
               "RelativeDocumentMoniker": "Middlewares\\ResponseWrappingMiddleware.cs",
               "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Middlewares\\ResponseWrappingMiddleware.cs",
               "RelativeToolTip": "Middlewares\\ResponseWrappingMiddleware.cs",
-              "ViewState": "AgIAAFgAAAAAAAAAAAAuwHYAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-08T09:51:35.786Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "appsettings.Development.json",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\appsettings.Development.json",
-              "RelativeDocumentMoniker": "appsettings.Development.json",
-              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\appsettings.Development.json",
-              "RelativeToolTip": "appsettings.Development.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-07-08T09:39:26.695Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "GetContractByLoanNoResponseDataDto.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Dtos\\GetContractByLoanNoResponseDataDto.cs",
-              "RelativeDocumentMoniker": "Dtos\\GetContractByLoanNoResponseDataDto.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Dtos\\GetContractByLoanNoResponseDataDto.cs",
-              "RelativeToolTip": "Dtos\\GetContractByLoanNoResponseDataDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-08T09:21:35.128Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "HubContractController.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Controllers\\HubContractController.cs",
-              "RelativeDocumentMoniker": "Controllers\\HubContractController.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Controllers\\HubContractController.cs",
-              "RelativeToolTip": "Controllers\\HubContractController.cs",
-              "ViewState": "AgIAAFoAAAAAAAAAAAAmwGkAAABKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-08T09:16:16.677Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "InsuranceService.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Services\\InsuranceService.cs",
-              "RelativeDocumentMoniker": "Services\\InsuranceService.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Services\\InsuranceService.cs",
-              "RelativeToolTip": "Services\\InsuranceService.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAG8AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-08T09:24:22.759Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "GetContractByLoanNoRequestDto.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Dtos\\GetContractByLoanNoRequestDto.cs",
-              "RelativeDocumentMoniker": "Dtos\\GetContractByLoanNoRequestDto.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Dtos\\GetContractByLoanNoRequestDto.cs",
-              "RelativeToolTip": "Dtos\\GetContractByLoanNoRequestDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-08T09:20:10.017Z",
+              "WhenOpened": "2025-07-09T02:16:03.148Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "CreateContractRequestDto.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Dtos\\CreateContractRequestDto.cs",
-              "RelativeDocumentMoniker": "Dtos\\CreateContractRequestDto.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Dtos\\CreateContractRequestDto.cs",
-              "RelativeToolTip": "Dtos\\CreateContractRequestDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
+              "Title": "ExceptionHandlingMiddleware.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Middlewares\\ExceptionHandlingMiddleware.cs",
+              "RelativeDocumentMoniker": "Middlewares\\ExceptionHandlingMiddleware.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Middlewares\\ExceptionHandlingMiddleware.cs",
+              "RelativeToolTip": "Middlewares\\ExceptionHandlingMiddleware.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAAYwEcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-08T09:19:48.852Z",
+              "WhenOpened": "2025-07-09T02:14:26.749Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "GetContractByLoanNoRequestDtoValidator.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Validators\\GetContractByLoanNoRequestDtoValidator.cs",
-              "RelativeDocumentMoniker": "Validators\\GetContractByLoanNoRequestDtoValidator.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Validators\\GetContractByLoanNoRequestDtoValidator.cs",
-              "RelativeToolTip": "Validators\\GetContractByLoanNoRequestDtoValidator.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-08T09:22:15.528Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAD8AAAAAAAAAAAAAABMAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAADwAAAAAAAAAAAAAAE8AAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-08T09:22:36.857Z",
+              "WhenOpened": "2025-07-09T02:09:32.42Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "MappingProfile.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Configurations\\MappingProfile.cs",
-              "RelativeDocumentMoniker": "Configurations\\MappingProfile.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Configurations\\MappingProfile.cs",
-              "RelativeToolTip": "Configurations\\MappingProfile.cs",
-              "ViewState": "AgIAAE0AAAAAAAAAAAAwwFUAAAABAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "HubContractController.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Controllers\\HubContractController.cs",
+              "RelativeDocumentMoniker": "Controllers\\HubContractController.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Controllers\\HubContractController.cs",
+              "RelativeToolTip": "Controllers\\HubContractController.cs",
+              "ViewState": "AgIAAGoAAAAAAAAAAAAuwJ0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-08T09:23:15.265Z",
+              "WhenOpened": "2025-07-09T02:07:35.125Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 1,
+              "Title": "InsuranceService.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Services\\InsuranceService.cs",
+              "RelativeDocumentMoniker": "Services\\InsuranceService.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Services\\InsuranceService.cs",
+              "RelativeToolTip": "Services\\InsuranceService.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAQwDEAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-09T02:04:03.595Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "IInsuranceService.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Services\\IInsuranceService.cs",
               "RelativeDocumentMoniker": "Services\\IInsuranceService.cs",
               "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Services\\IInsuranceService.cs",
               "RelativeToolTip": "Services\\IInsuranceService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABdAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-08T09:23:59.009Z",
+              "WhenOpened": "2025-07-09T02:03:10.163Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "HubContractSplitDto.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Dtos\\HubContractSplitDto.cs",
-              "RelativeDocumentMoniker": "Dtos\\HubContractSplitDto.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Dtos\\HubContractSplitDto.cs",
-              "RelativeToolTip": "Dtos\\HubContractSplitDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAeAAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-08T09:20:38.924Z",
+              "WhenOpened": "2025-07-09T02:00:57.153Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "RequestLog.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Models\\RequestLog.cs",
+              "RelativeDocumentMoniker": "Models\\RequestLog.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Models\\RequestLog.cs",
+              "RelativeToolTip": "Models\\RequestLog.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-09T01:59:48.433Z",
               "EditorCaption": ""
             }
           ]

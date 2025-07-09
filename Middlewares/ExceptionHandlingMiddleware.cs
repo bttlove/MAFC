@@ -1,11 +1,13 @@
-﻿using pviBase.Dtos;
-using pviBase.Helpers;
+﻿// Middlewares/ExceptionHandlingMiddleware.cs
+using pviBase.Dtos;
+using pviBase.Helpers; // Cần cho ErrorCodes
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
+
 namespace pviBase.Middlewares
 {
     public class ExceptionHandlingMiddleware
@@ -35,22 +37,22 @@ namespace pviBase.Middlewares
         private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
-            var response = new ApiResponse(false, "500", "An unexpected error occurred.");
+            // Sử dụng mã lỗi và thông báo mặc định cho lỗi không xác định
+            var response = new ApiResponse(false, ErrorCodes.ExceptionErrorsCode, ErrorCodes.UnexpectedErrorMessage);
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
             switch (exception)
             {
                 case ValidationException validationException:
-                    response.Code = "400";
-                    response.Message = "Validation failed.";
-                    // Optionally, you can include validation errors in Data
+                    response.Code = ErrorCodes.InvalidParametersCode; // Mã lỗi cho tham số không hợp lệ
+                    response.Message = ErrorCodes.InvalidParametersMessage; // Thông báo lỗi
+                    // Bạn có thể bao gồm chi tiết lỗi xác thực trong trường Data nếu muốn
                     // response.Data = validationException.Errors;
                     context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     break;
-                // Add more custom exception types here if needed
+                // Thêm các loại ngoại lệ tùy chỉnh khác ở đây nếu cần và gán mã lỗi tương ứng
                 default:
-                    // For production, you might not want to expose raw exception messages.
-                    // response.Message = "An unexpected error occurred. Please try again later.";
+                    // Đối với các lỗi không xác định, giữ mã 500 và thông báo chung
                     break;
             }
 

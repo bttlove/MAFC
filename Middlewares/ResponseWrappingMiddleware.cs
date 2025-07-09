@@ -1,5 +1,6 @@
 ﻿// Middlewares/ResponseWrappingMiddleware.cs
 using pviBase.Dtos;
+using pviBase.Helpers; // Cần cho ErrorCodes
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Text;
@@ -19,29 +20,23 @@ namespace pviBase.Middlewares
 
         public async Task InvokeAsync(HttpContext context)
         {
-            var originalBodyStream = context.Response.Body; // Lưu trữ luồng phản hồi gốc
+            var originalBodyStream = context.Response.Body;
 
-            // Tạo một luồng bộ nhớ tạm thời để "chụp" phản hồi
             using (var responseBody = new MemoryStream())
             {
-                context.Response.Body = responseBody; // Chuyển hướng luồng phản hồi đến luồng bộ nhớ tạm thời
+                context.Response.Body = responseBody;
 
-                await _next(context); // Chuyển yêu cầu cho middleware tiếp theo (hoặc Controller)
+                await _next(context);
 
-                // Đặt con trỏ về đầu luồng bộ nhớ tạm thời
                 responseBody.Seek(0, SeekOrigin.Begin);
-                var responseText = await new StreamReader(responseBody).ReadToEndAsync(); // Đọc toàn bộ nội dung phản hồi
+                var responseText = await new StreamReader(responseBody).ReadToEndAsync();
 
-                // Chỉ bọc nếu đó là phản hồi thành công (mã trạng thái 2xx)
-                // và không phải là phản hồi rỗng hoàn toàn từ Ok(new {})
                 if (context.Response.StatusCode >= 200 && context.Response.StatusCode < 300)
                 {
-                    // Thử deserialize để kiểm tra xem nó đã là một ApiResponse chưa
-                    // Điều này giúp tránh bọc lại các phản hồi đã được bọc bởi ExceptionHandlingMiddleware
                     bool isAlreadyWrapped = false;
                     try
                     {
-                        if (!string.IsNullOrEmpty(responseText)) // Chỉ parse nếu có nội dung
+                        if (!string.IsNullOrEmpty(responseText))
                         {
                             using (var jsonDoc = JsonDocument.Parse(responseText))
                             {
@@ -56,53 +51,46 @@ namespace pviBase.Middlewares
                     }
                     catch (JsonException)
                     {
-                        // Không phải JSON hợp lệ hoặc không theo định dạng ApiResponse của chúng ta, tiến hành bọc
+                        // Not valid JSON or not our ApiResponse format, proceed with wrapping
                     }
 
                     if (!isAlreadyWrapped)
                     {
-                        // Tạo một ApiResponse mới, bọc dữ liệu gốc vào trường Data
-                        // Xử lý trường hợp responseText rỗng (ví dụ từ Ok(new {}))
                         JsonElement dataElement;
                         if (string.IsNullOrEmpty(responseText))
                         {
-                            dataElement = JsonDocument.Parse("{}").RootElement; // Tạo một đối tượng JSON rỗng
+                            dataElement = JsonDocument.Parse("{}").RootElement;
                         }
                         else
                         {
                             dataElement = JsonDocument.Parse(responseText).RootElement;
                         }
 
+                        // Sử dụng mã thành công và thông báo từ ErrorCodes
                         var apiResponse = new ApiResponse<JsonElement>(
                             status: true,
-                            code: "000",
-                            message: "Success",
+                            code: ErrorCodes.SuccessCode, // Mã thành công
+                            message: ErrorCodes.SuccessMessage, // Thông báo thành công
                             data: dataElement
                         );
 
-                        // Tuần tự hóa ApiResponse đã bọc thành JSON
                         var wrappedJson = JsonSerializer.Serialize(apiResponse, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 
-                        // Đặt lại Content-Type và Content-Length trước khi ghi vào luồng gốc
                         context.Response.ContentType = "application/json";
-                        context.Response.ContentLength = Encoding.UTF8.GetBytes(wrappedJson).Length; // Cập nhật Content-Length
+                        context.Response.ContentLength = Encoding.UTF8.GetBytes(wrappedJson).Length;
 
-                        await originalBodyStream.WriteAsync(Encoding.UTF8.GetBytes(wrappedJson)); // Ghi phản hồi đã bọc vào luồng gốc
+                        await originalBodyStream.WriteAsync(Encoding.UTF8.GetBytes(wrappedJson));
                     }
                     else
                     {
-                        // Nếu đã được bọc, chỉ ghi lại nội dung gốc
-                        context.Response.ContentType = "application/json"; // Đảm bảo Content-Type vẫn là JSON
-                        context.Response.ContentLength = Encoding.UTF8.GetBytes(responseText).Length; // Cập nhật Content-Length
+                        context.Response.ContentType = "application/json";
+                        context.Response.ContentLength = Encoding.UTF8.GetBytes(responseText).Length;
                         await originalBodyStream.WriteAsync(Encoding.UTF8.GetBytes(responseText));
                     }
                 }
                 else
                 {
-                    // Đối với các phản hồi lỗi (không phải 2xx), hoặc phản hồi không phải JSON,
-                    // chỉ ghi lại nội dung gốc. ExceptionHandlingMiddleware đã xử lý lỗi.
-                    // Đảm bảo Content-Length được đặt đúng cho phản hồi gốc
-                    context.Response.ContentLength = Encoding.UTF8.GetBytes(responseText).Length; // Cập nhật Content-Length
+                    context.Response.ContentLength = Encoding.UTF8.GetBytes(responseText).Length;
                     await originalBodyStream.WriteAsync(Encoding.UTF8.GetBytes(responseText));
                 }
             }

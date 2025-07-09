@@ -1,4 +1,5 @@
-﻿using pviBase.Configurations;
+﻿// Program.cs
+using pviBase.Configurations;
 using pviBase.Data;
 using pviBase.Middlewares;
 using pviBase.Services;
@@ -16,34 +17,26 @@ using Hangfire.SqlServer;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Serilog;
 using Serilog.Events;
-using Newtonsoft.Json; // Đảm bảo dòng này có
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using pviBase.BackgroundTasks; // For Hangfire tasks
+using pviBase.BackgroundTasks;
+using pviBase.Dtos;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Serilog
 Log.Logger = new LoggerConfiguration()
-.MinimumLevel.Debug()
-.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-.Enrich.FromLogContext()
-.WriteTo.Console()
-.WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
-.CreateLogger();
+    .MinimumLevel.Debug()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
+    .CreateLogger();
 
 builder.Logging.ClearProviders();
 builder.Host.UseSerilog();
 
 // Add services to the container.
-builder.Services.AddControllers()
-    .AddNewtonsoftJson() // If you prefer Newtonsoft.Json for deserialization
-    .AddFluentValidation(fv =>
-    {
-        fv.DisableDataAnnotationsValidation = true;
-        fv.RegisterValidatorsFromAssemblyContaining<InsuranceContractRequestDtoValidator>();
-        fv.RegisterValidatorsFromAssemblyContaining<CreateContractRequestDtoValidator>();
-    });
-
 builder.Services.AddControllers()
     .AddNewtonsoftJson(options =>
     {
@@ -55,9 +48,9 @@ builder.Services.AddControllers()
         fv.DisableDataAnnotationsValidation = true;
         fv.RegisterValidatorsFromAssemblyContaining<InsuranceContractRequestDtoValidator>();
         fv.RegisterValidatorsFromAssemblyContaining<CreateContractRequestDtoValidator>();
-        // THÊM DÒNG NÀY:
-        fv.RegisterValidatorsFromAssemblyContaining<GetContractByLoanNoRequestDtoValidator>();
+        fv.RegisterValidatorsFromAssemblyContaining<GetContractByLoanNoRequestDtoValidator>(); // Đăng ký validator mới
     });
+
 // Entity Framework Core with SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -104,12 +97,10 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        policyBuilder => policyBuilder.WithOrigins("http://localhost:4200", "http://localhost:3000") // Add your allowed origins
-                            .AllowAnyHeader()
-                            .AllowAnyMethod());
+        policyBuilder => policyBuilder.WithOrigins("http://localhost:4200", "http://localhost:3000")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod());
 });
-
-
 
 // Redis Cache
 builder.Services.AddStackExchangeRedisCache(options =>
@@ -126,14 +117,18 @@ builder.Services.AddHangfire(config => config
     .UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddHangfireServer();
-builder.Services.AddTransient<SampleBackgroundTask>(); // Register your background task service
+builder.Services.AddTransient<SampleBackgroundTask>();
 
 // Register Services
 builder.Services.AddScoped<IInsuranceService, InsuranceService>();
+// Đảm bảo các validator được tiêm vào service nếu chúng được sử dụng trong service
+builder.Services.AddScoped<IValidator<InsuranceContractRequestDto>, InsuranceContractRequestDtoValidator>();
+builder.Services.AddScoped<IValidator<CreateContractRequestDto>, CreateContractRequestDtoValidator>();
+builder.Services.AddScoped<IValidator<GetContractByLoanNoRequestDto>, GetContractByLoanNoRequestDtoValidator>(); // THÊM DÒNG NÀY
 
 var app = builder.Build();
 
-// Apply migrations on startup (for development only, for production, handle migrations carefully)
+// Apply migrations on startup
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -141,8 +136,6 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
-
-// Exception handling middleware at the very top to catch all exceptions
 app.UseExceptionHandlingMiddleware();
 
 if (app.Environment.IsDevelopment())
@@ -158,36 +151,22 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection(); // Recommended for production
-
+app.UseHttpsRedirection();
 app.UseRouting();
-
-// CORS must be before Authorization and Authentication
 app.UseCors("AllowSpecificOrigin");
-
-// Rate Limiting
- // Apply after routing and CORS
-
-// IP Whitelisting should be before endpoint execution
+// app.UseRateLimiter(); // Bỏ ghi chú nếu muốn kích hoạt lại Rate Limiting
 app.UseIpWhitelistMiddleware();
-
-// Authentication and Authorization (if you add them later)
 // app.UseAuthentication();
 // app.UseAuthorization();
-
-// Hangfire Dashboard
 app.UseHangfireDashboard("/hangfire");
 
-// Example of background job setup using your service
 RecurringJob.AddOrUpdate<SampleBackgroundTask>(
     "DailyCleanupJob",
     x => x.PerformDailyDataCleanup(),
-    Cron.Daily() // Runs once a day
+    Cron.Daily()
 );
 
-// Response Wrapping should be after the main processing but before writing to client
-app.UseResponseWrappingMiddleware(); // Place after other processing middlewares like routing, auth.
-
+app.UseResponseWrappingMiddleware();
 app.MapControllers();
 
 app.Run();
