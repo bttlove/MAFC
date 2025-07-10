@@ -1,7 +1,4 @@
-﻿// Dtos/ApiResponse.cs
-using System.Text.Json;
-
-namespace pviBase.Dtos // Đảm bảo namespace này khớp với project của bạn
+﻿namespace pviBase.Dtos
 {
     public class ApiResponse<T>
     {
@@ -25,7 +22,7 @@ namespace pviBase.Dtos // Đảm bảo namespace này khớp với project của
             Status = status;
             Code = code;
             Message = message;
-            Data = default(T); // Gán giá trị mặc định cho Data
+            Data = default(T);
         }
     }
 
@@ -35,12 +32,23 @@ namespace pviBase.Dtos // Đảm bảo namespace này khớp với project của
         public string Code { get; set; }
         public string Message { get; set; }
 
-        // Sửa constructor này để khởi tạo tất cả các thuộc tính non-nullable
+     
+        public object? Errors { get; set; }
+
         public ApiResponse(bool status, string code, string message)
         {
             Status = status;
             Code = code;
             Message = message;
+        }
+
+ 
+        public ApiResponse(bool status, string code, string message, object errors)
+        {
+            Status = status;
+            Code = code;
+            Message = message;
+            Errors = errors;
         }
     }
 }

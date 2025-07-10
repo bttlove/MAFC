@@ -23,117 +23,117 @@ namespace pviBase.Migrations
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("pviBase.Models.InsuranceContract", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("CreatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<string>("CustAddress")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                b.Property<string>("CustAddress")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTime>("CustBirthday")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("CustBirthday")
+                    .HasColumnType("datetime2");
 
-                    b.Property<string>("CustEmail")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                b.Property<string>("CustEmail")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("CustGender")
-                        .IsRequired()
-                        .HasMaxLength(1)
-                        .HasColumnType("nvarchar(1)");
+                b.Property<string>("CustGender")
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .HasColumnType("nvarchar(1)");
 
-                    b.Property<string>("CustIdNo")
-                        .IsRequired()
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar(12)");
+                b.Property<string>("CustIdNo")
+                    .IsRequired()
+                    .HasMaxLength(12)
+                    .HasColumnType("nvarchar(12)");
 
-                    b.Property<string>("CustName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                b.Property<string>("CustName")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("CustPhone")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                b.Property<string>("CustPhone")
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasColumnType("nvarchar(10)");
 
-                    b.Property<DateTime>("DisbursementDate")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("DisbursementDate")
+                    .HasColumnType("datetime2");
 
-                    b.Property<double>("InsRate")
-                        .HasColumnType("float");
+                b.Property<double>("InsRate")
+                    .HasColumnType("float");
 
-                    b.Property<long>("LoanAmount")
-                        .HasColumnType("bigint");
+                b.Property<long>("LoanAmount")
+                    .HasColumnType("bigint");
 
-                    b.Property<DateTime>("LoanDate")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("LoanDate")
+                    .HasColumnType("datetime2");
 
-                    b.Property<string>("LoanNo")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                b.Property<string>("LoanNo")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("LoanTerm")
-                        .HasColumnType("int");
+                b.Property<int>("LoanTerm")
+                    .HasColumnType("int");
 
-                    b.Property<string>("LoanType")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                b.Property<string>("LoanType")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime?>("UpdatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("InsuranceContracts");
-                });
+                b.ToTable("InsuranceContracts");
+            });
 
             modelBuilder.Entity("pviBase.Models.RequestLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("CreatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<string>("ErrorMessage")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                b.Property<string>("ErrorMessage")
+                    .HasMaxLength(1000)
+                    .HasColumnType("nvarchar(1000)");
 
-                    b.Property<DateTime?>("LastUpdatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime?>("LastUpdatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<string>("RequestData")
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("RequestData")
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RequestId")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                b.Property<string>("RequestId")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                b.Property<string>("Status")
+                    .IsRequired()
+                    .HasMaxLength(20)
+                    .HasColumnType("nvarchar(20)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("RequestLogs");
-                });
+                b.ToTable("RequestLogs");
+            });
 #pragma warning restore 612, 618
         }
     }

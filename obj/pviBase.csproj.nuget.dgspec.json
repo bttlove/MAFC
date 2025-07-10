@@ -93,6 +93,10 @@
               "target": "Package",
               "version": "[9.0.6, )"
             },
+            "Polly.Extensions.Http": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
             "Serilog.AspNetCore": {
               "target": "Package",
               "version": "[9.0.0, )"

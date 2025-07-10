@@ -1,5 +1,4 @@
-﻿// Program.cs
-using pviBase.Configurations;
+﻿using pviBase.Configurations;
 using pviBase.Data;
 using pviBase.Middlewares;
 using pviBase.Services;
@@ -30,7 +29,8 @@ Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
     .Enrich.FromLogContext()
     .WriteTo.Console()
-    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day,
+        outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
     .CreateLogger();
 
 builder.Logging.ClearProviders();
@@ -46,9 +46,9 @@ builder.Services.AddControllers()
     .AddFluentValidation(fv =>
     {
         fv.DisableDataAnnotationsValidation = true;
-        fv.RegisterValidatorsFromAssemblyContaining<InsuranceContractRequestDtoValidator>();
-        fv.RegisterValidatorsFromAssemblyContaining<CreateContractRequestDtoValidator>();
-        fv.RegisterValidatorsFromAssemblyContaining<GetContractByLoanNoRequestDtoValidator>(); // Đăng ký validator mới
+        fv.ImplicitlyValidateChildProperties = true;
+        fv.ImplicitlyValidateRootCollectionElements = true;
+        fv.AutomaticValidationEnabled = false; // 👈 Tắt auto-validation của ASP.NET Core
     });
 
 // Entity Framework Core with SQL Server
@@ -98,8 +98,8 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
         policyBuilder => policyBuilder.WithOrigins("http://localhost:4200", "http://localhost:3000")
-                                .AllowAnyHeader()
-                                .AllowAnyMethod());
+            .AllowAnyHeader()
+            .AllowAnyMethod());
 });
 
 // Redis Cache
@@ -121,10 +121,11 @@ builder.Services.AddTransient<SampleBackgroundTask>();
 
 // Register Services
 builder.Services.AddScoped<IInsuranceService, InsuranceService>();
-// Đảm bảo các validator được tiêm vào service nếu chúng được sử dụng trong service
+
+// ✅ Đăng ký Validator thủ công
 builder.Services.AddScoped<IValidator<InsuranceContractRequestDto>, InsuranceContractRequestDtoValidator>();
 builder.Services.AddScoped<IValidator<CreateContractRequestDto>, CreateContractRequestDtoValidator>();
-builder.Services.AddScoped<IValidator<GetContractByLoanNoRequestDto>, GetContractByLoanNoRequestDtoValidator>(); // THÊM DÒNG NÀY
+builder.Services.AddScoped<IValidator<GetContractByLoanNoRequestDto>, GetContractByLoanNoRequestDtoValidator>();
 
 var app = builder.Build();
 
@@ -135,7 +136,7 @@ using (var scope = app.Services.CreateScope())
     dbContext.Database.Migrate();
 }
 
-// Configure the HTTP request pipeline.
+// Configure middleware pipeline
 app.UseExceptionHandlingMiddleware();
 
 if (app.Environment.IsDevelopment())
@@ -154,12 +155,11 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors("AllowSpecificOrigin");
-// app.UseRateLimiter(); // Bỏ ghi chú nếu muốn kích hoạt lại Rate Limiting
 app.UseIpWhitelistMiddleware();
 // app.UseAuthentication();
 // app.UseAuthorization();
-app.UseHangfireDashboard("/hangfire");
 
+app.UseHangfireDashboard("/hangfire");
 RecurringJob.AddOrUpdate<SampleBackgroundTask>(
     "DailyCleanupJob",
     x => x.PerformDailyDataCleanup(),

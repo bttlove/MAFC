@@ -506,6 +506,9 @@
           "message": {
             "type": "string",
             "nullable": true
+          },
+          "errors": {
+            "nullable": true
           }
         },
         "additionalProperties": false

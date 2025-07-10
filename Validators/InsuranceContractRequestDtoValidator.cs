@@ -1,4 +1,6 @@
 ﻿using FluentValidation;
+using Microsoft.EntityFrameworkCore;
+using pviBase.Data;
 using pviBase.Dtos;
 using System;
 using System.Linq;
@@ -7,8 +9,19 @@ namespace pviBase.Validators
 {
     public class InsuranceContractRequestDtoValidator : AbstractValidator<InsuranceContractRequestDto>
     {
-        public InsuranceContractRequestDtoValidator()
+        private readonly ApplicationDbContext _dbContext;
+
+        public InsuranceContractRequestDtoValidator(ApplicationDbContext dbContext)
         {
+            _dbContext = dbContext;
+
+            RuleFor(x => x.LoanNo)
+                .NotEmpty().WithMessage("Số hợp đồng tín dụng là bắt buộc.")
+                .MustAsync(async (loanNo, cancellation) =>
+                {
+                    return !await _dbContext.InsuranceContracts
+                            .AnyAsync(ic => ic.LoanNo == loanNo, cancellation);
+                }).WithMessage("Số hợp đồng tín dụng đã tồn tại.");
             RuleFor(x => x.LoanNo).NotEmpty().WithMessage("Số hợp đồng tín dụng là bắt buộc.");
             RuleFor(x => x.LoanType).NotEmpty().WithMessage("Loại hình vay là bắt buộc.");
             RuleFor(x => x.LoanDate).NotEmpty().WithMessage("Ngày ký hợp đồng tín dụng là bắt buộc.")
@@ -62,14 +75,16 @@ namespace pviBase.Validators
 
     public class CreateContractRequestDtoValidator : AbstractValidator<CreateContractRequestDto>
     {
-        public CreateContractRequestDtoValidator()
+        public CreateContractRequestDtoValidator(IValidator<InsuranceContractRequestDto> insuranceContractValidator)
         {
             RuleFor(x => x.AccessKey).NotEmpty().WithMessage("Access key là bắt buộc.");
             RuleFor(x => x.ProductCode).NotEmpty().WithMessage("Mã sản phẩm là bắt buộc.")
                                        .Must(x => x == "MAFC_SKNVV").WithMessage("Mã sản phẩm không hợp lệ. Giá trị mặc định là MAFC_SKNVV.");
             RuleFor(x => x.Data).NotEmpty().WithMessage("Danh sách chi tiết người tham gia bảo hiểm là bắt buộc.")
                                  .Must(data => data != null && data.Any()).WithMessage("Danh sách chi tiết người tham gia bảo hiểm không được rỗng.");
-            RuleForEach(x => x.Data).SetValidator(new InsuranceContractRequestDtoValidator());
+            RuleForEach(x => x.Data).SetValidator(insuranceContractValidator);
         }
     }
+
+
 }
