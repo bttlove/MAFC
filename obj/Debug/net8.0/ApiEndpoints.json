@@ -64,6 +64,98 @@
   {
     "ContainingType": "pviBase.Controllers.HubContractController",
     "Method": "CreateContract",
+    "RelativePath": "api/v1/HubContract/CreateContract",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "allAttachments",
+        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "pviBase.Dtos.ApiResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 202
+      },
+      {
+        "Type": "pviBase.Dtos.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 400
+      },
+      {
+        "Type": "pviBase.Dtos.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 401
+      },
+      {
+        "Type": "pviBase.Dtos.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 403
+      },
+      {
+        "Type": "pviBase.Dtos.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 429
+      },
+      {
+        "Type": "pviBase.Dtos.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 500
+      }
+    ]
+  },
+  {
+    "ContainingType": "pviBase.Controllers.HubContractController",
+    "Method": "DownloadAttachment",
+    "RelativePath": "api/v1/HubContract/download-attachment/{loanNo}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loanNo",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "pviBase.Controllers.HubContractController",
+    "Method": "CreateContract",
     "RelativePath": "api/v1/HubContract/MAFC_SKNVV_CreateContract",
     "HttpMethod": "POST",
     "IsController": true,
@@ -71,8 +163,13 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "pviBase.Dtos.CreateContractRequestDto",
-        "IsRequired": true
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "allAttachments",
+        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -141,9 +238,19 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "request",
-        "Type": "pviBase.Dtos.GetContractByLoanNoRequestDto",
-        "IsRequired": true
+        "Name": "AccessKey",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ProductCode",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "LoanNo",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -237,5 +344,21 @@
         "StatusCode": 500
       }
     ]
+  },
+  {
+    "ContainingType": "pviBase.Controllers.HubContractController",
+    "Method": "TestUpload",
+    "RelativePath": "api/v1/HubContract/test-upload",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "allAttachments",
+        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

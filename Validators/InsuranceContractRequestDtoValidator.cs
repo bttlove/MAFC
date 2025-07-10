@@ -24,12 +24,13 @@ namespace pviBase.Validators
                 }).WithMessage("Số hợp đồng tín dụng đã tồn tại.");
             RuleFor(x => x.LoanNo).NotEmpty().WithMessage("Số hợp đồng tín dụng là bắt buộc.");
             RuleFor(x => x.LoanType).NotEmpty().WithMessage("Loại hình vay là bắt buộc.");
-            RuleFor(x => x.LoanDate).NotEmpty().WithMessage("Ngày ký hợp đồng tín dụng là bắt buộc.")
-                                    .Must(BeAValidDate).WithMessage("Ngày ký hợp đồng tín dụng không hợp lệ (dd/MM/yyyy).");
+            RuleFor(x => x.LoanDate)
+    .NotEmpty().WithMessage("Ngày ký hợp đồng tín dụng là bắt buộc.");
+
             RuleFor(x => x.CustName).NotEmpty().WithMessage("Họ tên khách hàng là bắt buộc.");
-            RuleFor(x => x.CustBirthday).NotEmpty().WithMessage("Ngày sinh khách hàng là bắt buộc.")
-                                         .Must(BeAValidDate).WithMessage("Ngày sinh khách hàng không hợp lệ (dd/MM/yyyy).")
-                                         .Must(BeWithinAgeRange).WithMessage("Tuổi khách hàng phải nằm trong khoảng 18 -> 70.");
+            RuleFor(x => x.CustBirthday)
+    .NotEmpty().WithMessage("Ngày sinh khách hàng là bắt buộc.")
+    .Must(BeWithinAgeRange).WithMessage("Tuổi khách hàng phải nằm trong khoảng 18 -> 70.");
             RuleFor(x => x.CustGender).NotEmpty().WithMessage("Giới tính khách hàng là bắt buộc.")
                                       .Must(x => x == "M" || x == "F").WithMessage("Giới tính khách hàng chỉ có thể là 'M' hoặc 'F'.");
             RuleFor(x => x.CustIdNo).NotEmpty().WithMessage("Số CMND/CCNN/Passport khách hàng là bắt buộc.");
@@ -43,8 +44,8 @@ namespace pviBase.Validators
                                     .LessThanOrEqualTo(48).WithMessage("Thời hạn vay phải nhỏ hơn hoặc bằng 48.");
             RuleFor(x => x.InsRate).NotNull().WithMessage("Tỷ lệ phí bảo hiểm là bắt buộc.")
                                    .Must(BeAValidInsRate).WithMessage("Tỷ lệ phí bảo hiểm không hợp lệ.");
-            RuleFor(x => x.DisbursementDate).NotEmpty().WithMessage("Ngày giải ngân là bắt buộc.")
-                                            .Must(BeAValidDate).WithMessage("Ngày giải ngân không hợp lệ (dd/MM/yyyy).");
+            RuleFor(x => x.DisbursementDate)
+    .NotEmpty().WithMessage("Ngày giải ngân là bắt buộc.");
         }
 
         private bool BeAValidDate(string dateString)
@@ -52,19 +53,14 @@ namespace pviBase.Validators
             return DateTime.TryParseExact(dateString, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out _);
         }
 
-        private bool BeWithinAgeRange(string custBirthdayString)
+        private bool BeWithinAgeRange(DateTime custBirthday)
         {
-            if (!DateTime.TryParseExact(custBirthdayString, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out DateTime custBirthday))
-            {
-                return false;
-            }
-
             var today = DateTime.Today;
             var age = today.Year - custBirthday.Year;
             if (custBirthday.Date > today.AddYears(-age)) age--;
-
             return age >= 18 && age <= 70;
         }
+
 
         private bool BeAValidInsRate(double insRate)
         {

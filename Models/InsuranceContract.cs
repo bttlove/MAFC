@@ -57,5 +57,9 @@ namespace pviBase.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
+
+        public byte[]? AttachmentData { get; set; }
+        public string? AttachmentFileName { get; set; }
+        public string? AttachmentContentType { get; set; }
     }
 }

@@ -1,62 +1,58 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace pviBase.Dtos
 {
     public class InsuranceContractRequestDto
     {
-        [Required]
         [JsonProperty("loanNo")]
-        public required string LoanNo { get; set; } // Đã sửa
+        public string? LoanNo { get; set; }
 
-        [Required]
         [JsonProperty("loanType")]
-        public required string LoanType { get; set; } // Đã sửa
+        public string? LoanType { get; set; }
 
-        [Required]
         [JsonProperty("loanDate")]
-        public required string LoanDate { get; set; } // Đã sửa
+        public DateTime LoanDate { get; set; }
 
-        [Required]
         [JsonProperty("custName")]
-        public required string CustName { get; set; } // Đã sửa
+        public string? CustName { get; set; }
 
-        [Required]
         [JsonProperty("custBirthday")]
-        public required string CustBirthday { get; set; } // Đã sửa
+        public DateTime CustBirthday { get; set; }
 
-        [Required]
         [JsonProperty("custGender")]
-        public required string CustGender { get; set; } // Đã sửa
+        public string? CustGender { get; set; }
 
-        [Required]
         [JsonProperty("custIdNo")]
-        public required string CustIdNo { get; set; } // Đã sửa
+        public string? CustIdNo { get; set; }
 
         [JsonProperty("custAddress")]
-        public string? CustAddress { get; set; } // Giữ nguyên nullable
+        public string? CustAddress { get; set; }
 
-        [Required]
         [JsonProperty("custPhone")]
-        public required string CustPhone { get; set; } // Đã sửa
+        public string? CustPhone { get; set; }
 
         [JsonProperty("custEmail")]
-        public string? CustEmail { get; set; } // Giữ nguyên nullable
+        public string? CustEmail { get; set; }
 
-        [Required]
         [JsonProperty("loanAmount")]
-        public required long LoanAmount { get; set; } // Đã sửa
+        public decimal LoanAmount { get; set; }
 
-        [Required]
         [JsonProperty("loanTerm")]
-        public required int LoanTerm { get; set; } // Đã sửa
+        public int LoanTerm { get; set; }
 
-        [Required]
         [JsonProperty("insRate")]
-        public required double InsRate { get; set; } // Đã sửa
+        public double InsRate { get; set; }
 
-        [Required]
         [JsonProperty("disbursementDate")]
-        public required string DisbursementDate { get; set; } // Đã sửa
+        public DateTime DisbursementDate { get; set; }
+
+        // ✅ File name dùng để map file trong danh sách allAttachments
+        [JsonProperty("attachmentFileName")]
+        public string? AttachmentFileName { get; set; }
+
+        // Thêm để lưu dữ liệu file upload
+        public byte[]? AttachmentData { get; set; }
+        public string? AttachmentContentType { get; set; }
     }
 }

@@ -21,15 +21,36 @@ namespace pviBase.Middlewares
         public async Task InvokeAsync(HttpContext context)
         {
             var originalBodyStream = context.Response.Body;
-
             using (var responseBody = new MemoryStream())
             {
                 context.Response.Body = responseBody;
 
                 await _next(context);
 
+                // Kiểm tra nếu là file download (content-type là file/binary) thì không wrap
+                var contentType = context.Response.ContentType;
                 responseBody.Seek(0, SeekOrigin.Begin);
-                var responseText = await new StreamReader(responseBody).ReadToEndAsync();
+                var responseBytes = responseBody.ToArray();
+                var responseText = string.Empty;
+                if (responseBytes.Length > 0)
+                {
+                    responseText = Encoding.UTF8.GetString(responseBytes);
+                }
+
+                // Nếu là file download (octet-stream, pdf, image, zip, v.v.) thì không wrap
+                if (!string.IsNullOrEmpty(contentType) &&
+                    (contentType.StartsWith("application/octet-stream") ||
+                     contentType.StartsWith("application/pdf") ||
+                     contentType.StartsWith("image/") ||
+                     contentType.StartsWith("application/zip") ||
+                     contentType.StartsWith("application/vnd")))
+                {
+                    context.Response.Body = originalBodyStream;
+                    context.Response.ContentLength = responseBytes.Length;
+                    // Đảm bảo ghi đúng stream, không bị lỗi khi file lớn
+                    await originalBodyStream.WriteAsync(responseBytes, 0, responseBytes.Length);
+                    return;
+                }
 
                 if (context.Response.StatusCode >= 200 && context.Response.StatusCode < 300)
                 {
@@ -59,7 +80,7 @@ namespace pviBase.Middlewares
                         JsonElement dataElement;
                         if (string.IsNullOrEmpty(responseText))
                         {
-                            dataElement = JsonDocument.Parse("{}").RootElement;
+                            dataElement = JsonDocument.Parse("{}" ).RootElement;
                         }
                         else
                         {
@@ -94,6 +115,7 @@ namespace pviBase.Middlewares
                     await originalBodyStream.WriteAsync(Encoding.UTF8.GetBytes(responseText));
                 }
             }
+            }
         }
     }
 
@@ -101,7 +123,7 @@ namespace pviBase.Middlewares
     {
         public static IApplicationBuilder UseResponseWrappingMiddleware(this IApplicationBuilder builder)
         {
-            return builder.UseMiddleware<ResponseWrappingMiddleware>();
+            // Đảm bảo using Microsoft.AspNetCore.Builder;
+            return builder.UseMiddleware<pviBase.Middlewares.ResponseWrappingMiddleware>();
         }
     }
-}

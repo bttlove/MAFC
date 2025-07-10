@@ -212,10 +212,10 @@ C:\Users\ADMIN\source\repos\pviBase\obj\Debug\net8.0\staticwebassets\msbuild.bui
 C:\Users\ADMIN\source\repos\pviBase\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.pviBase.props
 C:\Users\ADMIN\source\repos\pviBase\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.pviBase.props
 C:\Users\ADMIN\source\repos\pviBase\obj\Debug\net8.0\staticwebassets.pack.json
-C:\Users\ADMIN\source\repos\pviBase\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\ADMIN\source\repos\pviBase\obj\Debug\net8.0\pviBase.csproj.Up2Date
 C:\Users\ADMIN\source\repos\pviBase\obj\Debug\net8.0\pviBase.dll
 C:\Users\ADMIN\source\repos\pviBase\obj\Debug\net8.0\refint\pviBase.dll
 C:\Users\ADMIN\source\repos\pviBase\obj\Debug\net8.0\pviBase.pdb
 C:\Users\ADMIN\source\repos\pviBase\obj\Debug\net8.0\pviBase.genruntimeconfig.cache
 C:\Users\ADMIN\source\repos\pviBase\obj\Debug\net8.0\ref\pviBase.dll
+C:\Users\ADMIN\source\repos\pviBase\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

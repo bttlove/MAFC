@@ -14,9 +14,10 @@ namespace pviBase.Configurations
         {
             // Mapping từ Request DTO sang Model (đã có)
             CreateMap<InsuranceContractRequestDto, InsuranceContract>()
-                .ForMember(dest => dest.LoanDate, opt => opt.MapFrom(src => DateTime.ParseExact(src.LoanDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
-                .ForMember(dest => dest.CustBirthday, opt => opt.MapFrom(src => DateTime.ParseExact(src.CustBirthday, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
-                .ForMember(dest => dest.DisbursementDate, opt => opt.MapFrom(src => DateTime.ParseExact(src.DisbursementDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)));
+       .ForMember(dest => dest.LoanDate, opt => opt.MapFrom(src => src.LoanDate))
+       .ForMember(dest => dest.CustBirthday, opt => opt.MapFrom(src => src.CustBirthday))
+       .ForMember(dest => dest.DisbursementDate, opt => opt.MapFrom(src => src.DisbursementDate));
+
 
             // Mapping từ Model sang Response Data DTO mới
             CreateMap<InsuranceContract, GetContractByLoanNoResponseDataDto>()

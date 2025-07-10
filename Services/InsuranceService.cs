@@ -13,7 +13,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using System.Linq;
-using Hangfire; // Cần cho BackgroundJob.Enqueue
+using Hangfire;
+using Microsoft.AspNetCore.Http;
 
 namespace pviBase.Services
 {
@@ -23,16 +24,17 @@ namespace pviBase.Services
         private readonly IMapper _mapper;
         private readonly IDistributedCache _cache;
         private readonly ILogger<InsuranceService> _logger;
-        private readonly IValidator<InsuranceContractRequestDto> _contractValidator; // Đổi tên để rõ ràng hơn
-        private readonly IValidator<CreateContractRequestDto> _createContractValidator; // Validator cho request tổng thể
+        private readonly IValidator<InsuranceContractRequestDto> _contractValidator;
+        private readonly IValidator<CreateContractRequestDto> _createContractValidator;
         private readonly IValidator<GetContractByLoanNoRequestDto> _getContractValidator;
+
         public InsuranceService(
             ApplicationDbContext context,
             IMapper mapper,
             IDistributedCache cache,
             ILogger<InsuranceService> logger,
-            IValidator<InsuranceContractRequestDto> contractValidator, // Tiêm validator cụ thể
-            IValidator<CreateContractRequestDto> createContractValidator, // Tiêm validator tổng thể
+            IValidator<InsuranceContractRequestDto> contractValidator,
+            IValidator<CreateContractRequestDto> createContractValidator,
             IValidator<GetContractByLoanNoRequestDto> getContractValidator)
         {
             _context = context;
@@ -44,10 +46,8 @@ namespace pviBase.Services
             _getContractValidator = getContractValidator;
         }
 
-        // Phương thức được Controller gọi để khởi tạo và đưa job vào hàng đợi
         public async Task<string> EnqueueCreateInsuranceContractsJob(CreateContractRequestDto request)
         {
-            // Validate request tổng thể trước khi đưa vào hàng đợi
             var validationResult = await _createContractValidator.ValidateAsync(request);
             if (!validationResult.IsValid)
             {
@@ -57,96 +57,105 @@ namespace pviBase.Services
                     errors[errorGroup.Key] = errorGroup.Select(e => e.ErrorMessage).ToArray();
                 }
                 throw new pviBase.Helpers.ValidationException(errors);
+
             }
 
-            // Tạo một RequestId duy nhất cho job này
             string requestId = Guid.NewGuid().ToString();
 
-            // Ghi log yêu cầu ban đầu vào bảng RequestLogs với trạng thái Pending
             var requestLog = new RequestLog
             {
                 RequestId = requestId,
                 Status = RequestStatus.Pending,
                 CreatedAt = DateTime.UtcNow,
-                RequestData = JsonSerializer.Serialize(request) // Lưu trữ dữ liệu request gốc
+                RequestData = JsonSerializer.Serialize(request)
             };
             _context.RequestLogs.Add(requestLog);
             await _context.SaveChangesAsync();
 
-            // Đẩy job vào Hangfire để xử lý bất đồng bộ
             BackgroundJob.Enqueue(() => ProcessCreateInsuranceContractsJob(requestId, request));
 
             _logger.LogInformation($"Enqueued job for RequestId: {requestId}");
-            return requestId; // Trả về RequestId cho client để theo dõi
+            return requestId;
         }
 
-        // Phương thức này được Hangfire gọi để xử lý job thực tế
-        [AutomaticRetry(Attempts = 3)] // Thử lại 3 lần nếu job thất bại
-        [DisableConcurrentExecution(timeoutInSeconds: 10 * 60)] // Ngăn chặn nhiều instance của cùng một job chạy đồng thời
+        [AutomaticRetry(Attempts = 3)]
+        [DisableConcurrentExecution(timeoutInSeconds: 600)]
         public async Task ProcessCreateInsuranceContractsJob(string requestId, CreateContractRequestDto request)
         {
-            // Lấy RequestLog để cập nhật trạng thái
             var requestLog = await _context.RequestLogs.FirstOrDefaultAsync(r => r.RequestId == requestId);
             if (requestLog == null)
             {
                 _logger.LogError($"RequestLog with RequestId {requestId} not found for processing.");
-                return; // Không tìm thấy log, không thể xử lý
+                return;
             }
 
             try
             {
-                // Cập nhật trạng thái thành Processing
                 requestLog.Status = RequestStatus.Processing;
                 requestLog.LastUpdatedAt = DateTime.UtcNow;
                 await _context.SaveChangesAsync();
                 _logger.LogInformation($"Processing job for RequestId: {requestId}");
 
-                // Logic xử lý chính (tạo hợp đồng)
-                var createdContracts = new List<InsuranceContract>();
-                foreach (var dto in request.Data)
+                _logger.LogInformation($"Tổng số file upload: {(request.AllAttachments == null ? 0 : request.AllAttachments.Count)}");
+                if (request.AllAttachments != null)
                 {
-                    // Validation từng hợp đồng con (nếu cần, đã có trong CreateContractRequestDtoValidator)
+                    foreach (var f in request.AllAttachments)
+                    {
+                        _logger.LogInformation($"Tên file upload: {f.FileName}");
+                    }
+                }
+
+                for (int i = 0; i < request.Data.Count; i++)
+                {
+                    var dto = request.Data[i];
+                    _logger.LogInformation($"Đang xử lý LoanNo: {dto.LoanNo}, attachmentFileName: {dto.AttachmentFileName}");
+
                     var validationResult = await _contractValidator.ValidateAsync(dto);
                     if (!validationResult.IsValid)
                     {
-                        var errors = new Dictionary<string, string[]>();
-                        foreach (var errorGroup in validationResult.Errors.GroupBy(e => e.PropertyName))
-                        {
-                            errors[errorGroup.Key] = errorGroup.Select(e => e.ErrorMessage).ToArray();
-                        }
-                        throw new pviBase.Helpers.ValidationException(errors); // Ném lỗi để bắt ở catch
+                        var errors = validationResult.Errors
+                            .GroupBy(e => e.PropertyName)
+                            .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+                        throw new pviBase.Helpers.ValidationException(errors);
                     }
 
                     var contract = _mapper.Map<InsuranceContract>(dto);
                     contract.CreatedAt = DateTime.UtcNow;
 
-                    _context.InsuranceContracts.Add(contract);
-                    createdContracts.Add(contract);
+                    if (dto.AttachmentData != null && !string.IsNullOrEmpty(dto.AttachmentFileName))
+                    {
+                        contract.AttachmentData = dto.AttachmentData;
+                        contract.AttachmentFileName = dto.AttachmentFileName;
+                        contract.AttachmentContentType = dto.AttachmentContentType;
+                        _logger.LogInformation($"Stored file '{dto.AttachmentFileName}' for LoanNo: {dto.LoanNo}");
+                    }
+                    else
+                    {
+                        _logger.LogInformation($"No file matched for LoanNo: {dto.LoanNo}");
+                    }
 
-                    // Vô hiệu hóa cache cho hợp đồng cụ thể này nếu nó tồn tại
+                    _context.InsuranceContracts.Add(contract);
+
                     var cacheKey = $"InsuranceContract:{contract.LoanNo}";
                     await _cache.RemoveAsync(cacheKey);
-                    _logger.LogInformation($"Removed cache key: {cacheKey}");
                 }
 
-                await _context.SaveChangesAsync(); // Lưu các hợp đồng vào DB
+                await _context.SaveChangesAsync();
 
-                // Cập nhật trạng thái thành Completed
                 requestLog.Status = RequestStatus.Completed;
                 requestLog.LastUpdatedAt = DateTime.UtcNow;
-                requestLog.ErrorMessage = null; // Xóa lỗi nếu có
+                requestLog.ErrorMessage = null;
                 await _context.SaveChangesAsync();
+
                 _logger.LogInformation($"Job for RequestId: {requestId} completed successfully.");
             }
             catch (Exception ex)
             {
-                // Cập nhật trạng thái thành Failed nếu có lỗi
                 requestLog.Status = RequestStatus.Failed;
                 requestLog.LastUpdatedAt = DateTime.UtcNow;
-                requestLog.ErrorMessage = ex.Message; // Lưu thông báo lỗi
+                requestLog.ErrorMessage = ex.Message;
                 await _context.SaveChangesAsync();
                 _logger.LogError(ex, $"Job for RequestId: {requestId} failed.");
-                // Ném lại ngoại lệ để Hangfire ghi nhận thất bại và thử lại (nếu có AutomaticRetry)
                 throw;
             }
         }
@@ -154,12 +163,12 @@ namespace pviBase.Services
         public async Task<InsuranceContract?> GetContractByLoanNo(string loanNo)
         {
             var cacheKey = $"InsuranceContract:{loanNo}";
-            string? cachedContractJson = await _cache.GetStringAsync(cacheKey);
+            var cachedJson = await _cache.GetStringAsync(cacheKey);
 
-            if (!string.IsNullOrEmpty(cachedContractJson))
+            if (!string.IsNullOrEmpty(cachedJson))
             {
                 _logger.LogInformation($"Cache hit for LoanNo: {loanNo}");
-                return JsonSerializer.Deserialize<InsuranceContract>(cachedContractJson);
+                return JsonSerializer.Deserialize<InsuranceContract>(cachedJson);
             }
 
             _logger.LogInformation($"Cache miss for LoanNo: {loanNo}, fetching from DB.");
@@ -183,11 +192,9 @@ namespace pviBase.Services
             {
                 return null;
             }
-            var detailedDto = _mapper.Map<GetContractByLoanNoResponseDataDto>(contract);
-            return detailedDto;
+            return _mapper.Map<GetContractByLoanNoResponseDataDto>(contract);
         }
 
-        // THÊM PHƯƠNG THỨC NÀY: Lấy trạng thái của yêu cầu
         public async Task<RequestLog?> GetRequestLogById(string requestId)
         {
             return await _context.RequestLogs.FirstOrDefaultAsync(r => r.RequestId == requestId);
