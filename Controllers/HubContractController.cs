@@ -1,5 +1,4 @@
-﻿// Controllers/HubContractController.cs
-using pviBase.Dtos;
+﻿using pviBase.Dtos;
 using pviBase.Models;
 using pviBase.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -8,17 +7,18 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Threading.RateLimiting;
 using pviBase.Helpers;
-using FluentValidation; // Thêm using này để dùng IValidator
+using FluentValidation;
 using System.Linq;
 using Newtonsoft.Json;
 using System.Globalization;
+using Microsoft.AspNetCore.Http;
+using pviBase.Data; 
 
 namespace pviBase.Controllers
 {
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("1.0")]
-    // [EnableRateLimiting("fixed")]
     public class HubContractController : ControllerBase
     {
         private readonly IInsuranceService _insuranceService;
@@ -26,21 +26,24 @@ namespace pviBase.Controllers
         private readonly IValidator<CreateContractRequestDto> _createValidator;
         private readonly IValidator<GetContractByLoanNoRequestDto> _getByLoanNoValidator;
         private readonly PviApiForwardService _pviApiForwardService;
+        private readonly ApplicationDbContext _dbContext; // ✅ THÊM ApplicationDbContext
 
         public HubContractController(
             IInsuranceService insuranceService,
             ILogger<HubContractController> logger,
             IValidator<CreateContractRequestDto> createValidator,
             IValidator<GetContractByLoanNoRequestDto> getByLoanNoValidator,
-            PviApiForwardService pviApiForwardService)
+            PviApiForwardService pviApiForwardService,
+            ApplicationDbContext dbContext // ✅ Inject thêm vào constructor
+        )
         {
             _insuranceService = insuranceService;
             _logger = logger;
             _createValidator = createValidator;
             _getByLoanNoValidator = getByLoanNoValidator;
             _pviApiForwardService = pviApiForwardService;
+            _dbContext = dbContext; // ✅ Gán lại vào field
         }
-
         /// <summary>
         /// Forward request và file base64 sang API PVI thật (test demo)
         /// </summary>
@@ -118,61 +121,47 @@ namespace pviBase.Controllers
         [HttpPost("CreateContract")]
         public async Task<IActionResult> CreateContract([FromForm] CreateContractFormDto form)
         {
-            // --- LOGIC Y CHANG POSTMAN, TÊN BIẾN, FIELD, SIGNATURE ---
             var headers = Request.Headers.ToDictionary(h => h.Key, h => h.Value.ToString());
             var contentType = Request.ContentType;
             var modelStateValid = ModelState.IsValid;
-            var modelStateErrors = ModelState
-                .Where(x => x.Value?.Errors != null && x.Value.Errors.Count > 0)
-                .Select(x => new
-                {
-                    x.Key,
-                    Errors = x.Value?.Errors?.Select(e => e.ErrorMessage) ?? new List<string>()
-                });
-
             _logger.LogInformation($"[CreateContract] Content-Type: {contentType}");
             _logger.LogInformation($"[CreateContract] Headers: {JsonConvert.SerializeObject(headers)}");
             _logger.LogInformation($"[CreateContract] ModelState.IsValid: {modelStateValid}");
+
             if (!modelStateValid)
             {
+                var modelStateErrors = ModelState
+                    .Where(x => x.Value?.Errors != null && x.Value.Errors.Count > 0)
+                    .Select(x => new
+                    {
+                        x.Key,
+                        Errors = x.Value?.Errors?.Select(e => e.ErrorMessage) ?? new List<string>()
+                    });
+
                 _logger.LogWarning($"[CreateContract] ModelState errors: {JsonConvert.SerializeObject(modelStateErrors)}");
+                return BadRequest(new ApiResponse(false, "INVALID_MODELSTATE", "Dữ liệu không hợp lệ", modelStateErrors));
             }
 
-            // Parse JSON từ trường request
+            // Parse JSON
             var requestJson = form.RequestJson;
             dynamic? req = JsonConvert.DeserializeObject(requestJson);
-            if (req == null)
+            if (req == null || req.data == null || req.data.Count == 0)
             {
                 return BadRequest(new ApiResponse(false, "INVALID_JSON", "Không thể phân tích request JSON"));
             }
 
+            var d = req.data[0];
 
-            // Map fields y chang Postman, đúng tên biến, đúng thứ tự, tính toán động
-            var d = req.data?[0];
+            // ---- Tạo object để forward ----
             string CpId = "15e1c1cf1c2a4ae8a5f0e5c8c10bf3a6";
             string StartTime = "00:00";
             string EndTime = "23:59";
-            string nguoi_thuhuong = (string)(d?.custName ?? "");
-            string dia_chi_th = (string)(d?.custAddress ?? "");
-            string quyen_loibh = (string)(d?.quyen_loibh ?? "Tai nạn cá nhân");
-            bool dtbh_tg_cho_01 = d?.dtbh_tg_cho_01 != null ? (bool)d.dtbh_tg_cho_01 : true;
-            bool dtbh_tg_cho_02 = d?.dtbh_tg_cho_02 != null ? (bool)d.dtbh_tg_cho_02 : false;
-            bool dtbh_tg_cho_03 = true; // luôn true theo yêu cầu
-            string dien_thoai = (string)(d?.custPhone ?? "");
-            string khach_hang = (string)(d?.custName ?? "");
+            string ngay_batdau = (string)(d?.disbursementDate ?? "01/01/2026");
+            string ma_gdich_doitac = (string)(d?.loanNo ?? "");
             long sotien_bh = d?.loanAmount != null ? (long)d.loanAmount : 0;
             double phi_tyle_phi = d?.insRate != null ? (double)d.insRate : 0;
-            string Email = (string)(d?.custEmail ?? "");
-            string ngay_batdau = (string)(d?.disbursementDate ?? "01/01/2026");
-            string dia_chi = (string)(d?.custAddress ?? "");
-            string ma_gdich_doitac = (string)(d?.loanNo ?? "");
-            string ma_sp = "010402";
-            string ma_chuongtrinh = "CT01";
-            string sohopdong_tindung = (string)(d?.loanNo ?? "");
-            string ngayhopdong_tindung = (string)(d?.loanDate ?? "01/01/2025");
-            double laisuat_chovay = d?.insRate != null ? (double)d.insRate : 0;
 
-            // Tính thoihan_bh: nếu có d.thoihan_bh thì lấy, nếu không thì lấy ngày_batdau + số tháng (loanTerm)
+            // Tính hạn bảo hiểm
             string thoihan_bh = "";
             if (!string.IsNullOrEmpty((string)(d?.thoihan_bh ?? "")))
             {
@@ -180,7 +169,6 @@ namespace pviBase.Controllers
             }
             else if (d?.loanTerm != null && !string.IsNullOrEmpty(ngay_batdau))
             {
-                // loanTerm là số tháng, ngày_batdau dạng dd/MM/yyyy
                 int months = 0;
                 int.TryParse(d.loanTerm.ToString(), out months);
                 DateTime dtStart;
@@ -190,12 +178,7 @@ namespace pviBase.Controllers
                     thoihan_bh = dtEnd.ToString("dd/MM/yyyy");
                 }
             }
-            else
-            {
-                thoihan_bh = "";
-            }
 
-            // Tính tong_phi_bh = sotien_bh * phi_tyle_phi, luôn là kiểu số (double hoặc long)
             double tong_phi_bh = 0;
             if (d?.loanAmount != null && d?.insRate != null)
             {
@@ -215,61 +198,41 @@ namespace pviBase.Controllers
                 tong_phi_bh = sotien_bh * rate;
             }
 
-            // Danh sách đính kèm
-            var NguoiDinhKem = new List<dynamic>
-            {
-                new {
-                    ho_ten = (string)(d?.custName ?? ""),
-                    gioi_tinh = (string)(d?.custGender ?? ""),
-                    ngay_sinh = (string)(d?.custBirthday ?? ""),
-                    dia_chi = (string)(d?.custAddress ?? ""),
-                    dien_thoai = (string)(d?.custPhone ?? ""),
-                    cmt_hc = (string)(d?.custIdNo ?? "")
-                }
-            };
-
-            // FileAttach
+            // File đính kèm
             var FileAttach = new List<dynamic>();
+            byte[]? fileBytes = null;
+            string? fileName = null;
+            string? contentTypeFile = null;
+
             if (form.AllAttachments != null && form.AllAttachments.Count > 0)
             {
                 var file = form.AllAttachments[0];
-                using (var ms = new System.IO.MemoryStream())
+                using (var ms = new MemoryStream())
                 {
                     await file.CopyToAsync(ms);
-                    var fileBytes = ms.ToArray();
-                    var fileAttach = pviBase.Services.PviApiForwardService.BuildFileAttach(file.FileName, fileBytes, System.IO.Path.GetExtension(file.FileName), "GYC");
+                    fileBytes = ms.ToArray();
+                    fileName = file.FileName;
+                    contentTypeFile = file.ContentType;
+
+                    var fileAttach = pviBase.Services.PviApiForwardService.BuildFileAttach(file.FileName, fileBytes, Path.GetExtension(file.FileName), "GYC");
                     FileAttach.Add(fileAttach);
                 }
             }
 
-            // Tính toán Sign: loại bỏ hoàn toàn field nào rỗng, null, hoặc 0 khỏi chuỗi hash (y chang Postman)
+            // Tính Sign
             string keycp = "1ab8972c95fe4e3e8bec7fe83a4cdaab";
-
             var signFields = new List<(string name, object value)>
-{
-    ("ngay_batdau", ngay_batdau),
-    ("thoihan_bh", thoihan_bh),
-    ("ma_gdich_doitac", ma_gdich_doitac),
-    ("sotien_bh", sotien_bh),
-    ("tong_phi_bh", tong_phi_bh),
-    ("StartTime", StartTime),
-    ("EndTime", EndTime)
-};
+    {
+        ("ngay_batdau", ngay_batdau),
+        ("thoihan_bh", thoihan_bh),
+        ("ma_gdich_doitac", ma_gdich_doitac),
+        ("sotien_bh", sotien_bh),
+        ("tong_phi_bh", tong_phi_bh),
+        ("StartTime", StartTime),
+        ("EndTime", EndTime)
+    };
 
-            // Bắt đầu build chuỗi
             string signString = keycp;
-
-            // Log từng field để kiểm tra
-            _logger.LogInformation($"[CreateContract] keycp: '{keycp}' (length: {keycp.Length})");
-            _logger.LogInformation($"[CreateContract] ngay_batdau: '{ngay_batdau}' (length: {ngay_batdau?.Length ?? 0})");
-            _logger.LogInformation($"[CreateContract] thoihan_bh: '{thoihan_bh}' (length: {thoihan_bh?.Length ?? 0})");
-            _logger.LogInformation($"[CreateContract] ma_gdich_doitac: '{ma_gdich_doitac}' (length: {ma_gdich_doitac?.Length ?? 0})");
-            _logger.LogInformation($"[CreateContract] sotien_bh: '{sotien_bh}' (length: {sotien_bh.ToString().Length})");
-            _logger.LogInformation($"[CreateContract] tong_phi_bh: '{tong_phi_bh}' (length: {tong_phi_bh.ToString().Length})");
-            _logger.LogInformation($"[CreateContract] StartTime: '{StartTime}' (length: {StartTime?.Length ?? 0})");
-            _logger.LogInformation($"[CreateContract] EndTime: '{EndTime}' (length: {EndTime?.Length ?? 0})");
-
-            // Duyệt field để build signString
             foreach (var f in signFields)
             {
                 if (f.value == null) continue;
@@ -291,7 +254,6 @@ namespace pviBase.Controllers
                     case double dVal:
                         if (dVal != 0)
                         {
-                            // Nếu là số nguyên (như 550000000.0), thì ép về long để loại bỏ phần ".0"
                             if (dVal % 1 == 0)
                                 signString += ((long)dVal).ToString();
                             else
@@ -307,62 +269,97 @@ namespace pviBase.Controllers
                 }
             }
 
-            // Final log
-            _logger.LogInformation($"[CreateContract] Final signString for MD5: '{signString}'");
-            _logger.LogInformation($"[CreateContract] Length of signString: {signString.Length}");
-
-            // Tính MD5
             string Sign = pviBase.Helpers.Md5Helper.TinhMD5(signString).ToLower();
-            _logger.LogInformation($"[CreateContract] Final MD5 Sign: {Sign}");
 
-            // Build object đúng tên biến, đúng thứ tự
+            // Build body gửi PVI
             var pviBody = new
             {
                 CpId,
                 StartTime,
                 EndTime,
-                nguoi_thuhuong,
-                dia_chi_th,
-                quyen_loibh,
-                dtbh_tg_cho_01,
-                dtbh_tg_cho_02,
-                dtbh_tg_cho_03,
-                dien_thoai,
-                khach_hang,
+                nguoi_thuhuong = (string)(d?.custName ?? ""),
+                dia_chi_th = (string)(d?.custAddress ?? ""),
+                quyen_loibh = (string)(d?.quyen_loibh ?? "Tai nạn cá nhân"),
+                dtbh_tg_cho_01 = d?.dtbh_tg_cho_01 != null ? (bool)d.dtbh_tg_cho_01 : true,
+                dtbh_tg_cho_02 = d?.dtbh_tg_cho_02 != null ? (bool)d.dtbh_tg_cho_02 : false,
+                dtbh_tg_cho_03 = true,
+                dien_thoai = (string)(d?.custPhone ?? ""),
+                khach_hang = (string)(d?.custName ?? ""),
                 sotien_bh = sotien_bh != 0 ? (object)sotien_bh : 0,
                 thoihan_bh,
                 phi_tyle_phi,
                 tong_phi_bh,
-                Email,
+                Email = (string)(d?.custEmail ?? ""),
                 ngay_batdau,
-                dia_chi,
+                dia_chi = (string)(d?.custAddress ?? ""),
                 ma_gdich_doitac,
-                ma_sp,
-                ma_chuongtrinh,
-                NguoiDinhKem,
-                sohopdong_tindung,
-                ngayhopdong_tindung,
-                laisuat_chovay,
+                ma_sp = "010402",
+                ma_chuongtrinh = "CT01",
+                NguoiDinhKem = new[]
+                {
+            new {
+                ho_ten = (string)(d?.custName ?? ""),
+                gioi_tinh = (string)(d?.custGender ?? ""),
+                ngay_sinh = (string)(d?.custBirthday ?? ""),
+                dia_chi = (string)(d?.custAddress ?? ""),
+                dien_thoai = (string)(d?.custPhone ?? ""),
+                cmt_hc = (string)(d?.custIdNo ?? "")
+            }
+        },
+                sohopdong_tindung = (string)(d?.loanNo ?? ""),
+                ngayhopdong_tindung = (string)(d?.loanDate ?? "01/01/2025"),
+                laisuat_chovay = phi_tyle_phi,
                 FileAttach,
                 Sign
             };
 
-            var jsonToSend = JsonConvert.SerializeObject(pviBody);
+            string jsonToSend = JsonConvert.SerializeObject(pviBody);
             _logger.LogInformation($"[CreateContract] JSON gửi đi: {jsonToSend}");
-            // Log riêng trường Sign trong JSON gửi đi
-            try
-            {
-                var signInJson = Newtonsoft.Json.Linq.JObject.Parse(jsonToSend)["Sign"]?.ToString();
-                _logger.LogInformation($"[CreateContract] Sign trong JSON gửi đi: {signInJson}");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning($"[CreateContract] Không thể log Sign trong JSON gửi đi: {ex.Message}");
-            }
-            var response = await _pviApiForwardService.ForwardRawRequestToPviApi(jsonToSend, form.AllAttachments != null && form.AllAttachments.Count > 0 ? form.AllAttachments[0] : null);
+            _logger.LogInformation($"[CreateContract] Sign trong JSON gửi đi: {Sign}");
+
+            // --- Gửi về PVI ---
+            var response = await _pviApiForwardService.ForwardRawRequestToPviApi(jsonToSend, form.AllAttachments?.FirstOrDefault());
             _logger.LogInformation($"[CreateContract] Forwarded to PVI, response: {response}");
+
+            // --- Lưu xuống DB ---
+            var contract = new InsuranceContract
+            {
+                LoanNo = (string)(d.loanNo ?? ""),
+                LoanType = (string)(d.loanType ?? "DEFAULT"),
+                LoanDate = ParseDate(d.loanDate, "01/01/2025"),
+                CustName = (string)(d.custName ?? ""),
+                CustBirthday = ParseDate(d.custBirthday, "01/01/2000"),
+                CustGender = (string)(d.custGender ?? "M"),
+                CustIdNo = (string)(d.custIdNo ?? ""),
+                CustAddress = (string)(d.custAddress ?? ""),
+                CustPhone = (string)(d.custPhone ?? ""),
+                CustEmail = (string)(d.custEmail ?? ""),
+                LoanAmount = sotien_bh,
+                LoanTerm = d.loanTerm != null ? (int)d.loanTerm : 0,
+                InsRate = phi_tyle_phi,
+                DisbursementDate = ParseDate(d.disbursementDate, "01/01/2026"),
+                AttachmentData = fileBytes,
+                AttachmentFileName = fileName,
+                AttachmentContentType = contentTypeFile,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            _dbContext.InsuranceContracts.Add(contract);
+            await _dbContext.SaveChangesAsync();
+            _logger.LogInformation($"[CreateContract] Đã lưu DB với ID: {contract.Id}, LoanNo: {contract.LoanNo}");
+
             return Content(response, "application/json");
-            
+        }
+
+        private DateTime ParseDate(dynamic? dateStr, string fallback)
+        {
+            if (dateStr == null) dateStr = fallback;
+            DateTime dt;
+            if (DateTime.TryParseExact((string)dateStr, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out dt))
+            {
+                return dt;
+            }
+            return DateTime.ParseExact(fallback, "dd/MM/yyyy", null);
         }
 
 

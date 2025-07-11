@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("pviBase")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+81cb30900bac6057481bc711abf150760c2878e1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f38dca0f243ec2956ed0aea3144f2e75105c4a7c")]
 [assembly: System.Reflection.AssemblyProductAttribute("pviBase")]
 [assembly: System.Reflection.AssemblyTitleAttribute("pviBase")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
