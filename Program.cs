@@ -119,7 +119,10 @@ builder.Services.AddHangfire(config => config
 builder.Services.AddHangfireServer();
 builder.Services.AddTransient<SampleBackgroundTask>();
 
+
 // Register Services
+builder.Services.AddHttpClient<PviApiForwardService>();
+builder.Services.AddScoped<PviApiForwardService>();
 builder.Services.AddScoped<IInsuranceService, InsuranceService>();
 
 // ✅ Đăng ký Validator thủ công
