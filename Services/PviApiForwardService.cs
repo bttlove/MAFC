@@ -9,26 +9,27 @@ using pviBase.Helpers;
 
 namespace pviBase.Services
 {
-
     public class PviApiForwardService
     {
         private readonly HttpClient _httpClient;
         private readonly string _apiUrl = "http://piastest.pvi.com.vn/API_CP/ManagerApplication/TaoDon_TNCN_ThongThuong";
-        private readonly string _key = "1ab8972c95fe4e3e8bec7fe83a4cdaabnbb";
+        private readonly string _key;
 
         public PviApiForwardService(HttpClient httpClient, Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _key = configuration["PviApi:Key"] ?? "";
+            _key = configuration["PviApi:Key"] ?? "1ab8972c95fe4e3e8bec7fe83a4cdaabnbb";
         }
 
         /// <summary>
         /// Forward trực tiếp request thô (json, file) lên API PVI thật.
         /// </summary>
         /// <param name="json">Chuỗi json (dạng string, đã có đủ các trường, chưa có Sign)</param>
-        /// <param name="file">File đính kèm (có thể null)</param>
+        /// <param name="fileBytes">File đính kèm (có thể null)</param>
+        /// <param name="fileName">Tên file</param>
+        /// <param name="contentType">Content-Type của file</param>
         /// <returns>Response string từ API PVI</returns>
-        public async Task<string> ForwardRawRequestToPviApi(string json, Microsoft.AspNetCore.Http.IFormFile file)
+        public async Task<string> ForwardRawRequestToPviApi(string json, byte[] fileBytes, string fileName, string contentType)
         {
             // Parse json thành object để kiểm tra
             var model = JsonSerializer.Deserialize<Human_ThongThuong_Content>(json);
@@ -52,20 +53,15 @@ namespace pviBase.Services
                 model.NguoiDinhKem = new List<DanhSachDinhKem_ThongThuong>();
 
             // Đảm bảo FileAttach không null nếu không có file
-            if (model.FileAttach == null && file == null)
+            if (model.FileAttach == null && (fileBytes == null || fileBytes.Length == 0))
                 model.FileAttach = new List<File_Attach_Content>();
 
             // Nếu có file thì convert sang base64 và add vào FileAttach
-            if (file != null)
+            if (fileBytes != null && fileBytes.Length > 0 && !string.IsNullOrEmpty(fileName))
             {
-                using (var ms = new System.IO.MemoryStream())
-                {
-                    await file.CopyToAsync(ms);
-                    var fileBytes = ms.ToArray();
-                    var fileAttach = BuildFileAttach(file.FileName, fileBytes, Path.GetExtension(file.FileName), "GYC");
-                    if (model.FileAttach == null) model.FileAttach = new List<File_Attach_Content>();
-                    model.FileAttach.Add(fileAttach);
-                }
+                var fileAttach = BuildFileAttach(fileName, fileBytes, System.IO.Path.GetExtension(fileName), "GYC");
+                if (model.FileAttach == null) model.FileAttach = new List<File_Attach_Content>();
+                model.FileAttach.Add(fileAttach);
             }
 
             var jsonBody = JsonSerializer.Serialize(model);
@@ -76,7 +72,6 @@ namespace pviBase.Services
             Console.WriteLine($"[PVI DEBUG] Response từ PVI: {responseString}");
             return responseString;
         }
-
 
         public async Task<string> TaoDonThongThuongAsync(Human_ThongThuong_Content model)
         {

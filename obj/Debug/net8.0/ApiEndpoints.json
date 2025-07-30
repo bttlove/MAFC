@@ -70,7 +70,87 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "request",
+        "Name": "product_Code",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "accessKey",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ma_chuongtrinh",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "loanNo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "loanType",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "loanDate",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "custName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "custBirthday",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "custGender",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "custIdNo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "custAddress",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "custPhone",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "custEmail",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "loanAmount",
+        "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "loanTerm",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "insRate",
+        "Type": "System.Double",
+        "IsRequired": false
+      },
+      {
+        "Name": "disbursementDate",
         "Type": "System.String",
         "IsRequired": false
       },
@@ -162,7 +242,87 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "request",
+        "Name": "product_Code",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "accessKey",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ma_chuongtrinh",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "loanNo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "loanType",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "loanDate",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "custName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "custBirthday",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "custGender",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "custIdNo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "custAddress",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "custPhone",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "custEmail",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "loanAmount",
+        "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "loanTerm",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "insRate",
+        "Type": "System.Double",
+        "IsRequired": false
+      },
+      {
+        "Name": "disbursementDate",
         "Type": "System.String",
         "IsRequired": false
       },

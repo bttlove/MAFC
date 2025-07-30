@@ -3,12 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|c:\\users\\admin\\source\\repos\\pvibase\\controllers\\hubcontractcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:controllers\\hubcontractcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|c:\\users\\admin\\source\\repos\\pvibase\\models\\insurancecontract.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:models\\insurancecontract.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|c:\\users\\admin\\source\\repos\\pvibase\\middlewares\\exceptionhandlingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3964F6E-5B7F-421E-B06B-03E7860C6211}|pviBase.csproj|solutionrelative:middlewares\\exceptionhandlingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,31 +14,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "InsuranceContract.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Models\\InsuranceContract.cs",
-              "RelativeDocumentMoniker": "Models\\InsuranceContract.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Models\\InsuranceContract.cs",
-              "RelativeToolTip": "Models\\InsuranceContract.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAQwEEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-11T09:35:01.925Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "HubContractController.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Controllers\\HubContractController.cs",
-              "RelativeDocumentMoniker": "Controllers\\HubContractController.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Controllers\\HubContractController.cs",
-              "RelativeToolTip": "Controllers\\HubContractController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAABYAAAAAAAAAA==",
+              "Title": "ExceptionHandlingMiddleware.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Middlewares\\ExceptionHandlingMiddleware.cs",
+              "RelativeDocumentMoniker": "Middlewares\\ExceptionHandlingMiddleware.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\pviBase\\Middlewares\\ExceptionHandlingMiddleware.cs",
+              "RelativeToolTip": "Middlewares\\ExceptionHandlingMiddleware.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAUwC0AAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-11T09:26:58.954Z",
+              "WhenOpened": "2025-07-30T05:01:02.288Z",
               "EditorCaption": ""
             }
           ]

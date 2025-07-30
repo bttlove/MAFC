@@ -1,0 +1,815 @@
+2025-07-30 13:40:34.976 +07:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-07-30 13:40:35.014 +07:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-07-30 13:40:35.027 +07:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2025-07-30 13:40:35.073 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2025-07-30 13:40:35.081 +07:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-07-30 13:40:35.084 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-07-30 13:40:35.089 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-07-30 13:40:35.096 +07:00 [INF] No migrations were applied. The database is already up to date.
+2025-07-30 13:40:35.098 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2025-07-30 13:40:35.235 +07:00 [INF] Start installing Hangfire SQL objects...
+2025-07-30 13:40:35.358 +07:00 [INF] Hangfire SQL objects installed.
+2025-07-30 13:40:35.725 +07:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [r].[Id], [r].[CreatedAt], [r].[ErrorMessage], [r].[LastUpdatedAt], [r].[RequestData], [r].[RequestId], [r].[Status]
+FROM [RequestLogs] AS [r]
+WHERE [r].[Status] IN (N'Failed', N'Pending')
+2025-07-30 13:40:35.856 +07:00 [INF] Now listening on: https://localhost:7024
+2025-07-30 13:40:35.857 +07:00 [INF] Now listening on: http://localhost:5017
+2025-07-30 13:40:35.935 +07:00 [INF] Starting Hangfire Server using job storage: 'SQL Server: (localdb)\mssqllocaldb@InsuranceHubDb'
+2025-07-30 13:40:35.936 +07:00 [INF] Using the following options for SQL Server job storage: Queue poll interval: 00:00:00.
+2025-07-30 13:40:35.937 +07:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2025-07-30 13:40:35.948 +07:00 [DBG] Execution loop BackgroundServerProcess:950f209a has started in 4.9735 ms
+2025-07-30 13:40:35.955 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-07-30 13:40:35.956 +07:00 [INF] Hosting environment: Development
+2025-07-30 13:40:35.957 +07:00 [INF] Content root path: C:\Users\ADMIN\source\repos\pviBase
+2025-07-30 13:40:35.965 +07:00 [INF] Server digi-tbhh2:33824:4081e304 successfully announced in 10.1284 ms
+2025-07-30 13:40:35.970 +07:00 [DBG] Execution loop ServerHeartbeatProcess:9a270591 has started in 3.3049 ms
+2025-07-30 13:40:35.970 +07:00 [INF] Server digi-tbhh2:33824:4081e304 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, SqlServerHeartbeatProcess, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2025-07-30 13:40:35.974 +07:00 [DBG] Execution loop ServerWatchdog:55989ce2 has started in 2.8312 ms
+2025-07-30 13:40:35.979 +07:00 [DBG] Execution loop SqlServerHeartbeatProcess:e762f838 has started in 4.874 ms
+2025-07-30 13:40:35.977 +07:00 [DBG] Execution loop ServerJobCancellationWatcher:23f9720b has started in 5.0949 ms
+2025-07-30 13:40:35.981 +07:00 [DBG] Execution loop ExpirationManager:d5313536 has started in 4.4196 ms
+2025-07-30 13:40:35.984 +07:00 [DBG] Execution loop CountersAggregator:15df32b8 has started in 4.6878 ms
+2025-07-30 13:40:35.986 +07:00 [DBG] Execution loop Worker:e254ecd7 has started in 4.8792 ms
+2025-07-30 13:40:35.990 +07:00 [DBG] Execution loop Worker:1de95dd7 has started in 8.818 ms
+2025-07-30 13:40:36.001 +07:00 [DBG] Execution loop Worker:1d48ad04 has started in 19.6199 ms
+2025-07-30 13:40:35.999 +07:00 [DBG] Removing outdated records from the 'AggregatedCounter' table...
+2025-07-30 13:40:35.997 +07:00 [DBG] Aggregating records in 'Counter' table...
+2025-07-30 13:40:35.992 +07:00 [DBG] Execution loop Worker:af90cd44 has started in 10.3202 ms
+2025-07-30 13:40:35.994 +07:00 [DBG] Execution loop Worker:3caea197 has started in 13.1647 ms
+2025-07-30 13:40:35.996 +07:00 [DBG] Execution loop Worker:021e2408 has started in 14.7239 ms
+2025-07-30 13:40:36.025 +07:00 [DBG] Removing outdated records from the 'Job' table...
+2025-07-30 13:40:35.998 +07:00 [DBG] Execution loop Worker:5530f668 has started in 17.0599 ms
+2025-07-30 13:40:36.004 +07:00 [DBG] Execution loop Worker:4327e778 has started in 22.4826 ms
+2025-07-30 13:40:36.007 +07:00 [DBG] Execution loop Worker:80967bba has started in 25.7211 ms
+2025-07-30 13:40:36.011 +07:00 [DBG] Execution loop Worker:0aa1e477 has started in 29.0537 ms
+2025-07-30 13:40:36.045 +07:00 [INF] Server digi-tbhh2:33824:4081e304 all the dispatchers started
+2025-07-30 13:40:36.014 +07:00 [DBG] Execution loop Worker:4d30366e has started in 32.9498 ms
+2025-07-30 13:40:36.016 +07:00 [DBG] Execution loop Worker:8a288bef has started in 35.0676 ms
+2025-07-30 13:40:36.021 +07:00 [DBG] Execution loop Worker:91e45bbf has started in 39.354 ms
+2025-07-30 13:40:36.024 +07:00 [DBG] Execution loop Worker:e06ef3d1 has started in 42.2268 ms
+2025-07-30 13:40:36.027 +07:00 [DBG] Execution loop Worker:08b22b40 has started in 45.7313 ms
+2025-07-30 13:40:36.051 +07:00 [DBG] Removing outdated records from the 'List' table...
+2025-07-30 13:40:36.031 +07:00 [DBG] Execution loop Worker:92f2fd38 has started in 49.7122 ms
+2025-07-30 13:40:36.034 +07:00 [DBG] Execution loop Worker:79e39ab4 has started in 52.35 ms
+2025-07-30 13:40:36.035 +07:00 [DBG] Execution loop Worker:e2130be7 has started in 54.1175 ms
+2025-07-30 13:40:36.059 +07:00 [DBG] Removing outdated records from the 'Set' table...
+2025-07-30 13:40:36.039 +07:00 [DBG] Execution loop Worker:cfd38064 has started in 57.8381 ms
+2025-07-30 13:40:36.043 +07:00 [DBG] Execution loop Worker:d48da791 has started in 61.2282 ms
+2025-07-30 13:40:36.045 +07:00 [DBG] Execution loop DelayedJobScheduler:4d1ab7b4 has started in 5.8226 ms
+2025-07-30 13:40:36.048 +07:00 [DBG] Execution loop RecurringJobScheduler:91a5c1b3 has started in 5.4356 ms
+2025-07-30 13:40:36.062 +07:00 [DBG] Removing outdated records from the 'Hash' table...
+2025-07-30 13:40:36.506 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7024/_framework/aspnetcore-browser-refresh.js - null null
+2025-07-30 13:40:36.506 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7024/_vs/browserLink - null null
+2025-07-30 13:40:36.545 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7024/_framework/aspnetcore-browser-refresh.js - 200 16499 application/javascript; charset=utf-8 45.551ms
+2025-07-30 13:40:36.581 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7024/_vs/browserLink - 200 null text/javascript; charset=UTF-8 82.7287ms
+2025-07-30 13:40:36.612 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7024/swagger/v1/swagger.json - null null
+2025-07-30 13:40:36.646 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7024/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 34.2356ms
+2025-07-30 13:40:39.774 +07:00 [INF] Request starting HTTP/1.1 POST https://localhost:7024/api/v1/HubContract/MAFC_SKNVV_CreateContract - multipart/form-data; boundary=--------------------------463240159408452692480590 17754
+2025-07-30 13:40:39.794 +07:00 [INF] Request from IP: ::1
+2025-07-30 13:40:39.797 +07:00 [INF] Executing endpoint 'pviBase.Controllers.HubContractController.CreateContract (pviBase)'
+2025-07-30 13:40:39.816 +07:00 [INF] Route matched with {action = "CreateContract", controller = "HubContract"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateContract(pviBase.Dtos.CreateContractFormDto) on controller pviBase.Controllers.HubContractController (pviBase).
+2025-07-30 13:40:39.934 +07:00 [INF] [CreateContract] Content-Type: multipart/form-data; boundary=--------------------------463240159408452692480590
+2025-07-30 13:40:39.939 +07:00 [INF] [CreateContract] Headers: {"Accept":"*/*","Connection":"keep-alive","Host":"localhost:7024","User-Agent":"PostmanRuntime/7.44.1","Accept-Encoding":"gzip, deflate, br","Content-Type":"multipart/form-data; boundary=--------------------------463240159408452692480590","Content-Length":"17754","Postman-Token":"40e5f65f-1e60-4261-8f22-7f09fbb9f6a5"}
+2025-07-30 13:40:39.940 +07:00 [INF] [CreateContract] ModelState.IsValid: True
+2025-07-30 13:40:39.960 +07:00 [INF] [CreateContract] JSON gửi đi: {"CpId":"15e1c1cf1c2a4ae8a5f0e5c8c10bf3a6","StartTime":"00:00","EndTime":"23:59","product_Code":"MAFC","nguoi_thuhuong":"Thịnh","dia_chi_th":"123 Tran Hung Dao, P.1, Q.5, HCM","quyen_loibh":"Tai nạn cá nhân","dtbh_tg_cho_01":true,"dtbh_tg_cho_02":false,"dtbh_tg_cho_03":true,"dien_thoai":"0912345678","khach_hang":"Thịnh","sotien_bh":12000000,"thoihan_bh":"06/07/2030","phi_tyle_phi":0.03,"tong_phi_bh":300000.0,"Email":"thinhbui1907@gmail.com","ngay_batdau":"06/07/2027","dia_chi":"123 Tran Hung Dao, P.1, Q.5, HCM","ma_gdich_doitac":"thinh30","ma_sp":"010402","ma_chuongtrinh":"CT01","NguoiDinhKem":[{"ho_ten":"Thịnh","gioi_tinh":"M","ngay_sinh":"19/07/2003","dia_chi":"123 Tran Hung Dao, P.1, Q.5, HCM","dien_thoai":"0912345678","cmt_hc":"123456789"}],"sohopdong_tindung":"thinh30","ngayhopdong_tindung":"04/10/2026","laisuat_chovay":0.03,"FileAttach":[{"file_name":"Work.docx","file_size":"15450","file_extension":".docx","loai_tailieu":"GYC","file_base64":"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"}],"Sign":"b42a47cd6699c792d6e3517a46430f30"}
+2025-07-30 13:40:39.964 +07:00 [INF] [CreateContract] Sign trong JSON gửi đi: b42a47cd6699c792d6e3517a46430f30
+2025-07-30 13:40:40.023 +07:00 [INF] Start processing HTTP request POST http://piastest.pvi.com.vn/API_CP/ManagerApplication/TaoDon_TNCN_ThongThuong
+2025-07-30 13:40:40.026 +07:00 [INF] Sending HTTP request POST http://piastest.pvi.com.vn/API_CP/ManagerApplication/TaoDon_TNCN_ThongThuong
+2025-07-30 13:40:40.269 +07:00 [INF] Received HTTP response headers after 239.2889ms - 200
+2025-07-30 13:40:40.271 +07:00 [INF] End processing HTTP request after 252.6766ms - 200
+2025-07-30 13:40:40.275 +07:00 [INF] [CreateContract] Forwarded to PVI, response: {"Status":"-503","Message":"ma giao dich da ton tai","Pr_key":0,"URL_Payment":null}
+2025-07-30 13:40:40.472 +07:00 [INF] Executed DbCommand (6ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (Size = -1) (DbType = Binary), @p2='?' (Size = 4000), @p3='?' (DbType = DateTime2), @p4='?' (Size = 200), @p5='?' (DbType = DateTime2), @p6='?' (Size = 200), @p7='?' (Size = 1), @p8='?' (Size = 12), @p9='?' (Size = 200), @p10='?' (Size = 10), @p11='?' (DbType = DateTime2), @p12='?' (DbType = Double), @p13='?' (DbType = Int64), @p14='?' (DbType = DateTime2), @p15='?' (Size = 50), @p16='?' (DbType = Int32), @p17='?' (Size = 50), @p18='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [InsuranceContracts] ([AttachmentContentType], [AttachmentData], [AttachmentFileName], [CreatedAt], [CustAddress], [CustBirthday], [CustEmail], [CustGender], [CustIdNo], [CustName], [CustPhone], [DisbursementDate], [InsRate], [LoanAmount], [LoanDate], [LoanNo], [LoanTerm], [LoanType], [UpdatedAt])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18);
+2025-07-30 13:40:40.500 +07:00 [ERR] An exception occurred in the database while saving changes for context type 'pviBase.Data.ApplicationDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert duplicate key row in object 'dbo.InsuranceContracts' with unique index 'IX_InsuranceContracts_LoanNo'. The duplicate key value is (thinh30).
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:c7a6a0c3-6c58-4bff-afd4-fac6170b9bcf
+Error Number:2601,State:1,Class:14
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert duplicate key row in object 'dbo.InsuranceContracts' with unique index 'IX_InsuranceContracts_LoanNo'. The duplicate key value is (thinh30).
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:c7a6a0c3-6c58-4bff-afd4-fac6170b9bcf
+Error Number:2601,State:1,Class:14
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-07-30 13:40:40.554 +07:00 [INF] Executed action pviBase.Controllers.HubContractController.CreateContract (pviBase) in 734.0401ms
+2025-07-30 13:40:40.556 +07:00 [INF] Executed endpoint 'pviBase.Controllers.HubContractController.CreateContract (pviBase)'
+2025-07-30 13:40:40.668 +07:00 [ERR] An unhandled exception has occurred.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert duplicate key row in object 'dbo.InsuranceContracts' with unique index 'IX_InsuranceContracts_LoanNo'. The duplicate key value is (thinh30).
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:c7a6a0c3-6c58-4bff-afd4-fac6170b9bcf
+Error Number:2601,State:1,Class:14
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at pviBase.Controllers.HubContractController.CreateContract(CreateContractFormDto form) in C:\Users\ADMIN\source\repos\pviBase\Controllers\HubContractController.cs:line 394
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at pviBase.Middlewares.ResponseWrappingMiddleware.InvokeAsync(HttpContext context) in C:\Users\ADMIN\source\repos\pviBase\Middlewares\ResponseWrappingMiddleware.cs:line 28
+   at pviBase.Middlewares.IpWhitelistMiddleware.InvokeAsync(HttpContext context) in C:\Users\ADMIN\source\repos\pviBase\Middlewares\IpWhitelistMiddleware.cs:line 38
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at pviBase.Middlewares.ExceptionHandlingMiddleware.InvokeAsync(HttpContext httpContext) in C:\Users\ADMIN\source\repos\pviBase\Middlewares\ExceptionHandlingMiddleware.cs:line 28
+2025-07-30 13:40:40.760 +07:00 [ERR] An unhandled exception has occurred while executing the request.
+System.ObjectDisposedException: Cannot access a closed Stream.
+   at System.IO.MemoryStream.Write(Byte[] buffer, Int32 offset, Int32 count)
+   at System.IO.MemoryStream.WriteAsync(ReadOnlyMemory`1 buffer, CancellationToken cancellationToken)
+--- End of stack trace from previous location ---
+   at System.IO.Pipelines.StreamPipeWriter.FlushAsyncInternal(Boolean writeToStream, ReadOnlyMemory`1 data, CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask`1.GetTaskForValueTaskSource(IValueTaskSource`1 t)
+--- End of stack trace from previous location ---
+   at pviBase.Middlewares.ExceptionHandlingMiddleware.HandleExceptionAsync(HttpContext context, Exception exception) in C:\Users\ADMIN\source\repos\pviBase\Middlewares\ExceptionHandlingMiddleware.cs:line 60
+   at pviBase.Middlewares.ExceptionHandlingMiddleware.InvokeAsync(HttpContext httpContext) in C:\Users\ADMIN\source\repos\pviBase\Middlewares\ExceptionHandlingMiddleware.cs:line 33
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2025-07-30 13:40:40.764 +07:00 [ERR] An exception was thrown attempting to display the error page.
+System.ObjectDisposedException: Cannot access a closed Stream.
+   at System.IO.MemoryStream.Write(Byte[] buffer, Int32 offset, Int32 count)
+   at System.IO.MemoryStream.WriteAsync(ReadOnlyMemory`1 buffer, CancellationToken cancellationToken)
+--- End of stack trace from previous location ---
+   at System.IO.Pipelines.StreamPipeWriter.FlushAsyncInternal(Boolean writeToStream, ReadOnlyMemory`1 data, CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask`1.GetTaskForValueTaskSource(IValueTaskSource`1 t)
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.DisplayExceptionContent(ErrorContext errorContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2025-07-30 13:40:40.769 +07:00 [ERR] Connection id "0HNEF6FUOTE9C", Request id "0HNEF6FUOTE9C:00000001": An unhandled exception was thrown by the application.
+System.ObjectDisposedException: Cannot access a closed Stream.
+   at System.IO.MemoryStream.Write(Byte[] buffer, Int32 offset, Int32 count)
+   at System.IO.MemoryStream.WriteAsync(ReadOnlyMemory`1 buffer, CancellationToken cancellationToken)
+--- End of stack trace from previous location ---
+   at System.IO.Pipelines.StreamPipeWriter.FlushAsyncInternal(Boolean writeToStream, ReadOnlyMemory`1 data, CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask`1.GetTaskForValueTaskSource(IValueTaskSource`1 t)
+--- End of stack trace from previous location ---
+   at pviBase.Middlewares.ExceptionHandlingMiddleware.HandleExceptionAsync(HttpContext context, Exception exception) in C:\Users\ADMIN\source\repos\pviBase\Middlewares\ExceptionHandlingMiddleware.cs:line 60
+   at pviBase.Middlewares.ExceptionHandlingMiddleware.InvokeAsync(HttpContext httpContext) in C:\Users\ADMIN\source\repos\pviBase\Middlewares\ExceptionHandlingMiddleware.cs:line 33
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.WebTools.BrowserLink.Net.BrowserLinkMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2025-07-30 13:40:40.778 +07:00 [INF] Request finished HTTP/1.1 POST https://localhost:7024/api/v1/HubContract/MAFC_SKNVV_CreateContract - 500 0 null 1003.9877ms
+2025-07-30 13:41:05.992 +07:00 [DBG] Server digi-tbhh2:33824:4081e304 heartbeat successfully sent
+2025-07-30 13:41:14.894 +07:00 [INF] Request starting HTTP/1.1 POST https://localhost:7024/api/v1/HubContract/MAFC_SKNVV_CreateContract - multipart/form-data; boundary=--------------------------375533644311952026044797 17754
+2025-07-30 13:41:14.901 +07:00 [INF] Request from IP: ::1
+2025-07-30 13:41:14.902 +07:00 [INF] Executing endpoint 'pviBase.Controllers.HubContractController.CreateContract (pviBase)'
+2025-07-30 13:41:14.903 +07:00 [INF] Route matched with {action = "CreateContract", controller = "HubContract"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateContract(pviBase.Dtos.CreateContractFormDto) on controller pviBase.Controllers.HubContractController (pviBase).
+2025-07-30 13:41:14.915 +07:00 [INF] [CreateContract] Content-Type: multipart/form-data; boundary=--------------------------375533644311952026044797
+2025-07-30 13:41:14.916 +07:00 [INF] [CreateContract] Headers: {"Accept":"*/*","Connection":"keep-alive","Host":"localhost:7024","User-Agent":"PostmanRuntime/7.44.1","Accept-Encoding":"gzip, deflate, br","Content-Type":"multipart/form-data; boundary=--------------------------375533644311952026044797","Content-Length":"17754","Postman-Token":"279a7f9c-0bfa-4238-b2b5-c19a8c5dcbd4"}
+2025-07-30 13:41:14.917 +07:00 [INF] [CreateContract] ModelState.IsValid: True
+2025-07-30 13:41:14.918 +07:00 [INF] [CreateContract] JSON gửi đi: {"CpId":"15e1c1cf1c2a4ae8a5f0e5c8c10bf3a6","StartTime":"00:00","EndTime":"23:59","product_Code":"MAFC","nguoi_thuhuong":"Thịnh","dia_chi_th":"123 Tran Hung Dao, P.1, Q.5, HCM","quyen_loibh":"Tai nạn cá nhân","dtbh_tg_cho_01":true,"dtbh_tg_cho_02":false,"dtbh_tg_cho_03":true,"dien_thoai":"0912345678","khach_hang":"Thịnh","sotien_bh":12000000,"thoihan_bh":"06/07/2030","phi_tyle_phi":0.03,"tong_phi_bh":300000.0,"Email":"thinhbui1907@gmail.com","ngay_batdau":"06/07/2027","dia_chi":"123 Tran Hung Dao, P.1, Q.5, HCM","ma_gdich_doitac":"thinh31","ma_sp":"010402","ma_chuongtrinh":"CT01","NguoiDinhKem":[{"ho_ten":"Thịnh","gioi_tinh":"M","ngay_sinh":"19/07/2003","dia_chi":"123 Tran Hung Dao, P.1, Q.5, HCM","dien_thoai":"0912345678","cmt_hc":"123456789"}],"sohopdong_tindung":"thinh31","ngayhopdong_tindung":"04/10/2026","laisuat_chovay":0.03,"FileAttach":[{"file_name":"Work.docx","file_size":"15450","file_extension":".docx","loai_tailieu":"GYC","file_base64":"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"}],"Sign":"c2c58e39b7180f8a4aacf2024fb45498"}
+2025-07-30 13:41:14.922 +07:00 [INF] [CreateContract] Sign trong JSON gửi đi: c2c58e39b7180f8a4aacf2024fb45498
+2025-07-30 13:41:14.929 +07:00 [INF] Start processing HTTP request POST http://piastest.pvi.com.vn/API_CP/ManagerApplication/TaoDon_TNCN_ThongThuong
+2025-07-30 13:41:14.930 +07:00 [INF] Sending HTTP request POST http://piastest.pvi.com.vn/API_CP/ManagerApplication/TaoDon_TNCN_ThongThuong
+2025-07-30 13:41:16.833 +07:00 [INF] Received HTTP response headers after 1900.9506ms - 200
+2025-07-30 13:41:16.835 +07:00 [INF] End processing HTTP request after 1906.0681ms - 200
+2025-07-30 13:41:16.838 +07:00 [INF] [CreateContract] Forwarded to PVI, response: {"Status":"00","Message":"Thanh cong","Pr_key":57188,"URL_Payment":null}
+2025-07-30 13:41:16.850 +07:00 [INF] Executed DbCommand (6ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (Size = -1) (DbType = Binary), @p2='?' (Size = 4000), @p3='?' (DbType = DateTime2), @p4='?' (Size = 200), @p5='?' (DbType = DateTime2), @p6='?' (Size = 200), @p7='?' (Size = 1), @p8='?' (Size = 12), @p9='?' (Size = 200), @p10='?' (Size = 10), @p11='?' (DbType = DateTime2), @p12='?' (DbType = Double), @p13='?' (DbType = Int64), @p14='?' (DbType = DateTime2), @p15='?' (Size = 50), @p16='?' (DbType = Int32), @p17='?' (Size = 50), @p18='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [InsuranceContracts] ([AttachmentContentType], [AttachmentData], [AttachmentFileName], [CreatedAt], [CustAddress], [CustBirthday], [CustEmail], [CustGender], [CustIdNo], [CustName], [CustPhone], [DisbursementDate], [InsRate], [LoanAmount], [LoanDate], [LoanNo], [LoanTerm], [LoanType], [UpdatedAt])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18);
+2025-07-30 13:41:16.864 +07:00 [INF] [CreateContract] Đã lưu DB với ID: 72, LoanNo: thinh31
+2025-07-30 13:41:16.866 +07:00 [INF] Executing ContentResult with HTTP Response ContentType of application/json
+2025-07-30 13:41:16.868 +07:00 [INF] Executed action pviBase.Controllers.HubContractController.CreateContract (pviBase) in 1963.045ms
+2025-07-30 13:41:16.870 +07:00 [INF] Executed endpoint 'pviBase.Controllers.HubContractController.CreateContract (pviBase)'
+2025-07-30 13:41:16.880 +07:00 [INF] Request finished HTTP/1.1 POST https://localhost:7024/api/v1/HubContract/MAFC_SKNVV_CreateContract - 200 141 application/json 1986.4435ms
+2025-07-30 13:41:35.750 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [r].[Id], [r].[CreatedAt], [r].[ErrorMessage], [r].[LastUpdatedAt], [r].[RequestData], [r].[RequestId], [r].[Status]
+FROM [RequestLogs] AS [r]
+WHERE [r].[Status] IN (N'Failed', N'Pending')
+2025-07-30 13:41:36.006 +07:00 [DBG] Server digi-tbhh2:33824:4081e304 heartbeat successfully sent
+2025-07-30 13:42:06.019 +07:00 [DBG] Server digi-tbhh2:33824:4081e304 heartbeat successfully sent
+2025-07-30 13:42:33.395 +07:00 [WRN] Stopping the server due to DomainUnload or ProcessExit event...
+2025-07-30 13:42:33.395 +07:00 [INF] Server digi-tbhh2:33824:4081e304 caught stopping signal...
+2025-07-30 13:42:33.397 +07:00 [DBG] Execution loop ExpirationManager:d5313536 stopped in 0 ms
+2025-07-30 13:42:33.397 +07:00 [DBG] Execution loop ServerJobCancellationWatcher:23f9720b stopped in 0 ms
+2025-07-30 13:42:33.398 +07:00 [INF] Server digi-tbhh2:33824:4081e304 caught stopped signal...
+2025-07-30 13:42:33.398 +07:00 [DBG] Execution loop ServerWatchdog:55989ce2 stopped in 0.5143 ms
+2025-07-30 13:42:33.397 +07:00 [DBG] Execution loop CountersAggregator:15df32b8 stopped in 0 ms
+2025-07-30 13:42:33.400 +07:00 [WRN] Server digi-tbhh2:33824:4081e304 caught shutdown signal...
+2025-07-30 13:42:33.399 +07:00 [DBG] Execution loop Worker:e254ecd7 stopped in 0.6572 ms
+2025-07-30 13:42:33.401 +07:00 [DBG] Execution loop SqlServerHeartbeatProcess:e762f838 stopped in 3.4884 ms
+2025-07-30 13:42:33.402 +07:00 [WRN] Server digi-tbhh2:33824:4081e304 stopped non-gracefully due to SqlServerHeartbeatProcess, Worker, DelayedJobScheduler, RecurringJobScheduler. Outstanding work on those dispatchers could be aborted, and there can be delays in background processing. This server instance will be incorrectly shown as active for a while. To avoid non-graceful shutdowns, investigate what prevents from stopping gracefully and add CancellationToken support for those methods.
+2025-07-30 13:42:33.402 +07:00 [DBG] Execution loop ServerHeartbeatProcess:9a270591 stopped in 0.3089 ms
+2025-07-30 13:42:33.399 +07:00 [DBG] Execution loop Worker:1de95dd7 stopped in 0.6689 ms
+2025-07-30 13:42:33.399 +07:00 [DBG] Execution loop Worker:af90cd44 stopped in 0.6968 ms
+2025-07-30 13:42:33.399 +07:00 [DBG] Execution loop Worker:3caea197 stopped in 0.6655 ms
+2025-07-30 13:42:33.399 +07:00 [DBG] Execution loop Worker:021e2408 stopped in 0.6814 ms
+2025-07-30 13:42:33.399 +07:00 [DBG] Execution loop Worker:5530f668 stopped in 0.7195 ms
+2025-07-30 13:42:33.398 +07:00 [DBG] Execution loop Worker:1d48ad04 stopped in 0.4798 ms
+2025-07-30 13:42:33.398 +07:00 [DBG] Execution loop Worker:4327e778 stopped in 0.562 ms
+2025-07-30 13:42:33.399 +07:00 [DBG] Execution loop Worker:80967bba stopped in 0.6789 ms
+2025-07-30 13:42:33.399 +07:00 [DBG] Execution loop Worker:0aa1e477 stopped in 0.6859 ms
+2025-07-30 13:42:33.399 +07:00 [DBG] Execution loop Worker:4d30366e stopped in 0.6801 ms
+2025-07-30 13:42:33.399 +07:00 [DBG] Execution loop Worker:8a288bef stopped in 0.7166 ms
+2025-07-30 13:42:33.399 +07:00 [DBG] Execution loop Worker:91e45bbf stopped in 0.6588 ms
+2025-07-30 13:42:33.399 +07:00 [DBG] Execution loop Worker:e06ef3d1 stopped in 0.6635 ms
+2025-07-30 13:42:33.398 +07:00 [DBG] Execution loop Worker:08b22b40 stopped in 0.6292 ms
+2025-07-30 13:42:33.412 +07:00 [INF] Server digi-tbhh2:33824:4081e304 successfully reported itself as stopped in 6.6911 ms
+2025-07-30 13:42:33.399 +07:00 [DBG] Execution loop Worker:92f2fd38 stopped in 0.6721 ms
+2025-07-30 13:42:33.399 +07:00 [DBG] Execution loop Worker:79e39ab4 stopped in 0.7151 ms
+2025-07-30 13:42:33.414 +07:00 [INF] Server digi-tbhh2:33824:4081e304 has been stopped in total 15.3873 ms
+2025-07-30 13:42:33.399 +07:00 [DBG] Execution loop Worker:e2130be7 stopped in 0.6662 ms
+2025-07-30 13:42:33.399 +07:00 [DBG] Execution loop Worker:cfd38064 stopped in 0.6655 ms
+2025-07-30 13:42:33.415 +07:00 [DBG] Execution loop BackgroundServerProcess:950f209a stopped in 17.0733 ms
+2025-07-30 13:42:39.087 +07:00 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-07-30 13:42:39.132 +07:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-07-30 13:42:39.145 +07:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2025-07-30 13:42:39.193 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2025-07-30 13:42:39.199 +07:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-07-30 13:42:39.201 +07:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-07-30 13:42:39.205 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-07-30 13:42:39.210 +07:00 [INF] No migrations were applied. The database is already up to date.
+2025-07-30 13:42:39.212 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2025-07-30 13:42:39.331 +07:00 [INF] Start installing Hangfire SQL objects...
+2025-07-30 13:42:39.442 +07:00 [INF] Hangfire SQL objects installed.
+2025-07-30 13:42:39.767 +07:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [r].[Id], [r].[CreatedAt], [r].[ErrorMessage], [r].[LastUpdatedAt], [r].[RequestData], [r].[RequestId], [r].[Status]
+FROM [RequestLogs] AS [r]
+WHERE [r].[Status] IN (N'Failed', N'Pending')
+2025-07-30 13:42:39.887 +07:00 [INF] Now listening on: https://localhost:7024
+2025-07-30 13:42:39.888 +07:00 [INF] Now listening on: http://localhost:5017
+2025-07-30 13:42:39.963 +07:00 [INF] Starting Hangfire Server using job storage: 'SQL Server: (localdb)\mssqllocaldb@InsuranceHubDb'
+2025-07-30 13:42:39.964 +07:00 [INF] Using the following options for SQL Server job storage: Queue poll interval: 00:00:00.
+2025-07-30 13:42:39.965 +07:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2025-07-30 13:42:39.976 +07:00 [DBG] Execution loop BackgroundServerProcess:c4813e4b has started in 5.5946 ms
+2025-07-30 13:42:39.982 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-07-30 13:42:39.983 +07:00 [INF] Hosting environment: Development
+2025-07-30 13:42:39.983 +07:00 [INF] Content root path: C:\Users\ADMIN\source\repos\pviBase
+2025-07-30 13:42:39.992 +07:00 [INF] Server digi-tbhh2:24196:6612f092 successfully announced in 10.4938 ms
+2025-07-30 13:42:39.997 +07:00 [DBG] Execution loop ServerHeartbeatProcess:d71a2311 has started in 3.0909 ms
+2025-07-30 13:42:39.997 +07:00 [INF] Server digi-tbhh2:24196:6612f092 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, SqlServerHeartbeatProcess, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2025-07-30 13:42:40.001 +07:00 [DBG] Execution loop ServerWatchdog:82607cd2 has started in 2.548 ms
+2025-07-30 13:42:40.004 +07:00 [DBG] Execution loop ServerJobCancellationWatcher:e66c9550 has started in 5.1633 ms
+2025-07-30 13:42:40.006 +07:00 [DBG] Execution loop SqlServerHeartbeatProcess:6bf7bbd7 has started in 5.7338 ms
+2025-07-30 13:42:40.009 +07:00 [DBG] Execution loop ExpirationManager:e9f42349 has started in 4.7162 ms
+2025-07-30 13:42:40.011 +07:00 [DBG] Execution loop CountersAggregator:a80c6aec has started in 4.7261 ms
+2025-07-30 13:42:40.014 +07:00 [DBG] Execution loop Worker:b4877a82 has started in 4.8747 ms
+2025-07-30 13:42:40.017 +07:00 [DBG] Execution loop Worker:82de007b has started in 7.1821 ms
+2025-07-30 13:42:40.026 +07:00 [DBG] Aggregating records in 'Counter' table...
+2025-07-30 13:42:40.028 +07:00 [DBG] Removing outdated records from the 'AggregatedCounter' table...
+2025-07-30 13:42:40.021 +07:00 [DBG] Execution loop Worker:a0bca336 has started in 11.7589 ms
+2025-07-30 13:42:40.023 +07:00 [DBG] Execution loop Worker:c51ae0a6 has started in 13.4403 ms
+2025-07-30 13:42:40.025 +07:00 [DBG] Execution loop Worker:ba018a8d has started in 15.935 ms
+2025-07-30 13:42:40.070 +07:00 [DBG] Execution loop Worker:629e950d has started in 60.4613 ms
+2025-07-30 13:42:40.027 +07:00 [DBG] Execution loop Worker:88f3baa2 has started in 18.189 ms
+2025-07-30 13:42:40.071 +07:00 [DBG] Removing outdated records from the 'Job' table...
+2025-07-30 13:42:40.030 +07:00 [DBG] Execution loop Worker:f771a333 has started in 20.5588 ms
+2025-07-30 13:42:40.087 +07:00 [INF] Server digi-tbhh2:24196:6612f092 all the dispatchers started
+2025-07-30 13:42:40.032 +07:00 [DBG] Execution loop Worker:9d3270e6 has started in 22.9603 ms
+2025-07-30 13:42:40.037 +07:00 [DBG] Execution loop Worker:88261e82 has started in 27.2261 ms
+2025-07-30 13:42:40.042 +07:00 [DBG] Execution loop Worker:2007191c has started in 32.7978 ms
+2025-07-30 13:42:40.045 +07:00 [DBG] Execution loop Worker:13a14d44 has started in 35.765 ms
+2025-07-30 13:42:40.050 +07:00 [DBG] Execution loop Worker:a86ae33d has started in 40.808 ms
+2025-07-30 13:42:40.057 +07:00 [DBG] Execution loop Worker:ea443980 has started in 47.7222 ms
+2025-07-30 13:42:40.107 +07:00 [DBG] Removing outdated records from the 'List' table...
+2025-07-30 13:42:40.061 +07:00 [DBG] Execution loop Worker:75eb3d5a has started in 51.6164 ms
+2025-07-30 13:42:40.065 +07:00 [DBG] Execution loop Worker:d6a2c018 has started in 55.4761 ms
+2025-07-30 13:42:40.074 +07:00 [DBG] Execution loop Worker:634c17ac has started in 65.0868 ms
+2025-07-30 13:42:40.076 +07:00 [DBG] Execution loop Worker:45f3b619 has started in 67.0546 ms
+2025-07-30 13:42:40.080 +07:00 [DBG] Execution loop Worker:7c0ab8da has started in 70.3459 ms
+2025-07-30 13:42:40.084 +07:00 [DBG] Execution loop Worker:96b8e321 has started in 74.8635 ms
+2025-07-30 13:42:40.087 +07:00 [DBG] Execution loop DelayedJobScheduler:d2bcfe32 has started in 6.8688 ms
+2025-07-30 13:42:40.090 +07:00 [DBG] Execution loop RecurringJobScheduler:23804c6a has started in 6.3672 ms
+2025-07-30 13:42:40.123 +07:00 [DBG] Removing outdated records from the 'Set' table...
+2025-07-30 13:42:40.133 +07:00 [DBG] Removing outdated records from the 'Hash' table...
+2025-07-30 13:42:40.599 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7024/_vs/browserLink - null null
+2025-07-30 13:42:40.599 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7024/_framework/aspnetcore-browser-refresh.js - null null
+2025-07-30 13:42:40.632 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7024/_framework/aspnetcore-browser-refresh.js - 200 16499 application/javascript; charset=utf-8 38.508ms
+2025-07-30 13:42:40.667 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7024/_vs/browserLink - 200 null text/javascript; charset=UTF-8 74.1522ms
+2025-07-30 13:42:40.698 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7024/swagger/v1/swagger.json - null null
+2025-07-30 13:42:40.731 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7024/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 33.5345ms
+2025-07-30 13:42:59.719 +07:00 [INF] Request starting HTTP/1.1 POST https://localhost:7024/api/v1/HubContract/MAFC_SKNVV_CreateContract - multipart/form-data; boundary=--------------------------093716546263210340943617 17754
+2025-07-30 13:42:59.741 +07:00 [INF] Request from IP: ::1
+2025-07-30 13:42:59.745 +07:00 [INF] Executing endpoint 'pviBase.Controllers.HubContractController.CreateContract (pviBase)'
+2025-07-30 13:42:59.765 +07:00 [INF] Route matched with {action = "CreateContract", controller = "HubContract"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateContract(pviBase.Dtos.CreateContractFormDto) on controller pviBase.Controllers.HubContractController (pviBase).
+2025-07-30 13:42:59.892 +07:00 [INF] [CreateContract] Content-Type: multipart/form-data; boundary=--------------------------093716546263210340943617
+2025-07-30 13:42:59.896 +07:00 [INF] [CreateContract] Headers: {"Accept":"*/*","Connection":"keep-alive","Host":"localhost:7024","User-Agent":"PostmanRuntime/7.44.1","Accept-Encoding":"gzip, deflate, br","Content-Type":"multipart/form-data; boundary=--------------------------093716546263210340943617","Content-Length":"17754","Postman-Token":"0a588430-aefe-47df-bcc9-076e9955879f"}
+2025-07-30 13:42:59.897 +07:00 [INF] [CreateContract] ModelState.IsValid: True
+2025-07-30 13:42:59.962 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[@__form_LoanNo_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [InsuranceContracts] AS [i]
+        WHERE [i].[LoanNo] = @__form_LoanNo_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-07-30 13:42:59.964 +07:00 [WRN] [CreateContract] Mã hợp đồng đã tồn tại: thinh31
+2025-07-30 13:42:59.969 +07:00 [INF] Executing BadRequestObjectResult, writing value of type 'pviBase.Dtos.ApiResponse'.
+2025-07-30 13:42:59.985 +07:00 [INF] Executed action pviBase.Controllers.HubContractController.CreateContract (pviBase) in 215.3195ms
+2025-07-30 13:42:59.987 +07:00 [INF] Executed endpoint 'pviBase.Controllers.HubContractController.CreateContract (pviBase)'
+2025-07-30 13:42:59.992 +07:00 [INF] Request finished HTTP/1.1 POST https://localhost:7024/api/v1/HubContract/MAFC_SKNVV_CreateContract - 400 112 application/json; charset=utf-8 273.7361ms
+2025-07-30 13:43:10.015 +07:00 [DBG] Server digi-tbhh2:24196:6612f092 heartbeat successfully sent
+2025-07-30 13:43:19.215 +07:00 [INF] Request starting HTTP/1.1 POST https://localhost:7024/api/v1/HubContract/MAFC_SKNVV_CreateContract - multipart/form-data; boundary=--------------------------917747704685867783043724 17754
+2025-07-30 13:43:19.219 +07:00 [INF] Request from IP: ::1
+2025-07-30 13:43:19.221 +07:00 [INF] Executing endpoint 'pviBase.Controllers.HubContractController.CreateContract (pviBase)'
+2025-07-30 13:43:19.223 +07:00 [INF] Route matched with {action = "CreateContract", controller = "HubContract"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateContract(pviBase.Dtos.CreateContractFormDto) on controller pviBase.Controllers.HubContractController (pviBase).
+2025-07-30 13:43:19.228 +07:00 [INF] [CreateContract] Content-Type: multipart/form-data; boundary=--------------------------917747704685867783043724
+2025-07-30 13:43:19.228 +07:00 [INF] [CreateContract] Headers: {"Accept":"*/*","Connection":"keep-alive","Host":"localhost:7024","User-Agent":"PostmanRuntime/7.44.1","Accept-Encoding":"gzip, deflate, br","Content-Type":"multipart/form-data; boundary=--------------------------917747704685867783043724","Content-Length":"17754","Postman-Token":"a359a88e-9541-4148-8a89-89139ef03852"}
+2025-07-30 13:43:19.229 +07:00 [INF] [CreateContract] ModelState.IsValid: True
+2025-07-30 13:43:19.234 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[@__form_LoanNo_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [InsuranceContracts] AS [i]
+        WHERE [i].[LoanNo] = @__form_LoanNo_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-07-30 13:43:19.251 +07:00 [INF] [CreateContract] JSON gửi đi: {"CpId":"15e1c1cf1c2a4ae8a5f0e5c8c10bf3a6","StartTime":"00:00","EndTime":"23:59","product_Code":"MAFC","nguoi_thuhuong":"Thịnh","dia_chi_th":"123 Tran Hung Dao, P.1, Q.5, HCM","quyen_loibh":"Tai nạn cá nhân","dtbh_tg_cho_01":true,"dtbh_tg_cho_02":false,"dtbh_tg_cho_03":true,"dien_thoai":"0912345678","khach_hang":"Thịnh","sotien_bh":15000000,"thoihan_bh":"06/07/2029","phi_tyle_phi":0.03,"tong_phi_bh":300000.0,"Email":"thinhbui1907@gmail.com","ngay_batdau":"06/07/2027","dia_chi":"123 Tran Hung Dao, P.1, Q.5, HCM","ma_gdich_doitac":"thinh32","ma_sp":"010402","ma_chuongtrinh":"CT01","NguoiDinhKem":[{"ho_ten":"Thịnh","gioi_tinh":"M","ngay_sinh":"19/07/2003","dia_chi":"123 Tran Hung Dao, P.1, Q.5, HCM","dien_thoai":"0912345678","cmt_hc":"123456789"}],"sohopdong_tindung":"thinh32","ngayhopdong_tindung":"04/10/2026","laisuat_chovay":0.03,"FileAttach":[{"file_name":"Work.docx","file_size":"15450","file_extension":".docx","loai_tailieu":"GYC","file_base64":"UEsDBBQABgAIAAAAIQDfpNJsWgEAACAFAAATAAgCW0NvbnRlbnRfVHlwZXNdLnhtbCCiBAIooAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC0lMtuwjAQRfeV+g+Rt1Vi6KKqKgKLPpYtUukHGHsCVv2Sx7z+vhMCUVUBkQpsIiUz994zVsaD0dqabAkRtXcl6xc9loGTXmk3K9nX5C1/ZBkm4ZQw3kHJNoBsNLy9GUw2ATAjtcOSzVMKT5yjnIMVWPgAjiqVj1Ykeo0zHoT8FjPg973eA5feJXApT7UHGw5eoBILk7LXNX1uSCIYZNlz01hnlUyEYLQUiep86dSflHyXUJBy24NzHfCOGhg/mFBXjgfsdB90NFEryMYipndhqYuvfFRcebmwpCxO2xzg9FWlJbT62i1ELwGRztyaoq1Yod2e/ygHpo0BvDxF49sdDymR4BoAO+dOhBVMP69G8cu8E6Si3ImYGrg8RmvdCZFoA6F59s/m2NqciqTOcfQBaaPjP8ber2ytzmngADHp039dm0jWZ88H9W2gQB3I5tv7bfgDAAD//wMAUEsDBBQABgAIAAAAIQAekRq37wAAAE4CAAALAAgCX3JlbHMvLnJlbHMgogQCKKAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArJLBasMwDEDvg/2D0b1R2sEYo04vY9DbGNkHCFtJTBPb2GrX/v082NgCXelhR8vS05PQenOcRnXglF3wGpZVDYq9Cdb5XsNb+7x4AJWFvKUxeNZw4gyb5vZm/cojSSnKg4tZFYrPGgaR+IiYzcAT5SpE9uWnC2kiKc/UYySzo55xVdf3mH4zoJkx1dZqSFt7B6o9Rb6GHbrOGX4KZj+xlzMtkI/C3rJdxFTqk7gyjWop9SwabDAvJZyRYqwKGvC80ep6o7+nxYmFLAmhCYkv+3xmXBJa/ueK5hk/Nu8hWbRf4W8bnF1B8wEAAP//AwBQSwMEFAAGAAgAAAAhADvqrRG3CgAA+TIAABEAAAB3b3JkL2RvY3VtZW50LnhtbOxba2/b1hn+PmD/4UAfhmSQzatISqvdSaIUp1lSx3aTLcMw0CQlcuKt5KFk59OGYCiGoFiCoB+CYmi8IAvStVi3FhgmocgHBf0f2i/Z+/Iiy5ET0EycNEsNRCTP5eE57+V533MO8867e65DhmYY2b63VuFW2QoxPd03bK+/Vvlgp7uiVEhENc/QHN8z1yr7ZlR5d/3HP3pn1DB8PXZNjxKA8KLGKNDXKhalQYNhIt0yXS1adW099CO/R1d132X8Xs/WTWbkhwbDsxyb3AWhr5tRBO9ra95QiyoZnL5XDM0ItRF0RkCR0S0tpObeIQZ3YpAaU2eUZSC+BBDMkOeWoYQTQ0kMjmoJSCwFBKNaQqqVQzpmclI5JH4ZSS6HJCwjKeWQlszJXTZwPzA9qOz5oatReAz7jKuFgzhYAeBAo/au7dh0HzBZKYfRbG9QYkTQa47gCsaJEWTG9Q3TEYwcxV+rxKHXyPqvzPvj0Btp/+wy72E6xV4Lr6sz5h51Ipr3DYvILu2uZsSSSI0JTQfk6HuRZQdzdnDLokGllYMMnyeAoevk7UYBV9DVnkVtaqqGQ8Aiw8905zrpyJ+PyLEFtIkQ8x5FhnD0nflIXLDgwxeXEs2CcLmC5JMD8EsAkm4WDBY5hpJhMPqhdyOOXdCtcpxUK4hjHwqWK8iBTw9mAcCITwTBC/k48ILdF7AigxrWyeByHTHYV6OapUVzp0kRewWJIEcUFxBTA3N8fc5niGmeTGi1OeC+u6DDoP9ijnou9OPgEM1+MbTzh5Q9wuTpBFiZwy+SUPRig9m2tACY3NUb5/ueH2q7DowI3JeAB5JEA/gLhoyX5NbcS8rRfrKbnoM3RkyQEivrkATu+sY+XgOoEBuBFmrnwYfEptqRJaVbSUohhFIslbM/KG1AwmlsrVVYtl3n24oyL9oMsZCXBaVVnxeqZk+LHbrcfHOhKBnFZoiXML1Ydt9y4B+F1kPNweTVcfxRhVl/h8kaMYd9jh3BydBGDbruzSZ3bWLEXp+MzN3IpibRZ+OHHv5+GRDPggutksvx9FsysKYHukWopblwPxvf94+0ggrTJ9Z3X80mnwKcMRv/3asSy5/e8widjR/QIyi70wOfOLPxgU2e3J5NbhDdmo6hG51+Y+fo0fSApm1WcdA0HXoqhmUt1gRZ5pU3SIvHT4NTa62OIEonn0bhEb8s49mxpt+gymyPRKAwjwSgt0fuMRbUKKA/qc43m4rUeXUTX6w50cSPGPJs8gmJ0IGoNf3cJe5s8kA/Kg8aTj/3CGR1MVr5l56VmbzXR2f5C/jf9D/Qfzi95x/XHcqh32zyMWDE2pG6AmLlRaUtsaz6Boj1Uh/sCaQym/wjk1nOSYsCP8I53mIXezZ+jHK0Z5OPKFLPbPxvPZN1YE3/6hHHTxjnaMtEwHmR5llFyEZQRFXpiuJpSjVzsoQ6YdL3j1rFk9tPbsB4gUcTVwOHe3Ibzem+vmCSMPfxw/1EBA9BSvFscscjIKzbepXsxQny3mzyqIr2hQ8OCiT+7+//VkAEHC+rXVE5LX9llt/I1rhWvdPiSjO8VOuwON7XF6fTEZzcNVSwy2dTSx/U9mdiQaTtV5cICVuCdVBbH2Q0UoSN2W5TqLd4/o2R9bOMVBH4Trf96tivtIp/vfcbsoPZz5Pb0/uJy36sJ9SEt3dAnUCBQ8itbKIDD5Int0Dpf4jJwE4tQPMh5ZrcRIK0UPk6uLw2J9CfkjM0RCNBRnjs5XEoykIYZlsuEuoRy5hz0NkCBiOqzY5Y65xW3nIMHQhcqw3CbpU20Tc3bV/IvPT0bv+YrAvTboh2YDQ3kSi+RAP5I9RNv/Ay4qChhqYCrPCwCCnwQr3TVESU2VsmcVzWNqJA02EVGoRmZIZDs7LezmXfRs7NiBbIeHwfcoxkJfQZ1J/znR65kqYal2DtdCYp2Azt62Z0liR/RcKt0myqLNt8C6394vYOYQVOUURekGto4g8CzPzu7ROeY1get2xq1awcwt9nNtmGX3IBqI5sYMoHJHcFmfQWaCgmO999RXY2yUb7Ilkhm9b0X5gp3UrSqQtAshdsYEbVL5gJSq1uq13n3kK9HO8TIOPJTS3hlD81CCit1ZJBuslKBwR8qR/vAwt55ArIm2xkPlIFNeQtdtLFfxrfvCo8Q15joXdNbmMlZLL4jkeQwu5srpINCI6kDeGMXAS9VRcdrZhjCbVaR2UV9gcFpgrc8Klje2aDsIpCJFYBHYp8UZLiZE7hyiyL3niS6ria7TSI7fX8n/eB4IOE31eHXgGxiU0Z3IR7lVnqy8g8FnPIcns+nNjsdFX1TZj4SkIyx+XMuM7KZZLtUSRLsQbBDfCowTCGr0erfd/vO2ay951/i8AYDHcpNPqXN/eitsHWrg+3ou3Le9fb3mBjdFXSr15bqW32atavzCvX9uOLjGnY9N04CtYiSwttr18obcDEXC0Rnsqm5bIs1OscV2LlWFanQktutqUT69TRIrpleoYZmsam1jdboakNkgktaTtZXiVm7RXT6i+jD0aecU1zA+7Stvyh3x0pnjPYGsW0+9tfXHhfsn+nbmxdo+/ZNb2MVmVJ7kp87bT85ri9l25Hleq1779Wl3Q3gITghpvvjuBi+hPIzkPw32KqHBjD3Xh7S+K3d+jV/etXlY7GtsT6bnT5/fN2sHXONIYrI+W9FWqcL6NKSF1llhOeUiXPdTpCncXS7y0FUgs3pag/PQCnSDYt/EGBCfOcLEgyizbzimxXVFlZEiXh1b1R4jptQSm/WCur6ZeXBy2az4vnlCsEUsoBcTQPP9UjAbAtCULfIAOf6NOviSCRJL0vYj5CS1CbHIrgB9Emos1yDi85edVhYexP79m5ZCODkjM923QM4uGC2Q/w6yTNqWa7w55PzcW2UPoFOHOy9iIm5rT5YVUS/eBBJ+fal84WWg2oHaHdVZ9SldDhO225jQdS/7eqAq0siLfdbqvMNto3GPldyJvxrCkmZyxcqiaH4wd2umBO1IDNi+y41jhRrctlaO01ifcZ06gLAgSlp9aMXE2s1fgOlr70AFhaq6idnZ9AUvezNsENpiN8lh3IDabfEifGU0lQa5pv3MhddDj9BgPl1/nuPjoTDX3sZdl4uFtA6yKsFFtSmUOwssGMF0ROEU5tZ//5CqLrqSNx5MwQaO1stmXtJKceH8YaMlJ6ooGHItkJyHA2eUAMH3wwOf7U0/OQ8YOgSnYhke/PJnfctMPC9y/pcrZBuGpynvYpbuEmx6EYqXq2YxZRjgR22+m8nm8YnhEgCJ8ehR/QxOzu4koVt6uRcB7hceLkn0mO/JHHZFvXuH1RJBLzdR48tMT5yylOVqiScziL9Aukg30GTzz19KTfKxK0JElocxJ3WulpqVmJ1fQQIbL8oMgcRKUrcErzqU+haiortZod3Og8XY+tVZMt9iF4nJc40fgxJQPcjI/wIww0L0LBgfFzmHg2foSOjN8kYCR8fOz0IlOnm/NXPh2P+tvXoWqEp728mEzPwgCiwH1KZ/2LGnamfoBbTmmTEOn+8HHXp9R3D58ds7dQa5maYcJEZT557PkQ1g8f+zFNHrPX6b4TQWmmRWyTFMOa8lyI3ys2cHt106Y6jFKQklomn2Jym36lyBz+n5X1/wEAAP//AwBQSwMEFAAGAAgAAAAhANZks1H0AAAAMQMAABwACAF3b3JkL19yZWxzL2RvY3VtZW50LnhtbC5yZWxzIKIEASigAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArJLLasMwEEX3hf6DmH0tO31QQuRsSiHb1v0ARR4/qCwJzfThv69ISevQYLrwcq6Yc8+ANtvPwYp3jNR7p6DIchDojK971yp4qR6v7kEQa1dr6x0qGJFgW15ebJ7Qak5L1PWBRKI4UtAxh7WUZDocNGU+oEsvjY+D5jTGVgZtXnWLcpXndzJOGVCeMMWuVhB39TWIagz4H7Zvmt7ggzdvAzo+UyE/cP+MzOk4SlgdW2QFkzBLRJDnRVZLitAfi2Myp1AsqsCjxanAYZ6rv12yntMu/rYfxu+wmHO4WdKh8Y4rvbcTj5/oKCFPPnr5BQAA//8DAFBLAwQUAAYACAAAACEA0FV2kiwHAAANIgAAFQAAAHdvcmQvdGhlbWUvdGhlbWUxLnhtbOxaW48bNRR+R+I/WPOeZmZyr5qiXCntbrva3Rbx6GScGTee8ch2djdCSKg88YKEBIgHkHjjASGQQALxwo+p1IrLj8D2TCbjxEMp3aIK7Uba+PKd48/nHB+fTHLjjYuYgDPEOKZJ3/GuuQ5AyZwGOAn7zv3Taa3rAC5gEkBCE9R31og7b9x8/bUb8LqIUIyAlE/4ddh3IiHS6/U6n8thyK/RFCVybkFZDIXssrAeMHgu9cak7rtuux5DnDgggbFUe2+xwHMETpVK5+ZG+YTIf4ngamBO2IlSjQwJjQ2Wnnrjaz4iDJxB0nfkOgE9P0UXwgEEciEn+o6r/5z6zRv1QoiICtmS3FT/5XK5QLD0tRwLZ4WgO/G7Ta/QrwFE7OMmXfUq9GkAnM/lTjMuZazXartdP8eWQFnTorvX8RomvqS/sa+/1x76TQOvQVmzub/HaW8ybhl4DcqarT38wPWHvYaB16Cs2d7DNyeDjj8x8BoUEZws99HtTrfbztEFZEHJLSu81267nXEO36LqpejK5BNRFWsxfEjZVAK0c6HACRDrFC3gXOIGqaAcjDFPCVw7IIUJ5XLY9T1PBl7T9YuXtji8jmBJOhua870hxQfwOcOp6Du3pVanBHny88+PH/34+NFPjz/44PGj78ABDiNhkbsFk7As98fXH//55fvg9x+++uOTT+14XsY//fbDp7/8+nfqhUHrs++f/vj9k88/+u2bTyzwAYOzMvwUx4iDu+gcHNNYbtCyAJqx55M4jSAuSwySkMMEKhkLeiIiA313DQm04IbItOMDJtOFDfjm6qFB+CRiK4EtwDtRbAAPKSVDyqx7uqPWKlthlYT2xdmqjDuG8My29mjHy5NVKuMe21SOImTQPCLS5TBECRJAzdElQhaxdzA27HqI54xyuhDgHQyGEFtNcopnRjRthW7hWPplbSMo/W3Y5vABGFJiUz9GZyZSng1IbCoRMcz4JlwJGFsZw5iUkQdQRDaSJ2s2NwzOhfR0iAgFkwBxbpO5x9YG3TtQ5i2r2w/JOjaRTOClDXkAKS0jx3Q5imCcWjnjJCpj3+JLGaIQHFFhJUHNE6L60g8wqXT3A4wMdz/7bN+XacgeIGpmxWxHAlHzPK7JAiKb8gGLjRQ7YNgaHcNVaIT2AUIEnsMAIXD/LRuepobNt6RvRzKr3EI229yGZqyqfoK4rJVUcWNxLOZGyJ6gkFbwOVzvJJ41TGLIqjTfXZohM5kxeRht8UrmSyOVYqYOrZ3EPR4b+6vUehRBI6xUn9vjdc0M//2TMyZlHv4LGfTcMjKx/2PbnEJiLLANmFOIwYEt3UoRw/1bEXWctNjKKrcwD+3WDfWdoifGyTMqoP+u8pH1xZMvvrRgL6fasQNfpM6pSiW71U0VbremGVEW4Fe/pBnDVXKE5C1igV5VNFcVzf++oqk6z1d1zFUdc1XH2EVeQh2zLV30A6DNYx6tJa585rPAhJyINUEHXBc9XJ79YCoHdUcLFY+Y0kg28+UMXMigbgNGxdtYRCcRTOUynl4h5LnqkIOUclk46WGrbjVBVvEhDfIneKrC0k81pQAU23G3VYzLIk1ko+3O9hFooV73Qv2YdUNAyT4PidJiJomGhURnM/gMEnpnl8KiZ2HRVeorWei33CvycgJQPRBvNTNGMtxkSAfKT5n8xruX7ukqY5rb9i3b6ymul+Npg0Qp3EwSpTCM5OWxO3zJvu5tXWrQU6bYp9HpvgxfqySykxtIYvbAueLUUXrmMO07C/mJSTbjVCrkKlVBEiZ9Zy5yS/+b1JIyLsaQRxlMT2UGiLFADBAcy2Av+4EkJXI9eWheVXK+csKrRk6/lb2MFgs0FxUj266cy5RYZ18QrDp0JUmfRME5mJEVO4bSUK2Op7wbYC4KVweYlaJ7a8WdfJWfRePLn+0ZhSSNYH6llLN5Btftgk5pH5rp7q7Mfr6ZWaic9MLX7rOF1EQpa1bcIOratCeQl3fLl1htE7/BKsvdu8mut0l2VdfEi98IJWrbxQxqirGF2nbUpHaJFUFpuSI0qy6Jy74OdqNW3RCbwlL39r7XprOHMvLHslxdkWyEJLKnKadHTHOf0WCdNwnPTkm2p00aIMkxWgAcXMiUaTNO/sVxkcSOswXU5VUIWq1qCuZ4hcsObCGcBfjfChcSemVZexfCuiy3KRAXxcoZPnNYkTVyS6lcs2dF+dmPwdHma90snerRTYq+EGDFcN95120NmiO/Naq53dak1mw03Vq3NWjUBq1Ww5u0PHc89N+T9EQUe63MgVMYY7LOf/ugx/d+/xBvPrBcm9O4TvWniboW1r9/8Pzq3z9Iq0ha/sRr+gN/VBuNvXat6Y/btW6nMaiN/PbYH8hM3p4O3nPAmQZ7w/F4Om35tfZI4pruoFUbDBujWrs7GfpTb9IcuxKcO+Iiz8G5LTZRefMvAAAA//8DAFBLAwQUAAYACAAAACEAmDN/Y1IEAAC7DAAAEQAAAHdvcmQvc2V0dGluZ3MueG1stFfbbts4EH1fYP/B0PM6suRrhDpFbMebFPF2UaXYZ0qkbCK8CCRlx13sv++QEi2lCYq4RV5ias7MmRF5OKN8+PjEWW9PlKZSzIPoYhD0iMglpmI7D74+rPuzoKcNEhgxKcg8OBIdfLz6/bcPh0QTY8BN94BC6ITn82BnTJmEoc53hCN9IUsiACyk4sjAo9qGHKnHquznkpfI0Iwyao5hPBhMgoZGzoNKiaSh6HOaK6llYWxIIouC5qT58RHqLXnrkJXMK06EcRlDRRjUIIXe0VJ7Nv6zbADuPMn+Ry+x58z7HaLBG173IBU+RbylPBtQKpkTreGAOPMFUtEmHr0gOuW+gNzNKzoqCI8GbtWtfHweQfyCYJKTp/M4Zg1HCJFdHorP45mceGi7sdHk54rpEODqLIp46OuwPza8w6Wxwbvz6PwZhTYWGbRD+qTImrFg5zGOOoy1wJjMH7uc5LxNG58Ij7w9Q/2yrFdUXUP3NFNI1T2jkTTPk7utkAplDMoBafdAnT1Xnf0Lh2x/3JI8Obvd22ZRMLuArb+ClvZNSt47JCVROdxr6IeDQRBaAG6TLFKDDDAmW4U49LF5kDOCRO2ASYEqZh5QlhpZgtMewUtN4yY+3yGFckNUWqIc7uRSCqMk835Y/iXNEnqigivbRLgO2a7SuttChEAcXvNZB91IDO3wkFSKvv08bIDLHo27Kb9PJGE6KIrJg93e1BwZWUPxKf1GrgX+VGlDgdH10V+o4EcFEGEzfwZBPBxLsibIVLBN75TMncSa0XJDlZLqTmAQwrslo0VBFCSgIKwNyIcqeXD7fEsQhqH8TnkrTf4BZ7iPwweQ5eNCGiP57bHcwV7/2kk6vYdd+cKnBdZ+8UVKc3IdLC/j5WxWV2rRFokn45vBzavIdDhbXL6GDBfT6+XkNWR6Ob0cNSJ/jrQVhKdKeWJH+d/Kr6zce7yOWCKeKYp6GzvsQ+uRqccFFR7PCHQs0kXSKvNgv18DmiPG1rDxHnCbxhNMdbkihVuzDVLblrfxUK9aofd8OnHZxkXUn0pWZY0eFCprGXuXaDRqIqkw95R7u66y1EcJ6LEdqBL48165fWq355AYkIVrB/fIycv5EtH/mjbyYyq10iEbVJa1ArNtNA8Y3e5MZEVj4AnDN6F7yLZxg8UOi2vMPaDcvhl4N4vWFntbx2/obcPWNvK2UWsbe9u4tU28bWJtO+g5ilHxCJfBL629kIzJA8G3Lf7CVG+C3qGSrOr5APKStaEZGLq3T8gTjBqCqYFP7ZJijp7s5ImdlBtvho6yMs98LWady+cMdvA31z98Fuwk/l0tdm7lFOSYHnnWjqOLunBGNbSOEiaXkcpjfzgsGiVY5nd2sI5q+2RxvYgm8aqGx27iGddd4Ny/kGKBNMEN5kPHdei/8exmNl1Phv3lajHoj6Llqn99OYr617N1FK+nq3gdjf9rLqn/r+PqfwAAAP//AwBQSwMEFAAGAAgAAAAhAHDx/38LEAAA+aYAAA8AAAB3b3JkL3N0eWxlcy54bWzsXdty20YSfd+q/QeUnnYfHIkiRV0qSkqS7bVrbUcx5c3zEBiKiECAC4CWla/fuQEcsjEgetBiFNeWqywSYJ8ZzOnTmG5c5sefvy2S4CvPizhLLw8GPxwdBDwNsyhO7y8Pvty9fXV2EBQlSyOWZCm/PHjixcHPP/39bz8+XhTlU8KLQACkxcUivDyYl+Xy4vCwCOd8wYofsiVPxc5Zli9YKb7m94cLlj+slq/CbLFkZTyNk7h8Ojw+OhofGJi8C0o2m8Uhf52FqwVPS2V/mPNEIGZpMY+XRYX22AXtMcujZZ6FvCjEQS8SjbdgcVrDDEYAaBGHeVZks/IHcTCmRwpKmA+O1KdFsgY4wQEcA4BxyL/hMM4MxqGwtHHiCIczrnHiyMLx64wFEK1QEMfDqh/yjzS3sIqojOY4uIqjQ2nLSjZnxXwTcZbgEEcWonawJAsfbEyOG7STGvBpITlchBfv79MsZ9NEIAmvDIRjBQpY/i/4kX/UR/5NbZfDYj7MEvlBjNpPQrpRFr7mM7ZKykJ+zW9z89V8U3/eZmlZBI8XrAjj+E70VzS6iEX7767SIj4QezgryqsiZo075/JD456wKK3N13EUHxzKFh94nordX5kY+GO9qfij3jCqttzITm1sS1h6X23j6asvE7tz1qapaOrygOWvJlfKcDC6SOJ7Vq5yEcfkN4Wgw10e3Yjj59/KFUvkjw/NwOi/1nAtt7+pXi5ZGKtOsVnJRVQbjI9kD5JYBtHj07Pqy+eV5JKtysw0ogD03xr2EDAmgp0IfRMdgcVePvsgfI1Hk1LsuDxQbYmNX97f5nGWiyh7eXB+bjZO+CJ+F0cRT60fpvM44r/Nefql4NF6+69vlSObDWG2SsXn4elYeVFSRG++hXwp467YmzLJ6SdpkMhfr+J148r8vxXYwNDWZD/nTJ58gsE2hOo+CuJYWhTW0TZjrraOXf0K1dBwXw2N9tXQyb4aGu+rodN9NaSkvY+GFMxzNhSnkTiPqN/DZgDqLhyHGtE4DrGhcRxaQuM4pILGcSgBjeNwdDSOw4/ROA43ReCUWejyQsvZhw5vb8fdfY7ww919SvDD3X0G8MPdHfD9cHfHdz/c3eHcD3d39PbD3R2s8bh6qhW8FzJLy94qm2VZmWYlD+SktzcaSwWWyshp8ORJj+ckB0kAoyObORH3RguZ+r7bQ5RI/c/npUwcg2wWzOJ7mfL07jhPv/IkW/KARZHAIwTMuUjKHCPi49M5n/GcpyGndGw6UJkJBulqMSXwzSW7J8PiaUQ8fBUiSVCoHVrkz3MpkpjAqRcszLP+XcsYWXz4EBf9x0qCBNerJOFEWJ9oXExh9c8NFEz/1EDB9M8MFEz/xMDijGqIDBrRSBk0ogEzaETjpv2TatwMGtG4GTSicTNo/cftLi4TFeLtWcege+3uJsnkNZTe/ZjE96mqyvZGMjXT4Jbl7D5ny3kgq9rNsPYxY9u5zqKn4I7inFYjUc3rlYvIWnacrvoP6AYalbhqPCJ51XhEAqvx+kvso5gmywnaO5p8ZrKalo2iVUidRDthyUpPaPurjZX9PWwtgLdxXpDJoBmWwIM/yemspJMi8q172b9ja6z+stqOSqTdM5AEvZQXXGnC8LunJc9FWvbQG+ltliTZI4/oECdlnmlfsyV/rCjpJPk3i+WcFbHKlTYgup/qq7svgo9s2fuAbhMWpzS8vXm1YHES0M0g3t19/BDcZUuZZsqBoQG8zsoyW5BhmkrgP37j03/SdPBKJMHpE9HRXhGVhxTYTUxwktFIWUSEJKaZcRqTnEMV3r/50zRjeUSDdptzfT9KyYkQJ2yx1JMOAm2JuPgo4g/BbEjh/YflsawLUYnqjgTMKhsWq+nvPOwf6j5lAUll6JdVqeqPaqqrrOng+k8TNuD6TxEUm+L0IP2X4GA34Pof7AYc1cHeJKwoYuclVG88qsOt8KiPt3/yZ/CyJMtnq4RuACtAshGsAMmGMEtWi7SgPGKFR3jACo/6eAldRuERlOQU3r/yOCIjQ4FRMaHAqGhQYFQcKDBSAvrfoWOB9b9NxwLrf6+OBiOaAlhgVH5GevonuspjgVH5mQKj8jMFRuVnCozKz4avAz6biUkw3SnGgqTyOQuS7kSTlnyxzHKWPxFBvkn4PSMokGq02zybySdhslTfxE0AKWvUCeFkW8NRkfwbn5J1TWJR9ougIsqSJMuIamvrE46y3Lx3bZeZehKkdxduExbyeZZEPHcck9tW5MsT/VjGdvdVNzqVPT/E9/MymMzrar8NMz7aaVkl7BtmuxtsGvOxeUSm0ewjj+LVouoofJhiPOxurDx6w7h67KbFeD2T2LA86WgJ2xzvtlzPkjcsTztawjbPOloqnW5YtunhNcsfGh3htM1/6hzP4XynbV5UGzc22+ZItWWTC562edGGVIKrMJRXCyA73TTjtu8mHrc9RkVuFIyc3CiddeWGaBPYZ/41lmd2TNBU7dV3T4C4rybRnSLnr6tM1+03Ljh1f6jrvZg4pQUPGnGG3S9cbUQZ9zh2DjduiM5xxw3ROQC5ITpFIqc5KiS5UTrHJjdE5yDlhkBHK3hGwEUraI+LVtDeJ1pBFJ9o1WMW4IboPB1wQ6CFCiHQQu0xU3BDoIQKzL2EClHQQoUQaKFCCLRQ4QQMJ1RojxMqtPcRKkTxESpEQQsVQqCFCiHQQoUQaKFCCLRQPef2TnMvoUIUtFAhBFqoEAItVDVf7CFUaI8TKrT3ESpE8REqREELFUKghQoh0EKFEGihQgi0UCEESqjA3EuoEAUtVAiBFiqEQAtVP2roL1RojxMqtPcRKkTxESpEQQsVQqCFCiHQQoUQaKFCCLRQIQRKqMDcS6gQBS1UCIEWKoRAC1VdLOwhVGiPEyq09xEqRPERKkRBCxVCoIUKIdBChRBooUIItFAhBEqowNxLqBAFLVQIgRYqhGjzT3OJ0nWb/QBf9XTesd/90pXp1Gf7UW4batgdquqVG6v7swjXWfYQND54OFT5RjeQeJrEmSpROy6r27jqlgjUhc9fbtqf8LHRe750yTwLoa6ZAvBRV0tQUxm1ubxtCZK8UZun25Zg1jlqi762JTgNjtqCrtJldVOKOB0B47YwYxkPHOZt0doyh0PcFqMtQzjCbZHZMoQD3BaPLcOTQAbnbeuTjuM0ru8vBQht7mghnLoR2twSclWFYyiMrqS5Ebqy50boSqMbAcWnEwZPrBsKzbAbyo9qKDMs1f5CdSNgqYYIXlQDGH+qIZQ31RDKj2oYGLFUQwQs1f7B2Y3gRTWA8acaQnlTDaH8qIanMizVEAFLNUTAUt3zhOyE8acaQnlTDaH8qIaTOyzVEAFLNUTAUg0RvKgGMP5UQyhvqiGUH9UgS0ZTDRGwVEMELNUQwYtqAONPNYTyphpCtVGtqigbVKMYtsxxkzDLEHdCtgxxwdky9MiWLGvPbMlC8MyWIFcV57hsySbNjdCVPTdCVxrdCCg+nTB4Yt1QaIbdUH5U47KlJqr9hepGwFKNy5acVOOypVaqcdlSK9W4bMlNNS5baqIaly01Ue0fnN0IXlTjsqVWqnHZUivVuGzJTTUuW2qiGpctNVGNy5aaqO55QnbC+FONy5ZaqcZlS26qcdlSE9W4bKmJaly21EQ1LltyUo3LllqpxmVLrVTjsiU31bhsqYlqXLbURDUuW2qiGpctOanGZUutVOOypVaqcdnSR2ESE7wCarJgeRnQvS/uHSvmJev/csIvac6LLPnKo4D2UD+gjvLwcWP5K4mtliIUvy/FmMk3oFuPK0X6DbAGUP3wfVQvUyWNZU8Cs3qY2aw6bC7X6haV4Y6manBzrXgA4NeLW6kWpkwc1S9yNEDjqXwxYsN26RDV9qqZmznL9d61q1a/MWJcH8vjRV7EUbX76Ojm/PjmzIjeLF72wPnyk2hfbZNfBD+8UN/W65pN5TvFxAgM9cJmZpmzM6PaTL+16cPXpG7JUGfaaF1kjv3essic3PnGbJP7N9aZ27BcrzMnN1/X68yFUuV1v96OTsfKN9SPVQS4PGBK/+vN8qYUAXT9ViOsl6WrLjbby9LpbdaCcT7Oc+x0HhOCaJznuIPzrGWpf7chymd2L7Nu3k73qiLDd+ZeQ0O27V56W0/3Gjrdy9zuQeNew+/Evaohd7jXLifah6scm2HYWCBTbevpKiOnq5j7e2hcZfTCXeXM9pQq7ENPUfKh95RY/3+je9fXb3p6xInTI8x9WzQecfJ9eIRSycuLHT19QC8B2+QDJoul8YHxC/eBke0DThdQsthrUDg5l/+2HUKuurR2h7tYruZ7pfjq6Q2nTm8wFQkabzj9LryhGvDnDAh75v/Myb8ZTRr+z14o/7sYVyLYq/6PT+W/Lvy/ppgjnjv5N6zQ8H/+F+W/GuLnVDw946EYbBaaF7M76mhmgaX6DUFqeaVtX3CswuTg0RTHAHHujpayfNvSSVXeba346Qqw07M6u1Y5TTS34sP7VHrWo3SLuqfRN6ahxP4bniQfmf51tnT/NOEzqQ+xd3CkXsC5tX+q15Jw2ufqooMT4HCzM/pru2Po1SVj/TSMs8AqK+sNw60ezeo70h2dNlwVYmgm8gfb/dsonm730uwMBsE64GxFsEbHd8WtyqVdMcsdhf5fJ0VTqkuaLkqPiSg1hbmup6Hvn+E+pUokw7qq6GJ4SMSwKYTSM/xnZfw2W32qhUi2dGHPxdaIiC1Ti3w5bO27YodkRRfXXKycELFi6oHfj4bIedAFLhcPYyIeTE3uL6EO+tIFkhJdZXJRckpEiSmMvVBp/Okk6FKPi4QzIhLMEP4ldPHMCf5uSnT1xUXJORElZuRfqC72VVfTb8TYHmu9tWmIsQU1hbQmrKEKYxI2VLEMVMT0JTJZDRNDp6vj8svnlXQytiqzaohTOYQrlpg39OuRewE3c6yPSB31q2pYHnhej/16Ll1tOTHnW3t2rbfRiXLNYKOX9FWj5Wpu53iZWe3+OWvWcL049zZB9Q4KJVdgrWI2BSiUmNPVQn+IE3ifldn5zDVt7CwEcD8wCch+E98NSlzk9xXophO5OX/hE8dnpqxZmXoRgW1m9FYKTSqkNkEem8mM59nVvn1N/eL3sLKUuStX7QJttswtR0fyXxfWqNPg9VA10tFXJRanbhZ2SmSvI9fssvKqyXodju2xUk8xrHfv8mE4FENTP0M5ZKyucMnrU/KdesYV2+ZyHd2lPmjzorn67Xfbhw1ej4dzlAaPQJ0od3vHHu/LMmPRHNo2V0/Z5R5dQpzdXFukG/rkEcvrSP3V10XV7wrhSWYd7j/kPXXyg/AvGU+U+tSwe5bF6yuoz9ySlIE5sl0PUshv2q0sjZ2NVW/UBV39Tf2kb/D/U8ugwI9aXbfv6WBDJDs89sXpvjVGrt/F6RrA9S/6RsnqUh8qSk51q2a0ChFUkhu2pBk7MImsbrjcGtHqU/HT/wAAAP//AwBQSwMEFAAGAAgAAAAhACbe+khvAQAALQQAABQAAAB3b3JkL3dlYlNldHRpbmdzLnhtbJzT3W7CIBQA4Psle4eGe6U6NUtjNVkWl90sS7Y9AMKpJQKnAVx1Tz+o1dV4Y3dTDtDz5fA3X+61Sr7BOokmJ6NhShIwHIU0m5x8fa4GjyRxnhnBFBrIyQEcWS7u7+Z1VsP6A7wPf7okKMZlmuek9L7KKHW8BM3cECswYbJAq5kPXbuhmtntrhpw1BXzci2V9Ac6TtMZaRl7i4JFITk8I99pML7JpxZUENG4UlbupNW3aDVaUVnk4FxYj1ZHTzNpzsxocgVpyS06LPwwLKatqKFC+ihtIq3+gGk/YHwFzDjs+xmPrUFDZteRop8zOztSdJz/FdMBxK4XMX441RGbmN6xnPCi7MedzojGXOZZyVx5KRaqnzjpiMcLppBvuyb027TpGTzoeIaaZ68bg5atVZDCrUzCxUoaOH7D+cSmCWHfjMdtaYNCxSDs2iK8X6y81PIHVmifLNYOLI3DTCms399eQodePPLFLwAAAP//AwBQSwMEFAAGAAgAAAAhAPnsaMADAgAA1QYAABIAAAB3b3JkL2ZvbnRUYWJsZS54bWzck8tu2zAQRfcF+g8C97Eo+RFHiBy0TQx000WRfABNURYRPgQObVl/X5J6RIEXtbqsAEujO56DmTvU49NFiujMDHCtcpQsMIqYorrg6pijt9f93RZFYIkqiNCK5ahlgJ52X788NlmplYXI1SvIJM1RZW2dxTHQikkCC10z5ZKlNpJY92qOsSTm/VTfUS1rYvmBC27bOMV4g3qMuYWiy5JT9qzpSTJlQ31smHBEraDiNQy05hZao01RG00ZgJtZio4nCVcjJlldgSSnRoMu7cIN03cUUK48wSGS4gOwngdIrwAbyi7zGNueEbvKKYcX8zibkcOLCeffmpkAitMsRLoc+vAPXz5hQWGLah5u2FHsa4klFYHqM7EU84irCbE7YELT9ymTzTNtPQJb6XcoafbzqLQhB+FI7lRG7mBFAezvbj/+EUJ2Cbq3pQ9K4QPn2q7/cqMmU0Q60LfaaggyrYgB5jNn4obHGMXh30Ry0Q4qNBygS9Tc0mrQz8Rw31mXAn50iRMccI7cB4Vxur1HnZJ4criWvZKOCu6V5WeFBk54TR72vfLBCX3G3VhX471yySD6xZrot5ZEhUFrojSwZBzUn4cNXuI1Xrlf6qJVN8ZNjpjAnePIizfkZR8m6Rz54ZT77fr7lSMPf3ek49zuSFh49MyhFqT9jxbfB7D7AwAA//8DAFBLAwQUAAYACAAAACEAD7wxqIABAAARAwAAEQAIAWRvY1Byb3BzL2NvcmUueG1sIKIEASigAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjJLfS8MwEMffBf+Hkid9aJOuOkbpKkwRHxwIThTfYnJu0TYNyblu/71pu3UWB/p2P773uctdsqtNWQRrsE5VekriiJEAtKik0sspeVrchhMSOORa8qLSMCVbcOQqPz3JhElFZeHBVgYsKnCBJ2mXCjMlK0STUurECkruIq/QPvle2ZKjd+2SGi4++RLoiLExLQG55MhpAwxNTyQ7pBQ90nzZogVIQaGAEjQ6GkcxPWgRbOmOFrSZH8pS4dbAUek+2as3TvXCuq6jOmmlfv6YvszvH9unhko3uxJA8kyKFBUWkGf0YHrLfb19gMAu3DveFhY4VjafrSKplgp5EUkUOgnOZnfhTRc5b6v2yuYGn7CtKyud5w08L5PghFUG/WW7boOAVxfc4dyf+l2BnG3/avy7oGFYWKvm7+Rxq+jdbHeIbliQgV9g2q17n3lOrm8WtyQfsdFlyMZhwhYsSdk4Zey1mXdQfwCWuwH+SbxIk8mQuAd0Kxt+4vwbAAD//wMAUEsDBBQABgAIAAAAIQCzxCGo2wEAANsDAAAQAAgBZG9jUHJvcHMvYXBwLnhtbCCiBAEooAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJxTTW/bMAy9D9h/MHRvFGdF1wSKiiHF0MO2FojbnjWZToTJkiCxQbNfP8puPGXbaT49PtLk44fEzWtvqwPEZLxbs3o2ZxU47Vvjdmv22Hy+uGZVQuVaZb2DNTtCYjfy/TvxEH2AiAZSRSlcWrM9YlhxnvQeepVm5Hbk6XzsFZIZd9x3ndFw6/VLDw75Yj6/4vCK4FpoL8KUkI0ZVwf836St11lfemqOgfJJ0UAfrEKQ3/KfVvCJEI1HZRvTg1wuiJ8s8aB2kCRxIxDPPrZkLy8FH6HY7FVUGml6sr66rgUvCPEpBGu0Qhqs/Gp09Ml3WN0PaqucQPAyRFAHW9Av0eBRzgUvTfHFOFJQU+URkbaodlGFfZIfssDJElutLGyoedkpm0Dw34S4A5UX+6BMFnjA1QE0+lgl85NWu2DVd5Ugj2zNDioa5ZCNYaMxYBsSRtkYtJR7sgdYhpXYXMp6CCBwHjgYgwbC5+qGCum+o97wH2LrUuygYZRayCmVnWr8kXXj+6AcDZhPiAb8Iz2Gxt/m63ib4TlZ7P3Z4H4blM7bWX5clBdQuMSWWGhppdNSJkLcUQvR5gL0r9tBe4r525Fv6ml8q3Rwszl9wxGdOLqE6RHJXwAAAP//AwBQSwECLQAUAAYACAAAACEA36TSbFoBAAAgBQAAEwAAAAAAAAAAAAAAAAAAAAAAW0NvbnRlbnRfVHlwZXNdLnhtbFBLAQItABQABgAIAAAAIQAekRq37wAAAE4CAAALAAAAAAAAAAAAAAAAAJMDAABfcmVscy8ucmVsc1BLAQItABQABgAIAAAAIQA76q0RtwoAAPkyAAARAAAAAAAAAAAAAAAAALMGAAB3b3JkL2RvY3VtZW50LnhtbFBLAQItABQABgAIAAAAIQDWZLNR9AAAADEDAAAcAAAAAAAAAAAAAAAAAJkRAAB3b3JkL19yZWxzL2RvY3VtZW50LnhtbC5yZWxzUEsBAi0AFAAGAAgAAAAhANBVdpIsBwAADSIAABUAAAAAAAAAAAAAAAAAzxMAAHdvcmQvdGhlbWUvdGhlbWUxLnhtbFBLAQItABQABgAIAAAAIQCYM39jUgQAALsMAAARAAAAAAAAAAAAAAAAAC4bAAB3b3JkL3NldHRpbmdzLnhtbFBLAQItABQABgAIAAAAIQBw8f9/CxAAAPmmAAAPAAAAAAAAAAAAAAAAAK8fAAB3b3JkL3N0eWxlcy54bWxQSwECLQAUAAYACAAAACEAJt76SG8BAAAtBAAAFAAAAAAAAAAAAAAAAADnLwAAd29yZC93ZWJTZXR0aW5ncy54bWxQSwECLQAUAAYACAAAACEA+exowAMCAADVBgAAEgAAAAAAAAAAAAAAAACIMQAAd29yZC9mb250VGFibGUueG1sUEsBAi0AFAAGAAgAAAAhAA+8MaiAAQAAEQMAABEAAAAAAAAAAAAAAAAAuzMAAGRvY1Byb3BzL2NvcmUueG1sUEsBAi0AFAAGAAgAAAAhALPEIajbAQAA2wMAABAAAAAAAAAAAAAAAAAAcjYAAGRvY1Byb3BzL2FwcC54bWxQSwUGAAAAAAsACwDBAgAAgzkAAAAA"}],"Sign":"53a986bbc4fccfbce9e45cb4186e0695"}
+2025-07-30 13:43:19.255 +07:00 [INF] [CreateContract] Sign trong JSON gửi đi: 53a986bbc4fccfbce9e45cb4186e0695
+2025-07-30 13:43:19.293 +07:00 [INF] Start processing HTTP request POST http://piastest.pvi.com.vn/API_CP/ManagerApplication/TaoDon_TNCN_ThongThuong
+2025-07-30 13:43:19.295 +07:00 [INF] Sending HTTP request POST http://piastest.pvi.com.vn/API_CP/ManagerApplication/TaoDon_TNCN_ThongThuong
+2025-07-30 13:43:21.214 +07:00 [INF] Received HTTP response headers after 1914.2908ms - 200
+2025-07-30 13:43:21.219 +07:00 [INF] End processing HTTP request after 1927.2647ms - 200
+2025-07-30 13:43:21.228 +07:00 [INF] [CreateContract] Forwarded to PVI, response: {"Status":"00","Message":"Thanh cong","Pr_key":57189,"URL_Payment":null}
+2025-07-30 13:43:21.415 +07:00 [INF] Executed DbCommand (9ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (Size = -1) (DbType = Binary), @p2='?' (Size = 4000), @p3='?' (DbType = DateTime2), @p4='?' (Size = 200), @p5='?' (DbType = DateTime2), @p6='?' (Size = 200), @p7='?' (Size = 1), @p8='?' (Size = 12), @p9='?' (Size = 200), @p10='?' (Size = 10), @p11='?' (DbType = DateTime2), @p12='?' (DbType = Double), @p13='?' (DbType = Int64), @p14='?' (DbType = DateTime2), @p15='?' (Size = 50), @p16='?' (DbType = Int32), @p17='?' (Size = 50), @p18='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [InsuranceContracts] ([AttachmentContentType], [AttachmentData], [AttachmentFileName], [CreatedAt], [CustAddress], [CustBirthday], [CustEmail], [CustGender], [CustIdNo], [CustName], [CustPhone], [DisbursementDate], [InsRate], [LoanAmount], [LoanDate], [LoanNo], [LoanTerm], [LoanType], [UpdatedAt])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18);
+2025-07-30 13:43:21.431 +07:00 [INF] [CreateContract] Đã lưu DB với ID: 73, LoanNo: thinh32
+2025-07-30 13:43:21.434 +07:00 [INF] Executing ContentResult with HTTP Response ContentType of application/json
+2025-07-30 13:43:21.435 +07:00 [INF] Executed action pviBase.Controllers.HubContractController.CreateContract (pviBase) in 2211.5477ms
+2025-07-30 13:43:21.437 +07:00 [INF] Executed endpoint 'pviBase.Controllers.HubContractController.CreateContract (pviBase)'
+2025-07-30 13:43:21.447 +07:00 [INF] Request finished HTTP/1.1 POST https://localhost:7024/api/v1/HubContract/MAFC_SKNVV_CreateContract - 200 141 application/json 2231.7688ms
+2025-07-30 13:43:39.801 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [r].[Id], [r].[CreatedAt], [r].[ErrorMessage], [r].[LastUpdatedAt], [r].[RequestData], [r].[RequestId], [r].[Status]
+FROM [RequestLogs] AS [r]
+WHERE [r].[Status] IN (N'Failed', N'Pending')
+2025-07-30 13:43:40.027 +07:00 [DBG] Server digi-tbhh2:24196:6612f092 heartbeat successfully sent
+2025-07-30 13:44:10.046 +07:00 [DBG] Server digi-tbhh2:24196:6612f092 heartbeat successfully sent
+2025-07-30 13:44:39.818 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [r].[Id], [r].[CreatedAt], [r].[ErrorMessage], [r].[LastUpdatedAt], [r].[RequestData], [r].[RequestId], [r].[Status]
+FROM [RequestLogs] AS [r]
+WHERE [r].[Status] IN (N'Failed', N'Pending')
+2025-07-30 13:44:40.062 +07:00 [DBG] Server digi-tbhh2:24196:6612f092 heartbeat successfully sent
+2025-07-30 13:45:10.084 +07:00 [DBG] Server digi-tbhh2:24196:6612f092 heartbeat successfully sent
+2025-07-30 13:45:39.842 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [r].[Id], [r].[CreatedAt], [r].[ErrorMessage], [r].[LastUpdatedAt], [r].[RequestData], [r].[RequestId], [r].[Status]
+FROM [RequestLogs] AS [r]
+WHERE [r].[Status] IN (N'Failed', N'Pending')
+2025-07-30 13:45:40.102 +07:00 [DBG] Server digi-tbhh2:24196:6612f092 heartbeat successfully sent
+2025-07-30 13:46:10.110 +07:00 [DBG] Server digi-tbhh2:24196:6612f092 heartbeat successfully sent
+2025-07-30 13:46:22.446 +07:00 [WRN] Stopping the server due to DomainUnload or ProcessExit event...
+2025-07-30 13:46:22.446 +07:00 [INF] Server digi-tbhh2:24196:6612f092 caught stopping signal...
+2025-07-30 13:46:22.447 +07:00 [DBG] Execution loop ExpirationManager:e9f42349 stopped in 0 ms
+2025-07-30 13:46:22.448 +07:00 [DBG] Execution loop ServerJobCancellationWatcher:e66c9550 stopped in 0 ms
+2025-07-30 13:46:22.449 +07:00 [INF] Server digi-tbhh2:24196:6612f092 caught stopped signal...
+2025-07-30 13:46:22.449 +07:00 [DBG] Execution loop ServerWatchdog:82607cd2 stopped in 0.5962 ms
+2025-07-30 13:46:22.449 +07:00 [DBG] Execution loop CountersAggregator:a80c6aec stopped in 0.0077 ms
+2025-07-30 13:46:22.456 +07:00 [WRN] Server digi-tbhh2:24196:6612f092 caught shutdown signal...
+2025-07-30 13:46:22.448 +07:00 [DBG] Execution loop Worker:b4877a82 stopped in 0 ms
+2025-07-30 13:46:22.457 +07:00 [DBG] Execution loop SqlServerHeartbeatProcess:6bf7bbd7 stopped in 8.7028 ms
+2025-07-30 13:46:22.458 +07:00 [DBG] Execution loop ServerHeartbeatProcess:d71a2311 stopped in 0.3881 ms
+2025-07-30 13:46:22.458 +07:00 [WRN] Server digi-tbhh2:24196:6612f092 stopped non-gracefully due to SqlServerHeartbeatProcess, Worker, DelayedJobScheduler, RecurringJobScheduler. Outstanding work on those dispatchers could be aborted, and there can be delays in background processing. This server instance will be incorrectly shown as active for a while. To avoid non-graceful shutdowns, investigate what prevents from stopping gracefully and add CancellationToken support for those methods.
+2025-07-30 13:46:22.448 +07:00 [DBG] Execution loop Worker:82de007b stopped in 0 ms
+2025-07-30 13:46:22.448 +07:00 [DBG] Execution loop Worker:a0bca336 stopped in 0 ms
+2025-07-30 13:46:22.449 +07:00 [DBG] Execution loop Worker:c51ae0a6 stopped in 0.8652 ms
+2025-07-30 13:46:22.450 +07:00 [DBG] Execution loop Worker:ba018a8d stopped in 1.4763 ms
+2025-07-30 13:46:22.448 +07:00 [DBG] Execution loop Worker:88f3baa2 stopped in 0 ms
+2025-07-30 13:46:22.449 +07:00 [DBG] Execution loop Worker:f771a333 stopped in 0.8252 ms
+2025-07-30 13:46:22.449 +07:00 [DBG] Execution loop Worker:9d3270e6 stopped in 0.6006 ms
+2025-07-30 13:46:22.449 +07:00 [DBG] Execution loop Worker:88261e82 stopped in 0.5833 ms
+2025-07-30 13:46:22.449 +07:00 [DBG] Execution loop Worker:2007191c stopped in 0.5795 ms
+2025-07-30 13:46:22.449 +07:00 [DBG] Execution loop Worker:13a14d44 stopped in 0.828 ms
+2025-07-30 13:46:22.450 +07:00 [DBG] Execution loop Worker:a86ae33d stopped in 0.9315 ms
+2025-07-30 13:46:22.449 +07:00 [DBG] Execution loop Worker:ea443980 stopped in 0.5983 ms
+2025-07-30 13:46:22.449 +07:00 [DBG] Execution loop Worker:75eb3d5a stopped in 0.5837 ms
+2025-07-30 13:46:22.450 +07:00 [DBG] Execution loop Worker:d6a2c018 stopped in 1.0056 ms
+2025-07-30 13:46:22.468 +07:00 [INF] Server digi-tbhh2:24196:6612f092 successfully reported itself as stopped in 6.173 ms
+2025-07-30 13:46:22.449 +07:00 [DBG] Execution loop Worker:629e950d stopped in 0.7701 ms
+2025-07-30 13:46:22.448 +07:00 [DBG] Execution loop Worker:634c17ac stopped in 0 ms
+2025-07-30 13:46:22.469 +07:00 [INF] Server digi-tbhh2:24196:6612f092 has been stopped in total 19.9153 ms
+2025-07-30 13:46:22.450 +07:00 [DBG] Execution loop Worker:45f3b619 stopped in 0.9714 ms
+2025-07-30 13:46:22.449 +07:00 [DBG] Execution loop Worker:7c0ab8da stopped in 0.5964 ms
+2025-07-30 13:46:22.471 +07:00 [DBG] Execution loop BackgroundServerProcess:c4813e4b stopped in 21.8835 ms
+2025-07-30 13:46:28.787 +07:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-07-30 13:46:28.822 +07:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-07-30 13:46:28.835 +07:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2025-07-30 13:46:28.878 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2025-07-30 13:46:28.886 +07:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-07-30 13:46:28.888 +07:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-07-30 13:46:28.892 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-07-30 13:46:28.897 +07:00 [INF] No migrations were applied. The database is already up to date.
+2025-07-30 13:46:28.899 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2025-07-30 13:46:29.098 +07:00 [INF] Start installing Hangfire SQL objects...
+2025-07-30 13:46:29.186 +07:00 [INF] Hangfire SQL objects installed.
+2025-07-30 13:46:29.489 +07:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [r].[Id], [r].[CreatedAt], [r].[ErrorMessage], [r].[LastUpdatedAt], [r].[RequestData], [r].[RequestId], [r].[Status]
+FROM [RequestLogs] AS [r]
+WHERE [r].[Status] IN (N'Failed', N'Pending')
+2025-07-30 13:46:29.656 +07:00 [INF] Now listening on: https://localhost:7024
+2025-07-30 13:46:29.657 +07:00 [INF] Now listening on: http://localhost:5017
+2025-07-30 13:46:29.744 +07:00 [INF] Starting Hangfire Server using job storage: 'SQL Server: (localdb)\mssqllocaldb@InsuranceHubDb'
+2025-07-30 13:46:29.744 +07:00 [INF] Using the following options for SQL Server job storage: Queue poll interval: 00:00:00.
+2025-07-30 13:46:29.745 +07:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2025-07-30 13:46:29.757 +07:00 [DBG] Execution loop BackgroundServerProcess:39757447 has started in 6.2417 ms
+2025-07-30 13:46:29.794 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-07-30 13:46:29.795 +07:00 [INF] Hosting environment: Development
+2025-07-30 13:46:29.796 +07:00 [INF] Content root path: C:\Users\ADMIN\source\repos\pviBase
+2025-07-30 13:46:29.803 +07:00 [INF] Server digi-tbhh2:30572:9ab09a73 successfully announced in 8.8629 ms
+2025-07-30 13:46:29.808 +07:00 [DBG] Execution loop ServerHeartbeatProcess:9da2ba74 has started in 3.1686 ms
+2025-07-30 13:46:29.808 +07:00 [INF] Server digi-tbhh2:30572:9ab09a73 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, SqlServerHeartbeatProcess, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2025-07-30 13:46:29.812 +07:00 [DBG] Execution loop ServerWatchdog:37bedfe9 has started in 2.6099 ms
+2025-07-30 13:46:29.814 +07:00 [DBG] Execution loop ServerJobCancellationWatcher:27829057 has started in 4.5928 ms
+2025-07-30 13:46:29.818 +07:00 [DBG] Execution loop SqlServerHeartbeatProcess:ed9d269b has started in 5.4093 ms
+2025-07-30 13:46:29.820 +07:00 [DBG] Execution loop ExpirationManager:2d951caf has started in 5.6878 ms
+2025-07-30 13:46:29.823 +07:00 [DBG] Execution loop CountersAggregator:7f5444de has started in 5.0244 ms
+2025-07-30 13:46:29.825 +07:00 [DBG] Execution loop Worker:98266830 has started in 5.1178 ms
+2025-07-30 13:46:29.828 +07:00 [DBG] Execution loop Worker:a5bd1057 has started in 7.432 ms
+2025-07-30 13:46:29.833 +07:00 [DBG] Removing outdated records from the 'AggregatedCounter' table...
+2025-07-30 13:46:29.833 +07:00 [DBG] Aggregating records in 'Counter' table...
+2025-07-30 13:46:29.830 +07:00 [DBG] Execution loop Worker:c225cc21 has started in 9.7824 ms
+2025-07-30 13:46:29.832 +07:00 [DBG] Execution loop Worker:baf41847 has started in 12.0999 ms
+2025-07-30 13:46:29.850 +07:00 [DBG] Execution loop Worker:6987b796 has started in 29.954 ms
+2025-07-30 13:46:29.835 +07:00 [DBG] Execution loop Worker:59b34f7a has started in 14.4323 ms
+2025-07-30 13:46:29.854 +07:00 [DBG] Removing outdated records from the 'Job' table...
+2025-07-30 13:46:29.837 +07:00 [DBG] Execution loop Worker:de033374 has started in 17.3297 ms
+2025-07-30 13:46:29.840 +07:00 [DBG] Execution loop Worker:d95245bc has started in 19.9584 ms
+2025-07-30 13:46:29.842 +07:00 [DBG] Execution loop Worker:3327788d has started in 22.3177 ms
+2025-07-30 13:46:29.845 +07:00 [DBG] Execution loop Worker:59e75d44 has started in 24.7717 ms
+2025-07-30 13:46:29.848 +07:00 [DBG] Execution loop Worker:818c4c6f has started in 27.4338 ms
+2025-07-30 13:46:29.854 +07:00 [DBG] Execution loop Worker:9b6bdda6 has started in 33.6686 ms
+2025-07-30 13:46:29.856 +07:00 [DBG] Execution loop Worker:77562649 has started in 35.6457 ms
+2025-07-30 13:46:29.878 +07:00 [DBG] Removing outdated records from the 'List' table...
+2025-07-30 13:46:29.881 +07:00 [INF] Server digi-tbhh2:30572:9ab09a73 all the dispatchers started
+2025-07-30 13:46:29.860 +07:00 [DBG] Execution loop Worker:70240848 has started in 40.0269 ms
+2025-07-30 13:46:29.862 +07:00 [DBG] Execution loop Worker:5aeaf660 has started in 42.033 ms
+2025-07-30 13:46:29.865 +07:00 [DBG] Execution loop Worker:13ae6061 has started in 44.7623 ms
+2025-07-30 13:46:29.868 +07:00 [DBG] Execution loop Worker:32f57688 has started in 47.5486 ms
+2025-07-30 13:46:29.871 +07:00 [DBG] Execution loop Worker:b8b19fbd has started in 50.7176 ms
+2025-07-30 13:46:29.874 +07:00 [DBG] Execution loop Worker:11e63a8e has started in 54.1697 ms
+2025-07-30 13:46:29.886 +07:00 [DBG] Removing outdated records from the 'Set' table...
+2025-07-30 13:46:29.877 +07:00 [DBG] Execution loop Worker:1a643ae6 has started in 56.8575 ms
+2025-07-30 13:46:29.882 +07:00 [DBG] Execution loop DelayedJobScheduler:0d1d0e78 has started in 7.4819 ms
+2025-07-30 13:46:29.884 +07:00 [DBG] Execution loop RecurringJobScheduler:3663a7ab has started in 7.163 ms
+2025-07-30 13:46:29.894 +07:00 [DBG] Removing outdated records from the 'Hash' table...
+2025-07-30 13:46:30.057 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7024/_framework/aspnetcore-browser-refresh.js - null null
+2025-07-30 13:46:30.057 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7024/_vs/browserLink - null null
+2025-07-30 13:46:30.090 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7024/_framework/aspnetcore-browser-refresh.js - 200 16499 application/javascript; charset=utf-8 33.8126ms
+2025-07-30 13:46:30.126 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7024/_vs/browserLink - 200 null text/javascript; charset=UTF-8 75.2939ms
+2025-07-30 13:46:30.159 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7024/swagger/v1/swagger.json - null null
+2025-07-30 13:46:30.190 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7024/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 30.9823ms
+2025-07-30 13:46:44.031 +07:00 [INF] Request starting HTTP/1.1 POST https://localhost:7024/api/v1/HubContract/MAFC_SKNVV_CreateContract - multipart/form-data; boundary=--------------------------496196597435436930957539 17754
+2025-07-30 13:46:44.051 +07:00 [INF] Request from IP: ::1
+2025-07-30 13:46:44.055 +07:00 [INF] Executing endpoint 'pviBase.Controllers.HubContractController.CreateContract (pviBase)'
+2025-07-30 13:46:44.074 +07:00 [INF] Route matched with {action = "CreateContract", controller = "HubContract"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateContract(pviBase.Dtos.CreateContractFormDto) on controller pviBase.Controllers.HubContractController (pviBase).
+2025-07-30 13:46:44.764 +07:00 [INF] [CreateContract] Content-Type: multipart/form-data; boundary=--------------------------496196597435436930957539
+2025-07-30 13:46:44.769 +07:00 [INF] [CreateContract] Headers: {"Accept":"*/*","Connection":"keep-alive","Host":"localhost:7024","User-Agent":"PostmanRuntime/7.44.1","Accept-Encoding":"gzip, deflate, br","Content-Type":"multipart/form-data; boundary=--------------------------496196597435436930957539","Content-Length":"17754","Postman-Token":"753ded02-0fdd-4fff-8a69-d1c107cdbfd4"}
+2025-07-30 13:46:44.770 +07:00 [INF] [CreateContract] ModelState.IsValid: True
+2025-07-30 13:46:44.774 +07:00 [WRN] [CreateContract] Rule validation errors: ["InsRate truyền lên không đúng rule. Đúng: 0.03, nhận: 0.02"]
+2025-07-30 13:46:44.780 +07:00 [INF] Executing BadRequestObjectResult, writing value of type 'pviBase.Dtos.ApiResponse'.
+2025-07-30 13:46:44.794 +07:00 [INF] Executed action pviBase.Controllers.HubContractController.CreateContract (pviBase) in 716.5146ms
+2025-07-30 13:46:44.795 +07:00 [INF] Executed endpoint 'pviBase.Controllers.HubContractController.CreateContract (pviBase)'
+2025-07-30 13:46:44.799 +07:00 [INF] Request finished HTTP/1.1 POST https://localhost:7024/api/v1/HubContract/MAFC_SKNVV_CreateContract - 400 201 application/json; charset=utf-8 767.831ms
+2025-07-30 13:46:59.826 +07:00 [DBG] Server digi-tbhh2:30572:9ab09a73 heartbeat successfully sent
+2025-07-30 13:47:11.523 +07:00 [WRN] Stopping the server due to DomainUnload or ProcessExit event...
+2025-07-30 13:47:11.524 +07:00 [INF] Server digi-tbhh2:30572:9ab09a73 caught stopping signal...
+2025-07-30 13:47:11.525 +07:00 [DBG] Execution loop ExpirationManager:2d951caf stopped in 0 ms
+2025-07-30 13:47:11.526 +07:00 [DBG] Execution loop Worker:d95245bc stopped in 0.2098 ms
+2025-07-30 13:47:11.526 +07:00 [INF] Server digi-tbhh2:30572:9ab09a73 caught stopped signal...
+2025-07-30 13:47:11.526 +07:00 [DBG] Execution loop ServerWatchdog:37bedfe9 stopped in 0.3696 ms
+2025-07-30 13:47:11.525 +07:00 [DBG] Execution loop ServerJobCancellationWatcher:27829057 stopped in 0 ms
+2025-07-30 13:47:11.527 +07:00 [WRN] Server digi-tbhh2:30572:9ab09a73 caught shutdown signal...
+2025-07-30 13:47:11.526 +07:00 [DBG] Execution loop CountersAggregator:7f5444de stopped in 0.0875 ms
+2025-07-30 13:47:11.526 +07:00 [DBG] Execution loop Worker:98266830 stopped in 0.4096 ms
+2025-07-30 13:47:11.529 +07:00 [WRN] Server digi-tbhh2:30572:9ab09a73 stopped non-gracefully due to SqlServerHeartbeatProcess, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler. Outstanding work on those dispatchers could be aborted, and there can be delays in background processing. This server instance will be incorrectly shown as active for a while. To avoid non-graceful shutdowns, investigate what prevents from stopping gracefully and add CancellationToken support for those methods.
+2025-07-30 13:47:11.529 +07:00 [DBG] Execution loop ServerHeartbeatProcess:9da2ba74 stopped in 0.2746 ms
+2025-07-30 13:47:11.529 +07:00 [DBG] Execution loop SqlServerHeartbeatProcess:ed9d269b stopped in 3.1558 ms
+2025-07-30 13:47:11.526 +07:00 [DBG] Execution loop Worker:a5bd1057 stopped in 0 ms
+2025-07-30 13:47:11.526 +07:00 [DBG] Execution loop Worker:c225cc21 stopped in 0 ms
+2025-07-30 13:47:11.526 +07:00 [DBG] Execution loop Worker:baf41847 stopped in 0 ms
+2025-07-30 13:47:11.526 +07:00 [DBG] Execution loop Worker:59b34f7a stopped in 0.0153 ms
+2025-07-30 13:47:11.526 +07:00 [DBG] Execution loop Worker:de033374 stopped in 0 ms
+2025-07-30 13:47:11.526 +07:00 [DBG] Execution loop Worker:3327788d stopped in 0.1137 ms
+2025-07-30 13:47:11.526 +07:00 [DBG] Execution loop Worker:59e75d44 stopped in 0 ms
+2025-07-30 13:47:11.526 +07:00 [DBG] Execution loop Worker:818c4c6f stopped in 0.0119 ms
+2025-07-30 13:47:11.526 +07:00 [DBG] Execution loop Worker:6987b796 stopped in 0 ms
+2025-07-30 13:47:11.526 +07:00 [DBG] Execution loop Worker:9b6bdda6 stopped in 0.5323 ms
+2025-07-30 13:47:11.526 +07:00 [DBG] Execution loop Worker:77562649 stopped in 0.467 ms
+2025-07-30 13:47:11.526 +07:00 [DBG] Execution loop Worker:70240848 stopped in 0.4798 ms
+2025-07-30 13:47:11.538 +07:00 [INF] Server digi-tbhh2:30572:9ab09a73 successfully reported itself as stopped in 6.359 ms
+2025-07-30 13:47:11.526 +07:00 [DBG] Execution loop Worker:5aeaf660 stopped in 0.6191 ms
+2025-07-30 13:47:11.526 +07:00 [DBG] Execution loop Worker:13ae6061 stopped in 0.4802 ms
+2025-07-30 13:47:11.540 +07:00 [INF] Server digi-tbhh2:30572:9ab09a73 has been stopped in total 13.6377 ms
+2025-07-30 13:47:11.527 +07:00 [DBG] Execution loop Worker:32f57688 stopped in 1.0309 ms
+2025-07-30 13:47:11.525 +07:00 [DBG] Execution loop Worker:b8b19fbd stopped in 0 ms
+2025-07-30 13:47:11.541 +07:00 [DBG] Execution loop BackgroundServerProcess:39757447 stopped in 15.2147 ms
+2025-07-30 13:50:19.516 +07:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-07-30 13:50:19.560 +07:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-07-30 13:50:19.574 +07:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2025-07-30 13:50:19.624 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2025-07-30 13:50:19.631 +07:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-07-30 13:50:19.633 +07:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-07-30 13:50:19.637 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-07-30 13:50:19.643 +07:00 [INF] No migrations were applied. The database is already up to date.
+2025-07-30 13:50:19.645 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2025-07-30 13:50:19.803 +07:00 [INF] Start installing Hangfire SQL objects...
+2025-07-30 13:50:19.924 +07:00 [INF] Hangfire SQL objects installed.
+2025-07-30 13:50:20.291 +07:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [r].[Id], [r].[CreatedAt], [r].[ErrorMessage], [r].[LastUpdatedAt], [r].[RequestData], [r].[RequestId], [r].[Status]
+FROM [RequestLogs] AS [r]
+WHERE [r].[Status] IN (N'Failed', N'Pending')
+2025-07-30 13:50:20.484 +07:00 [INF] Now listening on: https://localhost:7024
+2025-07-30 13:50:20.485 +07:00 [INF] Now listening on: http://localhost:5017
+2025-07-30 13:50:20.568 +07:00 [INF] Starting Hangfire Server using job storage: 'SQL Server: (localdb)\mssqllocaldb@InsuranceHubDb'
+2025-07-30 13:50:20.569 +07:00 [INF] Using the following options for SQL Server job storage: Queue poll interval: 00:00:00.
+2025-07-30 13:50:20.570 +07:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2025-07-30 13:50:20.583 +07:00 [DBG] Execution loop BackgroundServerProcess:032bd5a0 has started in 6.6634 ms
+2025-07-30 13:50:20.592 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-07-30 13:50:20.593 +07:00 [INF] Hosting environment: Development
+2025-07-30 13:50:20.594 +07:00 [INF] Content root path: C:\Users\ADMIN\source\repos\pviBase
+2025-07-30 13:50:20.608 +07:00 [INF] Server digi-tbhh2:13208:0ca34a58 successfully announced in 10.1886 ms
+2025-07-30 13:50:20.613 +07:00 [DBG] Execution loop ServerHeartbeatProcess:61a97f6e has started in 4.3072 ms
+2025-07-30 13:50:20.614 +07:00 [INF] Server digi-tbhh2:13208:0ca34a58 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, SqlServerHeartbeatProcess, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2025-07-30 13:50:20.619 +07:00 [DBG] Execution loop ServerWatchdog:c0a0e5f9 has started in 3.8216 ms
+2025-07-30 13:50:20.625 +07:00 [DBG] Execution loop ServerJobCancellationWatcher:bc0240bc has started in 9.7684 ms
+2025-07-30 13:50:20.627 +07:00 [DBG] Execution loop SqlServerHeartbeatProcess:c3541685 has started in 8.0667 ms
+2025-07-30 13:50:20.632 +07:00 [DBG] Execution loop ExpirationManager:b9fbe9c1 has started in 6.6965 ms
+2025-07-30 13:50:20.633 +07:00 [DBG] Execution loop CountersAggregator:cc6d0556 has started in 5.7539 ms
+2025-07-30 13:50:20.637 +07:00 [DBG] Execution loop Worker:9c94164c has started in 5.1484 ms
+2025-07-30 13:50:20.640 +07:00 [DBG] Execution loop Worker:4460b516 has started in 8.6047 ms
+2025-07-30 13:50:20.645 +07:00 [DBG] Execution loop Worker:42e30746 has started in 13.1845 ms
+2025-07-30 13:50:20.651 +07:00 [DBG] Removing outdated records from the 'AggregatedCounter' table...
+2025-07-30 13:50:20.647 +07:00 [DBG] Execution loop Worker:55985415 has started in 14.989 ms
+2025-07-30 13:50:20.651 +07:00 [DBG] Aggregating records in 'Counter' table...
+2025-07-30 13:50:20.650 +07:00 [DBG] Execution loop Worker:38b5b8ac has started in 17.8647 ms
+2025-07-30 13:50:20.652 +07:00 [DBG] Execution loop Worker:0b9df4c7 has started in 20.5738 ms
+2025-07-30 13:50:20.657 +07:00 [DBG] Execution loop Worker:9b905eb6 has started in 25.818 ms
+2025-07-30 13:50:20.686 +07:00 [DBG] Removing outdated records from the 'Job' table...
+2025-07-30 13:50:20.660 +07:00 [DBG] Execution loop Worker:51c2dc0b has started in 27.9944 ms
+2025-07-30 13:50:20.663 +07:00 [DBG] Execution loop Worker:18ff1d6f has started in 31.1347 ms
+2025-07-30 13:50:20.666 +07:00 [DBG] Execution loop Worker:e678b074 has started in 34.0725 ms
+2025-07-30 13:50:20.669 +07:00 [DBG] Execution loop Worker:bbb0672e has started in 37.0943 ms
+2025-07-30 13:50:20.673 +07:00 [DBG] Execution loop Worker:b98c0b36 has started in 41.0361 ms
+2025-07-30 13:50:20.679 +07:00 [DBG] Execution loop Worker:24b681a6 has started in 46.5691 ms
+2025-07-30 13:50:20.709 +07:00 [INF] Server digi-tbhh2:13208:0ca34a58 all the dispatchers started
+2025-07-30 13:50:20.681 +07:00 [DBG] Execution loop Worker:34995a39 has started in 49.2112 ms
+2025-07-30 13:50:20.685 +07:00 [DBG] Execution loop Worker:ecf33ce8 has started in 52.9483 ms
+2025-07-30 13:50:20.690 +07:00 [DBG] Execution loop Worker:326e9bfe has started in 58.3671 ms
+2025-07-30 13:50:20.692 +07:00 [DBG] Execution loop Worker:d39b1cb1 has started in 60.709 ms
+2025-07-30 13:50:20.696 +07:00 [DBG] Execution loop Worker:b90fb380 has started in 63.9621 ms
+2025-07-30 13:50:20.718 +07:00 [DBG] Removing outdated records from the 'List' table...
+2025-07-30 13:50:20.699 +07:00 [DBG] Execution loop Worker:79bcee5a has started in 67.5731 ms
+2025-07-30 13:50:20.703 +07:00 [DBG] Execution loop Worker:e688dbe0 has started in 71.0399 ms
+2025-07-30 13:50:20.709 +07:00 [DBG] Execution loop DelayedJobScheduler:1d3c7b8d has started in 9.1636 ms
+2025-07-30 13:50:20.713 +07:00 [DBG] Execution loop RecurringJobScheduler:1d1da588 has started in 8.9385 ms
+2025-07-30 13:50:20.728 +07:00 [DBG] Removing outdated records from the 'Set' table...
+2025-07-30 13:50:20.738 +07:00 [DBG] Removing outdated records from the 'Hash' table...
+2025-07-30 13:50:21.184 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7024/_framework/aspnetcore-browser-refresh.js - null null
+2025-07-30 13:50:21.184 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7024/_vs/browserLink - null null
+2025-07-30 13:50:21.215 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7024/_framework/aspnetcore-browser-refresh.js - 200 16499 application/javascript; charset=utf-8 40.0528ms
+2025-07-30 13:50:21.258 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7024/_vs/browserLink - 200 null text/javascript; charset=UTF-8 83.1683ms
+2025-07-30 13:50:21.284 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7024/swagger/v1/swagger.json - null null
+2025-07-30 13:50:21.317 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7024/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 32.8124ms
+2025-07-30 13:50:29.968 +07:00 [INF] Request starting HTTP/1.1 POST https://localhost:7024/api/v1/HubContract/MAFC_SKNVV_CreateContract - multipart/form-data; boundary=--------------------------914050298847168359220366 17754
+2025-07-30 13:50:29.993 +07:00 [INF] Request from IP: ::1
+2025-07-30 13:50:29.998 +07:00 [INF] Executing endpoint 'pviBase.Controllers.HubContractController.CreateContract (pviBase)'
+2025-07-30 13:50:30.027 +07:00 [INF] Route matched with {action = "CreateContract", controller = "HubContract"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateContract(pviBase.Dtos.CreateContractFormDto) on controller pviBase.Controllers.HubContractController (pviBase).
+2025-07-30 13:50:30.191 +07:00 [INF] [CreateContract] Content-Type: multipart/form-data; boundary=--------------------------914050298847168359220366
+2025-07-30 13:50:30.196 +07:00 [INF] [CreateContract] Headers: {"Accept":"*/*","Connection":"keep-alive","Host":"localhost:7024","User-Agent":"PostmanRuntime/7.44.1","Accept-Encoding":"gzip, deflate, br","Content-Type":"multipart/form-data; boundary=--------------------------914050298847168359220366","Content-Length":"17754","Postman-Token":"3c63555e-872a-4126-94f8-da8354fe5e3c"}
+2025-07-30 13:50:30.198 +07:00 [INF] [CreateContract] ModelState.IsValid: True
+2025-07-30 13:50:30.201 +07:00 [WRN] [CreateContract] Rule validation errors: ["CustGender chỉ nhận giá trị 'M' hoặc 'FM'. Nhận: a"]
+2025-07-30 13:50:30.210 +07:00 [INF] Executing BadRequestObjectResult, writing value of type 'pviBase.Dtos.ApiResponse'.
+2025-07-30 13:50:30.228 +07:00 [INF] Executed action pviBase.Controllers.HubContractController.CreateContract (pviBase) in 196.6152ms
+2025-07-30 13:50:30.229 +07:00 [INF] Executed endpoint 'pviBase.Controllers.HubContractController.CreateContract (pviBase)'
+2025-07-30 13:50:30.233 +07:00 [INF] Request finished HTTP/1.1 POST https://localhost:7024/api/v1/HubContract/MAFC_SKNVV_CreateContract - 400 194 application/json; charset=utf-8 265.1742ms
+2025-07-30 13:56:36.502 +07:00 [DBG] Server digi-tbhh2:13208:0ca34a58 heartbeat successfully sent
+2025-07-30 13:57:06.294 +07:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [r].[Id], [r].[CreatedAt], [r].[ErrorMessage], [r].[LastUpdatedAt], [r].[RequestData], [r].[RequestId], [r].[Status]
+FROM [RequestLogs] AS [r]
+WHERE [r].[Status] IN (N'Failed', N'Pending')
+2025-07-30 13:57:06.509 +07:00 [DBG] Server digi-tbhh2:13208:0ca34a58 heartbeat successfully sent
+2025-07-30 15:23:22.210 +07:00 [DBG] Server digi-tbhh2:13208:0ca34a58 heartbeat successfully sent
+2025-07-30 15:23:51.998 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [r].[Id], [r].[CreatedAt], [r].[ErrorMessage], [r].[LastUpdatedAt], [r].[RequestData], [r].[RequestId], [r].[Status]
+FROM [RequestLogs] AS [r]
+WHERE [r].[Status] IN (N'Failed', N'Pending')
+2025-07-30 15:23:52.224 +07:00 [DBG] Server digi-tbhh2:13208:0ca34a58 heartbeat successfully sent
+2025-07-30 15:24:22.242 +07:00 [DBG] Server digi-tbhh2:13208:0ca34a58 heartbeat successfully sent
+2025-07-30 15:24:52.026 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [r].[Id], [r].[CreatedAt], [r].[ErrorMessage], [r].[LastUpdatedAt], [r].[RequestData], [r].[RequestId], [r].[Status]
+FROM [RequestLogs] AS [r]
+WHERE [r].[Status] IN (N'Failed', N'Pending')
+2025-07-30 15:24:52.254 +07:00 [DBG] Server digi-tbhh2:13208:0ca34a58 heartbeat successfully sent
+2025-07-30 15:25:22.261 +07:00 [DBG] Server digi-tbhh2:13208:0ca34a58 heartbeat successfully sent
+2025-07-30 15:25:30.092 +07:00 [WRN] Stopping the server due to DomainUnload or ProcessExit event...
+2025-07-30 15:25:30.092 +07:00 [INF] Server digi-tbhh2:13208:0ca34a58 caught stopping signal...
+2025-07-30 15:25:30.093 +07:00 [DBG] Execution loop ExpirationManager:b9fbe9c1 stopped in 0 ms
+2025-07-30 15:25:30.094 +07:00 [DBG] Execution loop RecurringJobScheduler:1d1da588 stopped in 0 ms
+2025-07-30 15:25:30.094 +07:00 [DBG] Execution loop ServerJobCancellationWatcher:bc0240bc stopped in 0 ms
+2025-07-30 15:25:30.094 +07:00 [DBG] Execution loop DelayedJobScheduler:1d3c7b8d stopped in 0 ms
+2025-07-30 15:25:30.099 +07:00 [DBG] Execution loop CountersAggregator:cc6d0556 stopped in 0 ms
+2025-07-30 15:25:30.102 +07:00 [INF] Server digi-tbhh2:13208:0ca34a58 caught stopped signal...
+2025-07-30 15:25:30.102 +07:00 [DBG] Execution loop ServerWatchdog:c0a0e5f9 stopped in 0.2461 ms
+2025-07-30 15:25:30.099 +07:00 [DBG] Execution loop Worker:9c94164c stopped in 0 ms
+2025-07-30 15:25:30.103 +07:00 [WRN] Server digi-tbhh2:13208:0ca34a58 caught shutdown signal...
+2025-07-30 15:25:30.102 +07:00 [DBG] Execution loop Worker:4460b516 stopped in 0.3472 ms
+2025-07-30 15:25:30.104 +07:00 [DBG] Execution loop SqlServerHeartbeatProcess:c3541685 stopped in 2.7946 ms
+2025-07-30 15:25:30.104 +07:00 [DBG] Execution loop ServerHeartbeatProcess:61a97f6e stopped in 0.2057 ms
+2025-07-30 15:25:30.105 +07:00 [WRN] Server digi-tbhh2:13208:0ca34a58 stopped non-gracefully due to SqlServerHeartbeatProcess, Worker. Outstanding work on those dispatchers could be aborted, and there can be delays in background processing. This server instance will be incorrectly shown as active for a while. To avoid non-graceful shutdowns, investigate what prevents from stopping gracefully and add CancellationToken support for those methods.
+2025-07-30 15:25:30.102 +07:00 [DBG] Execution loop Worker:42e30746 stopped in 0.1621 ms
+2025-07-30 15:25:30.101 +07:00 [DBG] Execution loop Worker:55985415 stopped in 0.0152 ms
+2025-07-30 15:25:30.102 +07:00 [DBG] Execution loop Worker:38b5b8ac stopped in 0.1676 ms
+2025-07-30 15:25:30.102 +07:00 [DBG] Execution loop Worker:0b9df4c7 stopped in 0.2327 ms
+2025-07-30 15:25:30.101 +07:00 [DBG] Execution loop Worker:9b905eb6 stopped in 0.038 ms
+2025-07-30 15:25:30.100 +07:00 [DBG] Execution loop Worker:51c2dc0b stopped in 0 ms
+2025-07-30 15:25:30.101 +07:00 [DBG] Execution loop Worker:18ff1d6f stopped in 0.0475 ms
+2025-07-30 15:25:30.102 +07:00 [DBG] Execution loop Worker:e678b074 stopped in 0.1671 ms
+2025-07-30 15:25:30.102 +07:00 [DBG] Execution loop Worker:bbb0672e stopped in 0.1676 ms
+2025-07-30 15:25:30.102 +07:00 [DBG] Execution loop Worker:b98c0b36 stopped in 0.1696 ms
+2025-07-30 15:25:30.102 +07:00 [DBG] Execution loop Worker:24b681a6 stopped in 0.7528 ms
+2025-07-30 15:25:30.102 +07:00 [DBG] Execution loop Worker:34995a39 stopped in 0.3458 ms
+2025-07-30 15:25:30.102 +07:00 [DBG] Execution loop Worker:ecf33ce8 stopped in 0.7452 ms
+2025-07-30 15:25:30.102 +07:00 [DBG] Execution loop Worker:326e9bfe stopped in 0.7378 ms
+2025-07-30 15:25:30.102 +07:00 [DBG] Execution loop Worker:d39b1cb1 stopped in 0.7378 ms
+2025-07-30 15:25:30.102 +07:00 [DBG] Execution loop Worker:b90fb380 stopped in 0.7344 ms
+2025-07-30 15:25:30.116 +07:00 [INF] Server digi-tbhh2:13208:0ca34a58 successfully reported itself as stopped in 7.1564 ms
+2025-07-30 15:25:30.102 +07:00 [DBG] Execution loop Worker:79bcee5a stopped in 0.7427 ms
+2025-07-30 15:25:30.102 +07:00 [DBG] Execution loop Worker:e688dbe0 stopped in 0.7373 ms
+2025-07-30 15:25:30.116 +07:00 [INF] Server digi-tbhh2:13208:0ca34a58 has been stopped in total 15.0258 ms
+2025-07-30 15:25:30.118 +07:00 [DBG] Execution loop BackgroundServerProcess:032bd5a0 stopped in 16.6292 ms

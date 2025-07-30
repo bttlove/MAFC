@@ -12,7 +12,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
-using pviBase.Data; 
+using pviBase.Data;
 
 namespace pviBase.Controllers
 {
@@ -27,6 +27,7 @@ namespace pviBase.Controllers
         private readonly IValidator<GetContractByLoanNoRequestDto> _getByLoanNoValidator;
         private readonly PviApiForwardService _pviApiForwardService;
         private readonly ApplicationDbContext _dbContext; // ✅ THÊM ApplicationDbContext
+        private readonly RequestLogService _requestLogService;
 
         public HubContractController(
             IInsuranceService insuranceService,
@@ -59,7 +60,25 @@ namespace pviBase.Controllers
                     return BadRequest("JSON is required");
                 }
                 _logger.LogInformation($"[ForwardToPviApi] Forward trực tiếp request lên API PVI thật. json null? {json == null}, file null? {file == null}");
-                var response = await _pviApiForwardService.ForwardRawRequestToPviApi(json, file);
+
+                byte[]? fileBytes = null;
+                string? fileName = null;
+                string? contentTypeFile = null;
+                if (file != null)
+                {
+                    using var ms = new System.IO.MemoryStream();
+                    await file.CopyToAsync(ms);
+                    fileBytes = ms.ToArray();
+                    fileName = file.FileName;
+                    contentTypeFile = file.ContentType;
+                }
+
+                var response = await _pviApiForwardService.ForwardRawRequestToPviApi(
+                    json,
+                    fileBytes ?? Array.Empty<byte>(),
+                    fileName ?? "",
+                    contentTypeFile ?? ""
+                );
                 _logger.LogInformation($"[ForwardToPviApi] Nhận response từ API thật: {response}");
                 return Content(response, "application/json");
             }
@@ -121,6 +140,7 @@ namespace pviBase.Controllers
         [HttpPost("CreateContract")]
         public async Task<IActionResult> CreateContract([FromForm] CreateContractFormDto form)
         {
+
             var headers = Request.Headers.ToDictionary(h => h.Key, h => h.Value.ToString());
             var contentType = Request.ContentType;
             var modelStateValid = ModelState.IsValid;
@@ -142,60 +162,99 @@ namespace pviBase.Controllers
                 return BadRequest(new ApiResponse(false, "INVALID_MODELSTATE", "Dữ liệu không hợp lệ", modelStateErrors));
             }
 
-            // Parse JSON
-            var requestJson = form.RequestJson;
-            dynamic? req = JsonConvert.DeserializeObject(requestJson);
-            if (req == null || req.data == null || req.data.Count == 0)
+            // --- Kiểm tra rule hợp lệ cho các trường: ma_chuongtrinh, phi_tyle_phi, thoihan_bh, sotien_bh ---
+
+            // Bảng rule chương trình bảo hiểm (9 chương trình, nhiều thời hạn, phần trăm số tiền bảo hiểm)
+            var programRules = new Dictionary<string, (double feeRate, Dictionary<int, double> insuredPercents)>
             {
-                return BadRequest(new ApiResponse(false, "INVALID_JSON", "Không thể phân tích request JSON"));
+                { "CT01", (0.03, new Dictionary<int, double> { {12, 2.5}, {24, 1.5}, {36, 1.2}, {48, 1.2} }) },
+                { "CT02", (0.033, new Dictionary<int, double> { {12, 2.75}, {24, 1.65}, {36, 1.3}, {48, 1.3} }) },
+                { "CT03", (0.045, new Dictionary<int, double> { {12, 3.75}, {24, 2.25}, {36, 1.8}, {48, 1.8} }) },
+                { "CT04", (0.05,  new Dictionary<int, double> { {12, 4.15}, {24, 2.5}, {36, 2.0}, {48, 2.0} }) },
+                { "CT05", (0.055, new Dictionary<int, double> { {12, 4.6}, {24, 2.75}, {36, 2.2}, {48, 2.2} }) },
+                { "CT06", (0.06,  new Dictionary<int, double> { {12, 5.0}, {24, 3.0}, {36, 2.4}, {48, 2.4} }) },
+                { "CT07", (0.066, new Dictionary<int, double> { {12, 5.5}, {24, 3.3}, {36, 2.64}, {48, 2.64} }) },
+                { "CT08", (0.07,  new Dictionary<int, double> { {12, 5.8}, {24, 3.5}, {36, 2.8}, {48, 2.8} }) },
+                { "CT09", (0.077, new Dictionary<int, double> { {12, 6.0}, {24, 3.8}, {36, 3.0}, {48, 3.0} }) }
+            };
+
+            string ma_chuongtrinh = string.IsNullOrWhiteSpace(form.MaChuongTrinh) ? "" : form.MaChuongTrinh.Trim().ToUpper();
+            int months = form.LoanTerm;
+            // Làm tròn thời hạn bảo hiểm lên mốc gần nhất: 12, 24, 36, 48
+            if (months < 12)
+                months = 12;
+            else if (months > 12 && months <= 24)
+                months = 24;
+            else if (months > 24 && months <= 36)
+                months = 36;
+            else if (months > 36)
+                months = 48;
+
+            long loanAmount = form.LoanAmount;
+            var ruleErrors = new List<string>();
+            // Kiểm tra CustGender chỉ nhận 'M' hoặc 'FM'
+            if (!string.IsNullOrEmpty(form.CustGender) && form.CustGender != "M" && form.CustGender != "FM")
+            {
+                ruleErrors.Add($"CustGender chỉ nhận giá trị 'M' hoặc 'FM'. Nhận: {form.CustGender}");
+            }
+            if (loanAmount < 1 || loanAmount > 100_000_000)
+            {
+                ruleErrors.Add($"Số tiền vay (loanAmount) phải từ 1 đến 100,000,000. Nhận: {loanAmount}");
+            }
+            if (!programRules.ContainsKey(ma_chuongtrinh))
+            {
+                ruleErrors.Add($"Mã chương trình không hợp lệ: {ma_chuongtrinh}");
+            }
+            else if (!programRules[ma_chuongtrinh].insuredPercents.ContainsKey(months))
+            {
+                var validTerms = string.Join(", ", programRules[ma_chuongtrinh].insuredPercents.Keys.Select(k => k + " tháng"));
+                ruleErrors.Add($"Thời hạn bảo hiểm không hợp lệ cho chương trình {ma_chuongtrinh}. Đúng: {validTerms}, nhận: {months} tháng");
             }
 
-            var d = req.data[0];
+            // Kiểm tra insRate client truyền lên
+            if (Math.Abs(form.InsRate - programRules[ma_chuongtrinh].feeRate) > 0.00001)
+            {
+                ruleErrors.Add($"InsRate truyền lên không đúng rule. Đúng: {programRules[ma_chuongtrinh].feeRate}, nhận: {form.InsRate}");
+            }
 
-            // ---- Tạo object để forward ----
+            if (ruleErrors.Count > 0)
+            {
+                _logger.LogWarning($"[CreateContract] Rule validation errors: {JsonConvert.SerializeObject(ruleErrors)}");
+                return BadRequest(new ApiResponse(false, "INVALID_RULE", "Dữ liệu không hợp lệ theo rule chương trình bảo hiểm", ruleErrors));
+            }
+
+            // Tính toán đúng rule
+            var rule = programRules[ma_chuongtrinh];
+            double phi_tyle_phi = rule.feeRate;
+            var percent = rule.insuredPercents[months];
+            long sotien_bh = (long)(loanAmount * percent);
+            double tong_phi_bh = loanAmount * phi_tyle_phi;
+
+            // Kiểm tra trùng mã hợp đồng trước khi lưu DB
+            bool existed = _dbContext.InsuranceContracts.Any(x => x.LoanNo == form.LoanNo);
+            if (existed)
+            {
+                _logger.LogWarning($"[CreateContract] Mã hợp đồng đã tồn tại: {form.LoanNo}");
+                return BadRequest(new ApiResponse(false, "DUPLICATE_LOANNO", $"Mã hợp đồng đã tồn tại: {form.LoanNo}"));
+            }
+
+            // Lấy dữ liệu trực tiếp từ form
             string CpId = "15e1c1cf1c2a4ae8a5f0e5c8c10bf3a6";
             string StartTime = "00:00";
             string EndTime = "23:59";
-            string ngay_batdau = (string)(d?.disbursementDate ?? "01/01/2026");
-            string ma_gdich_doitac = (string)(d?.loanNo ?? "");
-            long sotien_bh = d?.loanAmount != null ? (long)d.loanAmount : 0;
-            double phi_tyle_phi = d?.insRate != null ? (double)d.insRate : 0;
+            string ngay_batdau = form.DisbursementDate ?? "01/01/2026";
+            string ma_gdich_doitac = form.LoanNo ?? "";
 
             // Tính hạn bảo hiểm
             string thoihan_bh = "";
-            if (!string.IsNullOrEmpty((string)(d?.thoihan_bh ?? "")))
+            if (!string.IsNullOrEmpty(ngay_batdau))
             {
-                thoihan_bh = (string)d.thoihan_bh;
-            }
-            else if (d?.loanTerm != null && !string.IsNullOrEmpty(ngay_batdau))
-            {
-                int months = 0;
-                int.TryParse(d.loanTerm.ToString(), out months);
                 DateTime dtStart;
                 if (DateTime.TryParseExact(ngay_batdau, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out dtStart))
                 {
                     var dtEnd = dtStart.AddMonths(months);
                     thoihan_bh = dtEnd.ToString("dd/MM/yyyy");
                 }
-            }
-
-            double tong_phi_bh = 0;
-            if (d?.loanAmount != null && d?.insRate != null)
-            {
-                double rate = 0;
-                if (d.insRate is double)
-                {
-                    rate = (double)d.insRate;
-                }
-                else if (d.insRate is string s && double.TryParse(s, out var parsed))
-                {
-                    rate = parsed;
-                }
-                else
-                {
-                    double.TryParse(d.insRate.ToString(), out rate);
-                }
-                tong_phi_bh = sotien_bh * rate;
             }
 
             // File đính kèm
@@ -277,37 +336,38 @@ namespace pviBase.Controllers
                 CpId,
                 StartTime,
                 EndTime,
-                nguoi_thuhuong = (string)(d?.custName ?? ""),
-                dia_chi_th = (string)(d?.custAddress ?? ""),
-                quyen_loibh = (string)(d?.quyen_loibh ?? "Tai nạn cá nhân"),
-                dtbh_tg_cho_01 = d?.dtbh_tg_cho_01 != null ? (bool)d.dtbh_tg_cho_01 : true,
-                dtbh_tg_cho_02 = d?.dtbh_tg_cho_02 != null ? (bool)d.dtbh_tg_cho_02 : false,
+                product_Code = form.ProductCode ?? "",
+                nguoi_thuhuong = form.CustName ?? "",
+                dia_chi_th = form.CustAddress ?? "",
+                quyen_loibh = "Tai nạn cá nhân",
+                dtbh_tg_cho_01 = true,
+                dtbh_tg_cho_02 = false,
                 dtbh_tg_cho_03 = true,
-                dien_thoai = (string)(d?.custPhone ?? ""),
-                khach_hang = (string)(d?.custName ?? ""),
+                dien_thoai = form.CustPhone ?? "",
+                khach_hang = form.CustName ?? "",
                 sotien_bh = sotien_bh != 0 ? (object)sotien_bh : 0,
                 thoihan_bh,
                 phi_tyle_phi,
                 tong_phi_bh,
-                Email = (string)(d?.custEmail ?? ""),
+                Email = form.CustEmail ?? "",
                 ngay_batdau,
-                dia_chi = (string)(d?.custAddress ?? ""),
+                dia_chi = form.CustAddress ?? "",
                 ma_gdich_doitac,
                 ma_sp = "010402",
-                ma_chuongtrinh = "CT01",
+                ma_chuongtrinh = form.MaChuongTrinh ?? "",
                 NguoiDinhKem = new[]
                 {
-            new {
-                ho_ten = (string)(d?.custName ?? ""),
-                gioi_tinh = (string)(d?.custGender ?? ""),
-                ngay_sinh = (string)(d?.custBirthday ?? ""),
-                dia_chi = (string)(d?.custAddress ?? ""),
-                dien_thoai = (string)(d?.custPhone ?? ""),
-                cmt_hc = (string)(d?.custIdNo ?? "")
-            }
-        },
-                sohopdong_tindung = (string)(d?.loanNo ?? ""),
-                ngayhopdong_tindung = (string)(d?.loanDate ?? "01/01/2025"),
+                    new {
+                        ho_ten = form.CustName ?? "",
+                        gioi_tinh = form.CustGender ?? "",
+                        ngay_sinh = form.CustBirthday ?? "",
+                        dia_chi = form.CustAddress ?? "",
+                        dien_thoai = form.CustPhone ?? "",
+                        cmt_hc = form.CustIdNo ?? ""
+                    }
+                },
+                sohopdong_tindung = form.LoanNo ?? "",
+                ngayhopdong_tindung = form.LoanDate ?? "01/01/2025",
                 laisuat_chovay = phi_tyle_phi,
                 FileAttach,
                 Sign
@@ -318,30 +378,35 @@ namespace pviBase.Controllers
             _logger.LogInformation($"[CreateContract] Sign trong JSON gửi đi: {Sign}");
 
             // --- Gửi về PVI ---
-            var response = await _pviApiForwardService.ForwardRawRequestToPviApi(jsonToSend, form.AllAttachments?.FirstOrDefault());
+            var response = await _pviApiForwardService.ForwardRawRequestToPviApi(
+                jsonToSend,
+                fileBytes ?? Array.Empty<byte>(),
+                fileName ?? "",
+                contentTypeFile ?? ""
+            );
             _logger.LogInformation($"[CreateContract] Forwarded to PVI, response: {response}");
 
             // --- Lưu xuống DB ---
             var contract = new InsuranceContract
             {
-                LoanNo = (string)(d.loanNo ?? ""),
-                LoanType = (string)(d.loanType ?? "DEFAULT"),
-                LoanDate = ParseDate(d.loanDate, "01/01/2025"),
-                CustName = (string)(d.custName ?? ""),
-                CustBirthday = ParseDate(d.custBirthday, "01/01/2000"),
-                CustGender = (string)(d.custGender ?? "M"),
-                CustIdNo = (string)(d.custIdNo ?? ""),
-                CustAddress = (string)(d.custAddress ?? ""),
-                CustPhone = (string)(d.custPhone ?? ""),
-                CustEmail = (string)(d.custEmail ?? ""),
+                LoanNo = form.LoanNo ?? "",
+                LoanType = form.LoanType ?? "DEFAULT",
+                LoanDate = ParseDate(form.LoanDate, "01/01/2025"),
+                CustName = form.CustName ?? "",
+                CustBirthday = ParseDate(form.CustBirthday, "01/01/2000"),
+                CustGender = form.CustGender ?? "",
+                CustIdNo = form.CustIdNo ?? "",
+                CustAddress = form.CustAddress ?? "",
+                CustPhone = form.CustPhone ?? "",
+                CustEmail = form.CustEmail ?? "",
                 LoanAmount = sotien_bh,
-                LoanTerm = d.loanTerm != null ? (int)d.loanTerm : 0,
+                LoanTerm = form.LoanTerm,
                 InsRate = phi_tyle_phi,
-                DisbursementDate = ParseDate(d.disbursementDate, "01/01/2026"),
+                DisbursementDate = ParseDate(form.DisbursementDate, "01/01/2026"),
                 AttachmentData = fileBytes,
                 AttachmentFileName = fileName,
                 AttachmentContentType = contentTypeFile,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow.AddHours(7) // UTC+7 cho Việt Nam
             };
 
             _dbContext.InsuranceContracts.Add(contract);

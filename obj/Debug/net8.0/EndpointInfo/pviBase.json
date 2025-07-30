@@ -52,7 +52,58 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "request": {
+                  "product_Code": {
+                    "type": "string"
+                  },
+                  "accessKey": {
+                    "type": "string"
+                  },
+                  "ma_chuongtrinh": {
+                    "type": "string"
+                  },
+                  "loanNo": {
+                    "type": "string"
+                  },
+                  "loanType": {
+                    "type": "string"
+                  },
+                  "loanDate": {
+                    "type": "string"
+                  },
+                  "custName": {
+                    "type": "string"
+                  },
+                  "custBirthday": {
+                    "type": "string"
+                  },
+                  "custGender": {
+                    "type": "string"
+                  },
+                  "custIdNo": {
+                    "type": "string"
+                  },
+                  "custAddress": {
+                    "type": "string"
+                  },
+                  "custPhone": {
+                    "type": "string"
+                  },
+                  "custEmail": {
+                    "type": "string"
+                  },
+                  "loanAmount": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "loanTerm": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "insRate": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "disbursementDate": {
                     "type": "string"
                   },
                   "allAttachments": {
@@ -65,7 +116,55 @@
                 }
               },
               "encoding": {
-                "request": {
+                "product_Code": {
+                  "style": "form"
+                },
+                "accessKey": {
+                  "style": "form"
+                },
+                "ma_chuongtrinh": {
+                  "style": "form"
+                },
+                "loanNo": {
+                  "style": "form"
+                },
+                "loanType": {
+                  "style": "form"
+                },
+                "loanDate": {
+                  "style": "form"
+                },
+                "custName": {
+                  "style": "form"
+                },
+                "custBirthday": {
+                  "style": "form"
+                },
+                "custGender": {
+                  "style": "form"
+                },
+                "custIdNo": {
+                  "style": "form"
+                },
+                "custAddress": {
+                  "style": "form"
+                },
+                "custPhone": {
+                  "style": "form"
+                },
+                "custEmail": {
+                  "style": "form"
+                },
+                "loanAmount": {
+                  "style": "form"
+                },
+                "loanTerm": {
+                  "style": "form"
+                },
+                "insRate": {
+                  "style": "form"
+                },
+                "disbursementDate": {
                   "style": "form"
                 },
                 "allAttachments": {
@@ -210,7 +309,58 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "request": {
+                  "product_Code": {
+                    "type": "string"
+                  },
+                  "accessKey": {
+                    "type": "string"
+                  },
+                  "ma_chuongtrinh": {
+                    "type": "string"
+                  },
+                  "loanNo": {
+                    "type": "string"
+                  },
+                  "loanType": {
+                    "type": "string"
+                  },
+                  "loanDate": {
+                    "type": "string"
+                  },
+                  "custName": {
+                    "type": "string"
+                  },
+                  "custBirthday": {
+                    "type": "string"
+                  },
+                  "custGender": {
+                    "type": "string"
+                  },
+                  "custIdNo": {
+                    "type": "string"
+                  },
+                  "custAddress": {
+                    "type": "string"
+                  },
+                  "custPhone": {
+                    "type": "string"
+                  },
+                  "custEmail": {
+                    "type": "string"
+                  },
+                  "loanAmount": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "loanTerm": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "insRate": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "disbursementDate": {
                     "type": "string"
                   },
                   "allAttachments": {
@@ -223,7 +373,55 @@
                 }
               },
               "encoding": {
-                "request": {
+                "product_Code": {
+                  "style": "form"
+                },
+                "accessKey": {
+                  "style": "form"
+                },
+                "ma_chuongtrinh": {
+                  "style": "form"
+                },
+                "loanNo": {
+                  "style": "form"
+                },
+                "loanType": {
+                  "style": "form"
+                },
+                "loanDate": {
+                  "style": "form"
+                },
+                "custName": {
+                  "style": "form"
+                },
+                "custBirthday": {
+                  "style": "form"
+                },
+                "custGender": {
+                  "style": "form"
+                },
+                "custIdNo": {
+                  "style": "form"
+                },
+                "custAddress": {
+                  "style": "form"
+                },
+                "custPhone": {
+                  "style": "form"
+                },
+                "custEmail": {
+                  "style": "form"
+                },
+                "loanAmount": {
+                  "style": "form"
+                },
+                "loanTerm": {
+                  "style": "form"
+                },
+                "insRate": {
+                  "style": "form"
+                },
+                "disbursementDate": {
                   "style": "form"
                 },
                 "allAttachments": {

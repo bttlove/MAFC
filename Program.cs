@@ -35,7 +35,8 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Logging.ClearProviders();
 builder.Host.UseSerilog();
-
+builder.Services.AddScoped<RequestLogService>();
+builder.Services.AddHostedService<RetryFailedRequests>();
 // Add services to the container.
 builder.Services.AddControllers()
     .AddNewtonsoftJson(options =>
